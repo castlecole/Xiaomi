@@ -24,7 +24,7 @@ metadata {
 		capability "Sensor"
 
 		attribute "absoluteHumidity", "number"
-        attribute "tempAndHumidity", "string"
+        	attribute "tempAndHumidity", "string"
 
 		fingerprint endpointId: "01", inClusters: "0001,0003,0020,0402,0B05,FC45", outClusters: "0019,0003"
 	}
@@ -44,8 +44,8 @@ metadata {
 
 	tiles(scale: 2) {
         multiAttributeTile(name:"temperature", type: "generic", width: 6, height: 4){
-			tileAttribute ("device.temperature", key: "PRIMARY_CONTROL") {
-				attributeState "temperature", label:'${currentValue}°',
+		tileAttribute ("device.temperature", key: "PRIMARY_CONTROL") {
+			attributeState "temperature", label:'${currentValue}°',
 					backgroundColors:[
 						[value: 31, color: "#153591"],
 						[value: 44, color: "#1e9cbb"],
@@ -56,7 +56,7 @@ metadata {
 						[value: 96, color: "#bc2323"]
 					]
 			}
-            tileAttribute ("device.absoluteHumidity", key: "SECONDARY_CONTROL") {
+            	tileAttribute ("device.absoluteHumidity", key: "SECONDARY_CONTROL") {
 				attributeState "absoluteHumidity", label:'Absolute Humidity: ${currentValue} g/m3'
 			}            
 		}
@@ -66,7 +66,7 @@ metadata {
 		valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
 			state "battery", label:'${currentValue}% battery'
 		}
-        valueTile("absoluteHumidity", "device.absoluteHumidity", inactiveLabel: false, width: 2, height: 2) {
+        	valueTile("absoluteHumidity", "device.absoluteHumidity", inactiveLabel: false, width: 2, height: 2) {
 			state "absoluteHumidity", label:'${currentValue} g/m3', unit:""
 		}
 		valueTile("tempAndHumidity", "device.tempAndHumidity", inactiveLabel: false, width: 2, height: 2) {
