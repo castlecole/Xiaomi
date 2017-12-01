@@ -33,14 +33,14 @@ metadata {
 		capability "Battery"
 		capability "Sensor"
 		capability "Refresh"
-        capability "Health Check" 
+        	capability "Health Check" 
         
-        attribute "lastCheckin", "String"
-        attribute "lastMotion", "String"
+       	 	attribute "lastCheckin", "String"
+        	attribute "lastMotion", "String"
 
-    	fingerprint profileId: "0104", deviceId: "0104", inClusters: "0000, 0003, FFFF, 0019", outClusters: "0000, 0004, 0003, 0006, 0008, 0005, 0019", manufacturer: "LUMI", model: "lumi.sensor_motion", deviceJoinName: "Xiaomi Motion"
+    		fingerprint profileId: "0104", deviceId: "0104", inClusters: "0000, 0003, FFFF, 0019", outClusters: "0000, 0004, 0003, 0006, 0008, 0005, 0019", manufacturer: "LUMI", model: "lumi.sensor_motion", deviceJoinName: "Xiaomi Motion"
         
-        command "reset"
+        	command "reset"
         
 	}
 
@@ -52,35 +52,34 @@ metadata {
 	}
 
 	tiles(scale: 2) {
-		multiAttributeTile(name:"motion", type: "generic", width: 6, height: 4){
-			tileAttribute ("device.motion", key: "PRIMARY_CONTROL") {
-				attributeState "active", label:'motion', icon:"st.motion.motion.active", backgroundColor:"#00a0dc"
-				attributeState "inactive", label:'no motion', icon:"st.motion.motion.inactive", backgroundColor:"#ffffff"
-			}
-            tileAttribute("device.lastCheckin", key: "SECONDARY_CONTROL") {
+	multiAttributeTile(name:"motion", type: "generic", width: 6, height: 4){
+		tileAttribute ("device.motion", key: "PRIMARY_CONTROL") {
+			attributeState "active", label:'motion', icon:"st.motion.motion.active", backgroundColor:"#00a0dc"
+			attributeState "inactive", label:'no motion', icon:"st.motion.motion.inactive", backgroundColor:"#ffffff"
+		}
+            	tileAttribute("device.lastCheckin", key: "SECONDARY_CONTROL") {
     			attributeState("default", label:'Last Update: ${currentValue}',icon: "st.Health & Wellness.health9")
-            }
+            		}
 		}
 		valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
 			state "battery", label:'${currentValue}% battery', unit:""
 		}
               
-	    standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
-            state "default", action:"refresh.refresh", icon:"st.secondary.refresh"
-        }
-        standardTile("configure", "device.configure", inactiveLabel: false, width: 2, height: 2, decoration: "flat") {
+	    	standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
+            	state "default", action:"refresh.refresh", icon:"st.secondary.refresh"
+        	}
+        	standardTile("configure", "device.configure", inactiveLabel: false, width: 2, height: 2, decoration: "flat") {
 			state "configure", label:'', action:"configuration.configure", icon:"st.secondary.configure"
-	    }       
-        
+	    	}
 		standardTile("reset", "device.reset", inactiveLabel: false, decoration: "flat", width: 2, height: 1) {
 			state "default", action:"reset", label: "Reset Motion"
 		}
 		standardTile("icon", "device.refresh", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
-            state "default", label:'Last Motion:', icon:"st.Entertainment.entertainment15"
-        }
-        valueTile("lastmotion", "device.lastMotion", decoration: "flat", inactiveLabel: false, width: 4, height: 1) {
+            		state "default", label:'Last Motion:', icon:"st.Entertainment.entertainment15"
+        	}
+        	valueTile("lastmotion", "device.lastMotion", decoration: "flat", inactiveLabel: false, width: 4, height: 1) {
 			state "default", label:'${currentValue}'
-        }
+        	}
 
 		main(["motion"])
 		details(["motion", "battery", "icon", "lastmotion", "reset" ])
