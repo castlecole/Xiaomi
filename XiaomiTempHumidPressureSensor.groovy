@@ -1,5 +1,5 @@
 metadata {
-	definition (name: "Xiaomi Temperature Humidity Pressure Sensor", namespace: "jaylee", author: "jaylee") {
+	definition (name: "Xiaomi Temperature Humidity Pressure Sensor", namespace: "castlecole", author: "jaylee") {
 		capability "Temperature Measurement"
 		capability "Relative Humidity Measurement"
 		capability "Sensor"
