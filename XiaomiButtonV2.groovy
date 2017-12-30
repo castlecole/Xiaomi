@@ -34,6 +34,7 @@ metadata {
 //    	capability "Battery"
 		capability "Button"
 //		capability "Holdable Button"
+                capability "Contact Sensor"
 		capability "Actuator"
 		capability "Switch"
 		capability "Momentary"
@@ -60,27 +61,28 @@ metadata {
 
 	tiles(scale: 2) {
 
-		multiAttributeTile(name:"switch", type: "lighting", width: 6, height: 4, canChangeIcon: true) {
+	        multiAttributeTile(name:"switch", type: "lighting", width: 6, height: 4, canChangeIcon: true) {
 			tileAttribute ("device.switch", key: "PRIMARY_CONTROL") {
-           		attributeState("on", label:' push', action: "momentary.push", backgroundColor:"#53a7c0")
-            	attributeState("off", label:' push', action: "momentary.push", backgroundColor:"#ffffff", nextState: "on")   
+           		        attributeState("on", label:' push', action: "momentary.push", backgroundColor:"#53a7c0")
+            	                attributeState("off", label:' push', action: "momentary.push", backgroundColor:"#ffffff", nextState: "on")   
  			}
-            tileAttribute("device.lastCheckin", key: "SECONDARY_CONTROL") {
-    			attributeState("default", label:'Last Update: ${currentValue}',icon: "st.Health & Wellness.health9")
-            }
-		}        
+                        tileAttribute("device.lastCheckin", key: "SECONDARY_CONTROL") {
+    	   		        attributeState("default", label:'Last Update: ${currentValue}',icon: "st.Health & Wellness.health9")
+                        }
+	        }
        
-//        valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
-//			state "battery", label:'${currentValue}% battery', unit:""
-//		}
-        standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
+                standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
 			state "default", action:"refresh.refresh", icon:"st.secondary.refresh"
-        }
-//        standardTile("configure", "device.configure", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
-//			state "configure", label:'', action:"configuration.configure", icon:"st.secondary.configure"
-//		}
+                }
         
-		main (["switch"])
+		multiAttributeTile(name:"switch2", type:"generic"){
+			tileAttribute ("device.switch", key:"PRIMARY_CONTROL") {
+           		        attributeState("on", label:' push', action: "momentary.push", icon:"https://github.com/castlecole/Xiaomi/blob/master/push-button-red-icon.png", backgroundColor:"#53a7c0")
+            	                attributeState("off", label:' push', action: "momentary.push", icon:"https://github.com/castlecole/Xiaomi/blob/master/push-button-red-icon.png", backgroundColor:"#ffffff", nextState: "on")
+        		}
+		}
+		
+		main (["switch2"])
 		details(["switch", "refresh"])//, "battery", "configure"
 	}
 }
