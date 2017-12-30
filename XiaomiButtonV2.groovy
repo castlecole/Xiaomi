@@ -77,8 +77,8 @@ metadata {
         
 		multiAttributeTile(name:"switch2", type:"generic"){
 			tileAttribute ("device.switch", key:"PRIMARY_CONTROL") {
-           		        attributeState("on", label:' push', action: "momentary.push", icon:"Xiaomi/push-button-red-icon.png", backgroundColor:"#53a7c0")
-            	                attributeState("off", label:' push', action: "momentary.push", icon:"https://github.com/castlecole/Xiaomi/blob/master/push-button-red-icon.png", backgroundColor:"#ffffff", nextState: "on")
+           		        attributeState("on", label:' push', action: "momentary.push", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/push-button-red-icon.png", backgroundColor:"#53a7c0")
+            	                attributeState("off", label:' push', action: "momentary.push", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/push-button-red-icon.png", backgroundColor:"#ffffff", nextState: "on")
         		}
 		}
 		
