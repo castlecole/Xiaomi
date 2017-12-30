@@ -3,14 +3,14 @@ metadata {
 		capability "Temperature Measurement"
 		capability "Relative Humidity Measurement"
 		capability "Sensor"
-        capability "Battery"
-        capability "Refresh"
+                capability "Battery"
+                capability "Refresh"
         
-        attribute "lastCheckin", "String"
-        attribute "pressure", "String"
+                attribute "lastCheckin", "String"
+                attribute "pressure", "String"
         
 		fingerprint profileId: "0104", deviceId: "0302", inClusters: "0000,0001,0003,0009,0402,0405"
-        fingerprint profileId: "0104", deviceId: "5F01", inClusters: "0000,0003,FFFF,0402,0403,0405", outClusters: "0000,0004,FFFF", deviceJoinName: "Xiaomi-Temp"
+                fingerprint profileId: "0104", deviceId: "5F01", inClusters: "0000,0003,FFFF,0402,0403,0405", outClusters: "0000,0004,FFFF", deviceJoinName: "Xiaomi-Temp"
 	}
 
 	// simulator metadata
@@ -34,14 +34,14 @@ metadata {
 			input title: "Temperature Offset", description: "This feature allows you to correct any temperature variations by selecting an offset. Ex: If your sensor consistently reports a temp that's 5 degrees too warm, you'd enter '-5'. If 3 degrees too cold, enter '+3'. Please note, any changes will take effect only on the NEXT temperature change.", displayDuringSetup: false, type: "paragraph", element: "paragraph"
 			input "tempOffset", "number", title: "Degrees", description: "Adjust temperature by this many degrees", range: "*..*", displayDuringSetup: false
 		}
-    }
+        }
     
 	// UI tile definitions
 	tiles(scale: 2) {
 		multiAttributeTile(name:"temperature", type:"generic", width:6, height:4) {
 			tileAttribute("device.temperature", key:"PRIMARY_CONTROL"){
-			    attributeState("default", label:'${currentValue}°',
-                backgroundColors:[
+			    attributeState("default", label:'${currentValue}°', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/temperature.png",
+                                  backgroundColors:[
 					[value: 0, color: "#153591"],
 					[value: 6, color: "#1e9cbb"],
 					[value: 15, color: "#90d2a7"],
@@ -49,7 +49,7 @@ metadata {
 					[value: 28, color: "#f1d801"],
 					[value: 35, color: "#d04e00"],
 					[value: 36, color: "#bc2323"],
-                    [value: 31, color: "#153591"],
+                                        [value: 31, color: "#153591"],
 					[value: 44, color: "#1e9cbb"],
 					[value: 59, color: "#90d2a7"],
 					[value: 74, color: "#44b621"],
@@ -58,27 +58,27 @@ metadata {
 					[value: 96, color: "#bc2323"]                                    
 				]
 			)
-            }
-            tileAttribute("device.lastCheckin", key: "SECONDARY_CONTROL") {
+                }
+                tileAttribute("device.lastCheckin", key: "SECONDARY_CONTROL") {
     			attributeState("default", label:'Last Update: ${currentValue}', icon: "st.Health & Wellness.health9")
 			}
 		}
        
-        standardTile("humidity", "device.humidity", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
-			state "default", label:'${currentValue}%', icon:"st.Weather.weather12"
+                valueTile("humidity", "device.humidity", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
+			state "default", label:'${currentValue}%', unit:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/humidity.png"
 		}
                 
-        valueTile("pressure", "device.pressure", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
+                valueTile("pressure", "device.pressure", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
 			state "default", label:'${currentValue} mbar', unit:""
 		}
         
-        valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
-			state "default", label:'${currentValue}% battery', unit:""
+                valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
+			state "default", label:'${currentValue}% battery', unit:"", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/battery.png"
 		}
         
 		valueTile("temperature2", "device.temperature", decoration: "flat", inactiveLabel: false) {
-			state "default", label:'${currentValue}°', icon: "st.Weather.weather2",
-                backgroundColors:[
+			state "default", label:'${currentValue}°', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/room-env-icon.png",
+                                 backgroundColors:[
 					[value: 0, color: "#153591"],
 					[value: 6, color: "#1e9cbb"],
 					[value: 15, color: "#90d2a7"],
@@ -86,7 +86,7 @@ metadata {
 					[value: 28, color: "#f1d801"],
 					[value: 35, color: "#d04e00"],
 					[value: 36, color: "#bc2323"], 
-                    [value: 31, color: "#153591"],
+                                        [value: 31, color: "#153591"],
 					[value: 44, color: "#1e9cbb"],
 					[value: 59, color: "#90d2a7"],
 					[value: 74, color: "#44b621"],
@@ -94,14 +94,14 @@ metadata {
 					[value: 95, color: "#d04e00"],
 					[value: 96, color: "#bc2323"],                          
 				]
-        }
+                }
 
 		standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
-			state "default", action:"refresh.refresh", icon:"st.secondary.refresh"
-        }
+			state "default", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
+                }
             
 		main(["temperature2"])
-		details(["temperature", "battery", "humidity", "refresh", "pressure"])
+		details(["temperature", "battery", "humidity", "pressure", "refresh"])
 	}
 }
 
