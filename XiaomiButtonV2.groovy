@@ -63,8 +63,8 @@ metadata {
 
 	        multiAttributeTile(name:"switch", type: "lighting", width: 6, height: 4, canChangeIcon: False) {
 			tileAttribute ("device.switch", key: "PRIMARY_CONTROL") {
-           		        attributeState("on", label:' push', action: "momentary.push", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/push-button-green-icon.png", backgroundColor:"#53a7c0")
-            	                attributeState("off", label:' push', action: "momentary.push", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/push-button-red-icon.png", backgroundColor:"#ffffff", nextState: "on")
+           		        attributeState("on", label:' push', action: "momentary.push", backgroundColor:"#53a7c0")
+            	                attributeState("off", label:' push', action: "momentary.push", backgroundColor:"#ffffff", nextState: "on")
  			}
                         tileAttribute("device.lastCheckin", key: "SECONDARY_CONTROL") {
     	   		        attributeState("default", label:'Last Update: ${currentValue}',icon: "st.Health & Wellness.health9")
