@@ -89,8 +89,8 @@ metadata {
 	    }
 		
             standardTile("motion2","device.motion", width: 2, height: 2) {
-                	state "active",label:'motion', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/motion-detector-icon.png", backgroundColor:"#53a7c0"
-                	state "inactive",label:'no motion', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/motion-detector-icon.png", backgroundColor:"#ffffff"
+                	state "active",label:'motion', icon:"st.motion.motion.active", backgroundColor:"#53a7c0"
+                	state "inactive",label:'no motion', icon:"st.motion.motion.inactive", backgroundColor:"#ffffff"
 	    }
 		
 	    valueTile("illuminance","device.illuminance", width: 2, height: 2) {
@@ -110,10 +110,6 @@ metadata {
 			state "configure", label:'', action:"configuration.configure", icon:"st.secondary.configure"
 	    }
 		
-	    standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
-            		state "default", action:"refresh.refresh", icon:"st.secondary.refresh"
-            }
-
 	    standardTile("reset", "device.reset", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
 			state "default", action:"reset", label: "Reset Motion", icon: "st.motion.motion.active"
 	    }
@@ -131,7 +127,7 @@ metadata {
             }
 
 	    main(["motion"])
-	    details(["main", "battery", "motion", "lastmotion", "configure", "reset", "refresh"])
+	    details(["main", "battery", "motion2", "lastmotion", "configure", "reset", "refresh"])
       }
 }
 
