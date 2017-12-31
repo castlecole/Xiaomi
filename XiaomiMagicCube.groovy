@@ -83,8 +83,8 @@ metadata {
 		standardTile("knock", "device.button", decoration: "flat", width: 2, height: 2) { state "default", label: "knock", action: "knock", icon: "https://raw.githubusercontent.com/ClassicGOD/SmartThingsPublic/master/devicetypes/classicgod/xiaomi-magic-cube-controller.src/images/knock.png",  backgroundColor: "#ffffff" }
 		standardTile("shake", "device.button", decoration: "flat", width: 2, height: 2) { state "default", label: "shake" , action: "shake", icon: "https://raw.githubusercontent.com/ClassicGOD/SmartThingsPublic/master/devicetypes/classicgod/xiaomi-magic-cube-controller.src/images/shake.png",  backgroundColor: "#ffffff" }
 		valueTile("battery", "device.battery", decoration: "flat", width: 4, height: 2) { state "val", label: '${currentValue}% battery', backgroundColor: "#ffffff" }
-		standardTile("faceMain", "device.face", decoration: "flat", width: 2, height: 2) { 
-			state "default", label:'Face: ${currentValue} ', icon: "https://raw.githubusercontent.com/ClassicGOD/SmartThingsPublic/master/devicetypes/classicgod/xiaomi-magic-cube-controller.src/images/cube_icon.png", backgroundColor: "#ffffff"
+		standardTile("faceMain", "device.face", decoration: "flat", width: 2, height: 2) {
+			state "default", label:'Face: ${currentValue} ', icon: "https://raw.githubusercontent.com/castlecole/Xiaomi/master/cube-blue-arr-icon.png", backgroundColor: "#ffffff"
 		}
 	   
 	   main(["faceMain"])
