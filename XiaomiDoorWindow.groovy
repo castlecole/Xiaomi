@@ -51,25 +51,29 @@ metadata {
    tiles(scale: 2) {
       multiAttributeTile(name:"contact", type: "generic", width: 6, height: 4){
          tileAttribute ("device.contact", key: "PRIMARY_CONTROL") {
-            attributeState "open", label:'${name}', icon:"st.contact.contact.open", backgroundColor:"#e86d13"
-            attributeState "closed", label:'${name}', icon:"st.contact.contact.closed", backgroundColor:"#00a0dc"
+            attributeState "open", label:'${name}', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/door-sensor-open.png", backgroundColor:"#e86d13"
+            attributeState "closed", label:'${name}', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/door-sensor.png", backgroundColor:"#00a0dc"
          }
-            tileAttribute("device.lastCheckin", key: "SECONDARY_CONTROL") {
+         
+	 tileAttribute("device.lastCheckin", key: "SECONDARY_CONTROL") {
     			attributeState("default", label:'Last Update: ${currentValue}',icon: "st.Health & Wellness.health9")
-            }
+         }
       }
+	   
       standardTile("icon", "device.refresh", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
             state "default", label:'Last Opened:', icon:"st.Entertainment.entertainment15"
       }
+	   
       valueTile("lastopened", "device.lastOpened", decoration: "flat", inactiveLabel: false, width: 4, height: 1) {
 			state "default", label:'${currentValue}'
-	  }
+      }
       valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
-			state "battery", label:'${currentValue}% battery', unit:""
-	  }  	
+			state "default", label:'${currentValue}%', unit:"", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/battery.png"
+      }  	
+      
       standardTile("resetClosed", "device.resetClosed", inactiveLabel: false, decoration: "flat", width: 3, height: 1) {
 			state "default", action:"resetClosed", label: "Override Close", icon:"st.contact.contact.closed"
-	  }
+      }
 	  standardTile("resetOpen", "device.resetOpen", inactiveLabel: false, decoration: "flat", width: 3, height: 1) {
 			state "default", action:"resetOpen", label: "Override Open", icon:"st.contact.contact.open"
 	  }
