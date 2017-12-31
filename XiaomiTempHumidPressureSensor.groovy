@@ -68,7 +68,7 @@ metadata {
 	tiles(scale: 2) {
 		multiAttributeTile(name:"temperature", type:"generic", width:6, height:4) {
 			tileAttribute("device.temperature", key:"PRIMARY_CONTROL"){
-			    attributeState("default", label:'${currentValue}°', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/temperature.png",
+			    attributeState("default", label:'${currentValue}°',
                                   backgroundColors:[
 					[value: 0, color: "#153591"],
 					[value: 6, color: "#1e9cbb"],
@@ -105,7 +105,7 @@ metadata {
 		}
         
                 valueTile("temperature3", "device.temperature", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
-			state "default", label:'${currentValue}°', unit:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/temperature.png"
+			state "default", label:'${currentValue}', unit:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/temperature.png"
 		}
         
                 valueTile("blank", "", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
