@@ -88,7 +88,12 @@ metadata {
                 	state "inactive",label:'no motion', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/motion-detector-icon.png", backgroundColor:"#ffffff"
 	    }
 		
-            valueTile("illuminance","device.illuminance", width: 2, height: 2) {
+            standardTile("motion2","device.motion", width: 2, height: 2) {
+                	state "active",label:'motion', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/motion-detector-icon.png", backgroundColor:"#53a7c0"
+                	state "inactive",label:'no motion', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/motion-detector-icon.png", backgroundColor:"#ffffff"
+	    }
+		
+	    valueTile("illuminance","device.illuminance", width: 2, height: 2) {
             		state "illuminance",label:'${currentValue} lx', backgroundColors:[
                 		[value: 0, color: "#000000"],
                         	[value: 1, color: "#060053"],
@@ -112,20 +117,20 @@ metadata {
 	    standardTile("reset", "device.reset", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
 			state "default", action:"reset", label: "Reset Motion", icon: "st.motion.motion.active"
 	    }
-		
+	 	
 	    valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
-			state "battery", label:'${currentValue}%', unit:"", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/battery.png"
+			state "battery", label:' ${currentValue}% ', unit:"", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/battery.png"
 	    }
               
             valueTile("lastmotion", "device.lastMotion", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
-			state "default", label:'${currentValue}', icon:"st.Entertainment.entertainment15"
+			state "default", label:' ${currentValue} ', icon:"st.Entertainment.entertainment15"
             }
         
-	    standardTile("refresh", "command.refresh", inactiveLabel: false) {
-			state "default", label:'refresh', action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
-	    }
+   	    standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
+			state "default", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
+            }
 
-      	    main(["motion"])
+	    main(["motion"])
 	    details(["main", "battery", "motion", "lastmotion", "configure", "reset", "refresh"])
       }
 }
