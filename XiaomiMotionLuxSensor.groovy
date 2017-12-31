@@ -114,7 +114,7 @@ metadata {
 	    }
 		
 	    valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
-			state "battery", label:'${currentValue}%', unit:""icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/battery.png"
+			state "battery", label:'${currentValue}%', unit:"", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/battery.png"
 	    }
               
             valueTile("lastmotion", "device.lastMotion", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
