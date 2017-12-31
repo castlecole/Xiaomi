@@ -1,3 +1,32 @@
+/**
+
+ *  Xiaomi Aqara Temperature Humidity Pressure Sensor
+ *
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ *  in compliance with the License. You may obtain a copy of the License at:
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
+ *  on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License
+ *  for the specific language governing permissions and limitations under the License.
+ *
+ * Based on original DH by Eric Maycock 2015
+ * modified 29/12/2016 a4refillpad 
+ * Added fingerprinting
+ * Added heartbeat/lastcheckin for monitoring
+ * Added battery and refresh 
+ * Motion background colours consistent with latest DH
+ * Fixed max battery percentage to be 100%
+ * Added Last update to main tile
+ * Added last updated tile
+ * Heartdeat icon plus improved localisation of date
+ * removed non working tiles and changed layout and incorporated latest colours
+ * added experimental health check as worked out by rolled54.Why
+ *
+ */
+
 metadata {
 	definition (name: "Xiaomi Temperature Humidity Pressure Sensor", namespace: "castlecole", author: "jaylee") {
 		capability "Temperature Measurement"
@@ -65,15 +94,15 @@ metadata {
 		}
        
                 valueTile("humidity", "device.humidity", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
-			state "default", label:'${currentValue}%', unit:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/humidity.png"
+			state "default", label:'${currentValue} %', unit:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/humidity.png"
 		}
                 
                 valueTile("pressure", "device.pressure", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
-			state "default", label:'${currentValue} mbar', unit:""
+			state "default", label:'${currentValue} mbar', unit:"", , icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/pressure.png"
 		}
         
                 valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
-			state "default", label:'${currentValue}% battery', unit:"", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/battery.png"
+			state "default", label:'${currentValue} %', unit:"", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/battery.png"
 		}
         
 		valueTile("temperature2", "device.temperature", decoration: "flat", inactiveLabel: false) {
