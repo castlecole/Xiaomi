@@ -97,7 +97,7 @@ metadata {
 		}
                 
                 valueTile("pressure", "device.pressure", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
-			state "default", label:'${currentValue} mbar', unit:"", , icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/pressure.png"
+			state "default", label:'${currentValue} mbar', unit:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/pressure.png"
 		}
         
                 valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
