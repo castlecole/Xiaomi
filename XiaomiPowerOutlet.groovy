@@ -65,7 +65,15 @@ metadata {
         standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
   	    state "default", label:"", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
         }
-        main (["switch", "temperature"])
+
+        valuetile("switch2", "device.switch", width: 2, height: 2) { 
+            State "on", label:'${name}', action:"switch.off", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Power_On.png", backgroundColor:"#00a0dc", nextState:"turningOff"
+            State "off", label:'${name}', action:"switch.on", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Power_Off.png", backgroundColor:"#ffffff", nextState:"turningOn"
+            State "turningOn", label:'${name}', action:"switch.off", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Power_On.png", backgroundColor:"#00a0dc", nextState:"turningOff"
+            State "turningOff", label:'${name}', action:"switch.on", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Power_Off.png", backgroundColor:"#ffffff", nextState:"turningOn"
+            }
+	    
+	main (["switch2", "temperature"])
         details(["switch", "temperature", "refresh"])
     }
 }
