@@ -29,7 +29,7 @@
  */
 
 metadata {
-    definition (name: "Xiaomi Aqara Motion Illuminance Sensor", namespace: "bspranger", author: "bspranger") {
+    definition (name: "Xiaomi Aqara Motion Illuminance Sensor", namespace: "castlecole", author: "bspranger") {
         capability "Motion Sensor"
         capability "Illuminance Measurement"
         capability "Configuration"
@@ -101,10 +101,10 @@ metadata {
         valueTile("lastcheckin", "device.lastCheckin", decoration: "flat", inactiveLabel: false, width: 4, height: 1) {
             state "default", label:'Last Checkin:\n ${currentValue}'
         }
-/*        standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
+        standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
             state "default", action:"refresh.refresh", icon:"st.secondary.refresh"
         }
-*/
+
 	standardTile("refresh", "command.refresh", inactiveLabel: false) {
 	    state "default", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
         }
