@@ -38,7 +38,7 @@ metadata {
     }
 
     tiles(scale: 2) {
-        multiAttributeTile(name:"switch", type: "lighting", width: 6, height: 4, canChangeIcon: true){
+        multiAttributeTile(name:"switch", type: "lighting", width: 6, height: 4, canChangeIcon: false){
             tileAttribute ("device.switch", key: "PRIMARY_CONTROL") { 
                 attributeState "on", label:'${name}', action:"switch.off", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Power_On.png", backgroundColor:"#00a0dc", nextState:"turningOff"
                 attributeState "off", label:'${name}', action:"switch.on", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Power_Off.png", backgroundColor:"#ffffff", nextState:"turningOn"
