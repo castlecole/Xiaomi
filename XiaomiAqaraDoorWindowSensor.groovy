@@ -64,8 +64,8 @@ metadata {
    tiles(scale: 2) {
         multiAttributeTile(name:"contact", type: "generic", width: 6, height: 4){
             tileAttribute ("device.contact", key: "PRIMARY_CONTROL") {
-                attributeState "open", label:'${name}', icon:"st.contact.contact.open", backgroundColor:"#e86d13"
-                attributeState "closed", label:'${name}', icon:"st.contact.contact.closed", backgroundColor:"#00a0dc"
+		attributeState "open", label:'${name}', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/door-sensor-open.png", backgroundColor:"#e86d13"
+                attributeState "closed", label:'${name}', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/door-sensor.png", backgroundColor:"#00a0dc"
             }
             tileAttribute("device.lastOpened", key: "SECONDARY_CONTROL") {
                 attributeState("default", label:'Last Opened: ${currentValue}')
