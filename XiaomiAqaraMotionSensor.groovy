@@ -61,15 +61,21 @@ metadata {
     tiles(scale: 2) {
         multiAttributeTile(name:"motion", type: "generic", width: 6, height: 4) {
             tileAttribute ("device.motion", key: "PRIMARY_CONTROL") {
-                attributeState "active", label:'motion', icon:"st.motion.motion.active", backgroundColor:"#00a0dc"
-                attributeState "inactive", label:'no motion', icon:"st.motion.motion.inactive", backgroundColor:"#ffffff"
+                attributeState "active", label:'Motion', icon:"st.motion.motion.active", backgroundColor:"#00a0dc"
+                attributeState "inactive", label:'No motion', icon:"st.motion.motion.inactive", backgroundColor:"#ffffff"
             }
             tileAttribute("device.lastMotion", key: "SECONDARY_CONTROL") {
-                attributeState("default", label:'Last Motion: ${currentValue}')
+                attributeState("default", label:'Last Motion: ${currentValue}', icon: "st.secondary.activity")
             }
-        }
-        valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
-            state "default", label:'${currentValue}%', unit:"",
+	}
+
+	standardTile("motion2","device.motion", width: 2, height: 2) {
+		state "active",label:'Motion', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/motion-detector-icon.png", backgroundColor:"#53a7c0"
+		state "inactive",label:'No motion', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/motion-detector-icon.png", backgroundColor:"#ffffff"
+	}
+   
+	valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
+            state "default", label:'${currentValue}%', unit:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Battery.png", 
             backgroundColors: [
                 [value: 10, color: "#bc2323"],
                 [value: 26, color: "#f1d801"],
@@ -77,7 +83,17 @@ metadata {
             ]
         }
         valueTile("light", "device.Light", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
-		state "light", label:'${currentValue} ${unit}', unit:"lux"
+		state "light", label:'${currentValue} ${unit}', unit:"lux",
+			backgroundColors:[
+                    		[value: 0, color: "#000000"],
+                    		[value: 1, color: "#060053"],
+                    		[value: 3, color: "#3E3900"],
+                    		[value: 12, color: "#8E8400"],
+                    		[value: 24, color: "#C5C08B"],
+                    		[value: 36, color: "#DAD7B6"],
+                    		[value: 128, color: "#F3F2E9"],
+                    		[value: 1000, color: "#FFFFFF"]
+			]
         }
         standardTile("reset", "device.reset", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
             state "default", action:"reset", label: "Reset Motion", icon:"st.motion.motion.active"
@@ -85,20 +101,21 @@ metadata {
         valueTile("lastcheckin", "device.lastCheckin", decoration: "flat", inactiveLabel: false, width: 4, height: 1) {
             state "default", label:'Last Checkin:\n ${currentValue}'
         }
-        standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
+/*        standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
             state "default", action:"refresh.refresh", icon:"st.secondary.refresh"
         }
-        standardTile("refresh", "command.refresh", inactiveLabel: false) {
-            state "default", label:'refresh', action:"refresh.refresh", icon:"st.secondary.refresh-icon"
+*/
+	standardTile("refresh", "command.refresh", inactiveLabel: false) {
+	    state "default", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
         }
-		valueTile("batteryRuntime", "device.batteryRuntime", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
-			state "batteryRuntime", label:'Battery Changed (tap to reset):\n ${currentValue}', action:"resetBatteryRuntime"
-		}
+	valueTile("batteryRuntime", "device.batteryRuntime", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
+	    state "batteryRuntime", label:'Battery Changed (tap to reset):\n ${currentValue}', action:"resetBatteryRuntime"
+	}
         standardTile("empty1x1", "null", width: 1, height: 1, decoration: "flat") {
-			state "emptySmall", label:'', defaultState: true
-		}
+	    state "emptySmall", label:'', defaultState: true
+	}
 
-        main(["motion"])
+        main(["motion2"])
         details(["motion", "battery", "light", "reset", "lastcheckin", "refresh", "batteryRuntime"])
     }
 }
