@@ -1,5 +1,5 @@
 /**
- *  Xiaomi Aqara Motion Sensor
+ *  Xiaomi Aqara Motion Illuminance Sensor
  *
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
@@ -29,7 +29,7 @@
  */
 
 metadata {
-    definition (name: "Xiaomi Aqara Motion Sensor", namespace: "bspranger", author: "bspranger") {
+    definition (name: "Xiaomi Aqara Motion Illuminance Sensor", namespace: "bspranger", author: "bspranger") {
         capability "Motion Sensor"
         capability "Illuminance Measurement"
         capability "Configuration"
