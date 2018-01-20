@@ -71,7 +71,7 @@ metadata {
 
 	standardTile("motion2","device.motion", width: 2, height: 2) {
 		state "active",label:'Motion', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/motion-detector-icon.png", backgroundColor:"#53a7c0"
-		state "inactive",label:'No motion', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/motion-detector-icon.png", backgroundColor:"#ffffff"
+		state "inactive",label:'No motion', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/motion-detector-icon2.png", backgroundColor:"#ffffff"
 	}
    
 	valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
