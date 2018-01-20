@@ -64,8 +64,8 @@ metadata {
     tiles(scale: 2) {
         multiAttributeTile(name:"water", type: "generic", width: 6, height: 4){
             tileAttribute ("device.water", key: "PRIMARY_CONTROL") {
-                attributeState "dry", label:"Dry", icon:"st.alarm.water.dry"
-                attributeState "wet", label:"Wet", icon:"st.alarm.water.wet", backgroundColor:"#00a0dc"
+                attributeState "dry", label:"Dry", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Water_NoLeak.png"
+                attributeState "wet", label:"Wet", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Water_Leak.png"
             }
             tileAttribute("device.lastWet", key: "SECONDARY_CONTROL") {
                 attributeState("default", label:'Last Wet: ${currentValue}')
@@ -90,7 +90,7 @@ metadata {
             state "default", action:"resetDry", label: "Override Dry", icon:"st.alarm.water.dry"
         }
         standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
-            state "default", action:"refresh.refresh", icon:"st.secondary.refresh"
+			state "default", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
         }
         valueTile("batteryRuntime", "device.batteryRuntime", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
             state "batteryRuntime", label:'Battery Changed (tap to reset):\n ${currentValue}', unit:"", action:"resetBatteryRuntime"
