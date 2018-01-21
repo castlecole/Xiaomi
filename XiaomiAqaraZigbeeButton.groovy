@@ -43,17 +43,17 @@ metadata {
     definition (name: "Xiaomi Aqara Button", namespace: "castlecole", author: "bspranger") {
         capability "Battery"
         capability "Button"
-		capability "Configuration"
-		capability "Sensor"
+	capability "Configuration"
+	capability "Sensor"
         capability "Refresh"
         
         attribute "lastPress", "string"
         attribute "batterylevel", "string"
         attribute "lastCheckin", "string"
         attribute "lastCheckinDate", "Date"
-	    attribute "batteryRuntime", "String"
+	attribute "batteryRuntime", "String"
 
-	    command "resetBatteryRuntime"
+	command "resetBatteryRuntime"
         
         fingerprint endpointId: "01", profileId: "0104", deviceId: "5F01", inClusters: "0000,FFFF,0006", outClusters: "0000,0004,FFFF", manufacturer: "LUMI", model: "lumi.sensor_switch.aq2", deviceJoinName: "Xiaomi Aqara Button"
     }
@@ -70,17 +70,28 @@ metadata {
     
     tiles(scale: 2) {
 
-        multiAttributeTile(name:"button", type: "lighting", width: 6, height: 4, canChangeIcon: true) {
-			tileAttribute ("device.button", key: "PRIMARY_CONTROL") {
-                attributeState("pushed", label:'${name}', backgroundColor:"#53a7c0")
-                attributeState("released", label:'${name}', backgroundColor:"#ffffff")
-             }
-            tileAttribute("device.lastCheckin", key: "SECONDARY_CONTROL") {
-                attributeState("default", label:'Last Update: ${currentValue}',icon: "st.Health & Wellness.health9")
+        multiAttributeTile(name:"button", type: "lighting", width: 6, height: 4, canChangeIcon: false) {
+		tileAttribute ("device.button", key: "PRIMARY_CONTROL") {
+                	attributeState("pushed", label:'${name}', backgroundColor:"#53a7c0")
+                	attributeState("released", label:'${name}', backgroundColor:"#ffffff")
+             	}
+            	tileAttribute("device.lastCheckin", key: "SECONDARY_CONTROL") {
+                	attributeState("default", label:'Last Update: ${currentValue}',icon: "st.Health & Wellness.health9")
             }
-        }        
-        valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
-            state "default", label:'${currentValue}%', unit:"",
+        }
+
+        multiAttributeTile(name:"button2", type: "lighting", width: 6, height: 4, canChangeIcon: false) {
+		tileAttribute ("device.button", key: "PRIMARY_CONTROL") {
+                	attributeState("pushed", label:'${name}', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/push-button-green-icon.png", backgroundColor:"#53a7c0")
+                	attributeState("released", label:'${name}', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/push-button-red-icon.png", backgroundColor:"#ffffff")
+             	}
+            	tileAttribute("device.lastCheckin", key: "SECONDARY_CONTROL") {
+                	attributeState("default", label:'Last Update: ${currentValue}',icon: "st.Health & Wellness.health9")
+            }
+        }
+ 
+	valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
+            state "default", label:'${currentValue}%', unit:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Battery.png",
 			backgroundColors:[
 				[value: 0, color: "#c0392b"],
 				[value: 25, color: "#f1c40f"],
@@ -95,13 +106,14 @@ metadata {
             state "default", label:'Last Pressed:\n${currentValue}'
         }
         standardTile("refresh", "command.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 1) {
-            state "default", label:'refresh', action:"refresh.refresh", icon:"st.secondary.refresh-icon"
+	    state "default", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
+
         }
 	valueTile("batteryRuntime", "device.batteryRuntime", inactiveLabel: false, decoration: "flat", width: 6, height: 2) {
 	    state "batteryRuntime", label:'Battery Changed: ${currentValue} - Tap To Reset Date', unit:"", action:"resetBatteryRuntime"
 	}    
 	    
-        main (["button"])
+        main (["button2"])
         details(["button","battery","lastcheckin","lastpressed","refresh","batteryRuntime"])
    }
 }
