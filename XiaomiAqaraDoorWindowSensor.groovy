@@ -78,8 +78,8 @@ metadata {
                 attributeState "closed", label:'${name}', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/door-sensor.png", backgroundColor:"#00a0dc"
             }
             tileAttribute("device.lastOpened", key: "SECONDARY_CONTROL") {
-                attributeState("default", label:'Last Opened: ${currentValue}', icon: "st.secondary.activity", icon: "st.secondary.activity")
-            }
+                attributeState("default", label:'Last Opened: ${currentValue}', "st.secondary.activity")
+	    }
         }
 	   
 	valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
