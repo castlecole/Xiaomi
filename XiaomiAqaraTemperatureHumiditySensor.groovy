@@ -94,7 +94,7 @@ metadata {
                 )
             }
             tileAttribute("device.temperature", key:"SECONDARY_CONTROL") {
-                attributeState("default", label:'', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/temperature.png")
+                attributeState("default", label:'', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/temperature2.png")
             }
         }
         valueTile("humidity", "device.humidity", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
