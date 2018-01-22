@@ -106,12 +106,12 @@ metadata {
         valueTile("lastpressed", "device.lastpressed", decoration: "flat", inactiveLabel: false, width: 4, height: 1) {
             state "default", label:'Last Pressed:\n${currentValue}'
         }
-        standardTile("refresh", "command.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 1) {
+        standardTile("refresh", "command.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
 	    state "default", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
 
         }
 	valueTile("batteryRuntime", "device.batteryRuntime", inactiveLabel: false, decoration: "flat", width: 4, height: 2) {
-	    state "batteryRuntime", label:'Battery Changed: ${currentValue} - Tap To Reset Date', unit:"", action:"resetBatteryRuntime"
+	    state "batteryRuntime", label:'Battery Changed:\n${currentValue}\nTap To Reset Date', unit:"", action:"resetBatteryRuntime"
 	}
 	    
         main (["button2"])
