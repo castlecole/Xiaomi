@@ -65,7 +65,7 @@ metadata {
             tileAttribute ("device.contact", key: "PRIMARY_CONTROL") {
 		attributeState "open", label:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/door-sensor-open.png", backgroundColor:"#e86d13"
                 attributeState "closed", label:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/door-sensor.png", backgroundColor:"#00a0dc"
-            }
+	    }
             tileAttribute("device.lastOpened", key: "SECONDARY_CONTROL") {
                 attributeState("default", label:'Last Opened: ${currentValue}')
             }
@@ -104,7 +104,7 @@ metadata {
 	    state "default", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
         }
 	valueTile("batteryRuntime", "device.batteryRuntime", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
-	    state "batteryRuntime", label:'Battery Changed: ${currentValue}'+"\n(tap to reset)", unit:"", action:"resetBatteryRuntime"
+	    state "batteryRuntime", label:'Battery Changed: ${currentValue}'+"\n(Tap to Reset)", unit:"", action:"resetBatteryRuntime"
 	}
 
         main (["contact"])
