@@ -42,7 +42,6 @@ metadata {
         capability "Refresh"
         capability "Battery"
         capability "Health Check"
-
         attribute "lastCheckin", "String"
         attribute "lastOpened", "String"
         attribute "lastOpenedDate", "Date"
@@ -85,10 +84,12 @@ metadata {
 	valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
             state "default", label:'${currentValue}%', unit:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Battery.png",
             backgroundColors: [
+		[value: 0, color: "#c0392b"],
                 [value: 10, color: "#bc2323"],
-                [value: 26, color: "#f1d801"],
-                [value: 51, color: "#44b621"] 
-            ]
+		[value: 25, color: "#f1c40f"],
+		[value: 50, color: "#e67e22"],
+		[value: 75, color: "#44b621"]
+           ]
         }
         valueTile("lastcheckin", "device.lastCheckin", decoration: "flat", inactiveLabel: false, width: 4, height: 1) {
             state "default", label:'Last Checkin:\n${currentValue}'
