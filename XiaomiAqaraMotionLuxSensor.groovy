@@ -85,7 +85,7 @@ metadata {
             ]
         }
         valueTile("light", "device.Light", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
-		state "light", label:'${currentValue} ${unit}', unit:"lux",
+		state "light", label:'${currentValue}\n${unit}', unit:"lux",
 			backgroundColors:[
                     		[value: 0, color: "#000000"],
                     		[value: 1, color: "#060053"],
