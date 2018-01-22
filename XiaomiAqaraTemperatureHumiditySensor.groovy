@@ -29,6 +29,7 @@
  */
 
 metadata {
+
     definition (name: "Xiaomi Aqara Temperature Humidity Sensor", namespace: "castlecole", author: "bspranger") {
         capability "Temperature Measurement"
         capability "Relative Humidity Measurement"
@@ -74,7 +75,7 @@ metadata {
     tiles(scale: 2) {
         multiAttributeTile(name:"temperature", type:"generic", width:6, height:4) {
             tileAttribute("device.temperature", key:"PRIMARY_CONTROL") {
-                attributeState("temperature", label:'${currentValue}°', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/temperature.png",
+                attributeState("temperature", label:'${currentValue}°',
                     backgroundColors:[
                         [value: 0, color: "#153591"],
                         [value: 5, color: "#1e9cbb"],
@@ -91,6 +92,9 @@ metadata {
                         [value: 96, color: "#bc2323"]
                     ]
                 )
+            }
+            tileAttribute("device.temperature", key:"SECONDARY_CONTROL") {
+                attributeState("default", label:'', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/temperature.png")
             }
         }
         valueTile("humidity", "device.humidity", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
