@@ -43,7 +43,7 @@ metadata {
         capability "Battery"
         capability "Health Check"
 
-        attribute "lastCheckin", "String"
+	attribute "lastCheckin", "String"
         attribute "lastWet", "String"
         attribute "lastWetDate", "Date"
         attribute "lastCheckinDate", "Date"
@@ -68,26 +68,27 @@ metadata {
                 attributeState "wet", label:"Wet", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Water_Leak.png"
             }
             tileAttribute("device.lastWet", key: "SECONDARY_CONTROL") {
-                attributeState("default", label:'Last Wet: ${currentValue}')
+                attributeState("default", label:'Last Wet: ${currentValue}',icon: "st.Health & Wellness.health9")
             }
         }
         valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
-            state "default", label:'${currentValue}%', unit:"",
-            backgroundColors:[
-                [value: 0, color: "#c0392b"],
-                [value: 25, color: "#f1c40f"],
-                [value: 50, color: "#e67e22"],
-                [value: 75, color: "#27ae60"]
-            ]
+           state "default", label:'${currentValue}%'+"\n", unit:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Battery.png",
+		backgroundColors:[
+			[value: 0, color: "#ff1800"],
+			[value: 10, color: "#fb854a"],
+			[value: 25, color: "#ceec24"],
+			[value: 50, color: "#71f044"],
+			[value: 75, color: "#33d800"]
+		]
         }
         valueTile("lastcheckin", "device.lastCheckin", decoration: "flat", inactiveLabel: false, width: 4, height: 1) {
             state "default", label:'Last Checkin:\n${currentValue}'
         }
         standardTile("resetWet", "device.resetWet", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
-            state "default", action:"resetWet", label: "Override Wet", icon:"st.alarm.water.wet"
+            state "default", action:"resetWet", label: "Override Wet", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Water_Leak2.png"
         }
         standardTile("resetDry", "device.resetDry", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
-            state "default", action:"resetDry", label: "Override Dry", icon:"st.alarm.water.dry"
+            state "default", action:"resetDry", label: "Override Dry", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Water_NoLeak2.png"
         }
         standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
 			state "default", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
