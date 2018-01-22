@@ -64,6 +64,16 @@ metadata {
    tiles(scale: 2) {
         multiAttributeTile(name:"contact", type: "generic", width: 6, height: 4){
             tileAttribute ("device.contact", key: "PRIMARY_CONTROL") {
+		attributeState "open", label:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/door-sensor-open.png", backgroundColor:"#e86d13"
+                attributeState "closed", label:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/door-sensor.png", backgroundColor:"#00a0dc"
+            }
+            tileAttribute("device.lastOpened", key: "SECONDARY_CONTROL") {
+                attributeState("default", label:'Last Opened: ${currentValue}')
+            }
+        }
+        
+        multiAttributeTile(name:"contact2", type: "generic", width: 6, height: 4){
+            tileAttribute ("device.contact", key: "PRIMARY_CONTROL") {
 		attributeState "open", label:'${name}', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/door-sensor-open.png", backgroundColor:"#e86d13"
                 attributeState "closed", label:'${name}', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/door-sensor.png", backgroundColor:"#00a0dc"
             }
@@ -71,8 +81,9 @@ metadata {
                 attributeState("default", label:'Last Opened: ${currentValue}')
             }
         }
-        valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
-            state "default", label:'${currentValue}%', unit:"",
+	   
+	valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
+            state "default", label:'${currentValue}%', unit:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Battery.png",
             backgroundColors: [
                 [value: 10, color: "#bc2323"],
                 [value: 26, color: "#f1d801"],
