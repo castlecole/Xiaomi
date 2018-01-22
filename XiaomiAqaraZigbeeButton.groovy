@@ -94,6 +94,7 @@ metadata {
             state "default", label:'${currentValue}%'+"\n", unit:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Battery.png",
 			backgroundColors:[
 				[value: 0, color: "#c0392b"],
+				[value: 10, color: "#bc2323"],
 				[value: 25, color: "#f1c40f"],
 				[value: 50, color: "#e67e22"],
 				[value: 75, color: "#44b621"]
