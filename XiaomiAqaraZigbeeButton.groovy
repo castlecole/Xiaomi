@@ -110,12 +110,16 @@ metadata {
 	    state "default", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
 
         }
-	valueTile("batteryRuntime", "device.batteryRuntime", inactiveLabel: false, decoration: "flat", width: 4, height: 2) {
-	    state "batteryRuntime", label:"Battery Changed:\n"+'${currentValue}'+"\nTap To Reset the changed Date", unit:"", action:"resetBatteryRuntime"
+	
+	valueTile("batteryblank", "", inactiveLabel: true, decoration: "flat", width: 4, height: 1) {
+	    state "batteryRuntime", label:""
+	}
+	valueTile("batteryRuntime", "device.batteryRuntime", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
+	    state "batteryRuntime", label:"Battery Changed:\n"+'${currentValue}'+"\nTap To Reset the changed Date", unit:", action:"resetBatteryRuntime"
 	}
 	    
         main (["button2"])
-        details(["button","battery","lastcheckin","lastpressed","batteryRuntime","refresh"])
+        details(["button","battery","lastcheckin","lastpressed","batteryblank","batteryRuntime","refresh"])
    }
 }
 
