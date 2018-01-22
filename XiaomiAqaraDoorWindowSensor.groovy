@@ -106,7 +106,7 @@ metadata {
 	valueTile("batteryRuntime", "device.batteryRuntime", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
 	    state "batteryRuntime", label:'Battery Changed: ${currentValue}'+"\n(Tap to Reset)", unit:"", action:"resetBatteryRuntime"
 	}
-
+	   
         main (["contact"])
         details(["contact","battery","resetClosed","resetOpen","lastcheckin","batteryRuntime","refresh"])
    }
