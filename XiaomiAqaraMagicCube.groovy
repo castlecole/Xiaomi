@@ -17,7 +17,7 @@
  */
 
 metadata {
-	definition (name: "Xiaomi Magic Cube Controller", namespace: "castlecole", author: "Artur Draga") {
+	definition (name: "Xiaomi Aqara Magic Cube", namespace: "castlecole", author: "Artur Draga") {
 		capability "Actuator"
 		capability "Button"
 		capability "Configuration"
@@ -82,13 +82,30 @@ metadata {
 		standardTile("slide", "device.button", decoration: "flat", width: 2, height: 2) { state "default", label: "slide", action: "slide", icon: "https://raw.githubusercontent.com/ClassicGOD/SmartThingsPublic/master/devicetypes/classicgod/xiaomi-magic-cube-controller.src/images/slide.png",  backgroundColor: "#ffffff" }
 		standardTile("knock", "device.button", decoration: "flat", width: 2, height: 2) { state "default", label: "knock", action: "knock", icon: "https://raw.githubusercontent.com/ClassicGOD/SmartThingsPublic/master/devicetypes/classicgod/xiaomi-magic-cube-controller.src/images/knock.png",  backgroundColor: "#ffffff" }
 		standardTile("shake", "device.button", decoration: "flat", width: 2, height: 2) { state "default", label: "shake" , action: "shake", icon: "https://raw.githubusercontent.com/ClassicGOD/SmartThingsPublic/master/devicetypes/classicgod/xiaomi-magic-cube-controller.src/images/shake.png",  backgroundColor: "#ffffff" }
-		valueTile("battery", "device.battery", decoration: "flat", width: 4, height: 2) { state "val", label: '${currentValue}% battery', backgroundColor: "#ffffff" }
+		
+		valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
+            		state "default", label:'${currentValue}%'+"\n", unit:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Battery.png", 
+            			backgroundColors: [
+					[value: 0, color: "#ff1800"],
+					[value: 10, color: "#fb854a"],
+					[value: 25, color: "#ceec24"],
+					[value: 50, color: "#71f044"],
+					[value: 75, color: "#33d800"]
+            			]
+        	}
+		
+//		valueTile("battery", "device.battery", decoration: "flat", width: 4, height: 2) { state "val", label: '${currentValue}% battery', backgroundColor: "#ffffff" }
+
+		standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
+	    		state "default", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
+        	}		
+		
 		standardTile("faceMain", "device.face", decoration: "flat", width: 2, height: 2) {
 			state "default", label:'Face: ${currentValue} ', icon: "https://raw.githubusercontent.com/castlecole/Xiaomi/master/cube-blue-arr-icon.png", backgroundColor: "#ffffff"
 		}
 	   
 	   main(["faceMain"])
-	   details(["flip90","face0","flip180","face4","face5","face1","rotateL","face3","rotateR","slide","face2","knock","battery","shake"])
+	   details(["flip90","face0","flip180","face4","face5","face1","rotateL","face3","rotateR","slide","face2","knock","battery","shake","refresh"])
 	}
 	
 	preferences {
@@ -210,6 +227,30 @@ private Map parseCustomMessage(String description) {
 	return resultMap
 }
 
+private Map getBatteryResult(rawValue) {
+    def rawVolts = rawValue / 1000
+    def minVolts = 2.7
+    def maxVolts = 3.3
+    def pct = (rawVolts - minVolts) / (maxVolts - minVolts)
+    def roundedPct = Math.min(100, Math.round(pct * 100))
+    def result = [
+        name: 'battery',
+        value: roundedPct,
+        unit: "%",
+        isStateChange:true,
+        descriptionText : "${device.displayName} raw battery is ${rawVolts}v"
+    ]
+
+    log.debug "${device.displayName}: ${result}"
+    if (state.battery != result.value)
+    {
+    	state.battery = result.value
+        resetBatteryRuntime()
+    }
+    return result
+}
+
+/*
 private getBatteryResult(rawValue) {
 	def battLevel = Math.round(rawValue * 100 / 255)
 	
@@ -219,6 +260,7 @@ private getBatteryResult(rawValue) {
 	
    	if (battLevel) { sendEvent( [ name: "battery", value: battLevel, descriptionText: "$device.displayName battery is ${battLevel}%", isStateChange: true] ) }
 }
+*/
 
 private Map getMotionResult(String value) {
 	String motionType = value[0..1]
