@@ -83,12 +83,12 @@ metadata {
 	   
 	valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
             state "default", label:'${currentValue}%'+"\n", unit:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Battery.png",
-            backgroundColors: [
-		[value: 0, color: "#c0392b"],
-                [value: 10, color: "#bc2323"],
-		[value: 25, color: "#f1c40f"],
-		[value: 50, color: "#e67e22"],
-		[value: 75, color: "#44b621"]
+            	backgroundColors: [
+			[value: 0, color: "#ff1800"],
+			[value: 10, color: "#fb854a"],
+			[value: 25, color: "#ceec24"],
+			[value: 50, color: "#71f044"],
+		[value: 75, color: "#33d800"]
            ]
         }
         valueTile("lastcheckin", "device.lastCheckin", decoration: "flat", inactiveLabel: false, width: 4, height: 1) {
@@ -104,7 +104,7 @@ metadata {
 	    state "default", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
         }
 	valueTile("batteryRuntime", "device.batteryRuntime", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
-	    state "batteryRuntime", label:'Battery Changed (tap to reset):\n ${currentValue}', unit:"", action:"resetBatteryRuntime"
+	    state "batteryRuntime", label:'Battery Changed: ${currentValue}'+"\n(tap to reset)", unit:"", action:"resetBatteryRuntime"
 	}
 
         main (["contact"])
