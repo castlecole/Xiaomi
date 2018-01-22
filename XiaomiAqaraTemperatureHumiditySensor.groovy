@@ -29,9 +29,10 @@
  */
 
 metadata {
-    definition (name: "Xiaomi Aqara Temperature Humidity Sensor", namespace: "bspranger", author: "bspranger") {
+    definition (name: "Xiaomi Aqara Temperature Humidity Sensor", namespace: "castlecole", author: "bspranger") {
         capability "Temperature Measurement"
         capability "Relative Humidity Measurement"
+	capability "Pressure Measurement"
         capability "Sensor"
         capability "Battery"
         capability "Refresh"
@@ -74,7 +75,7 @@ metadata {
     tiles(scale: 2) {
         multiAttributeTile(name:"temperature", type:"generic", width:6, height:4) {
             tileAttribute("device.temperature", key:"PRIMARY_CONTROL") {
-                attributeState("temperature", label:'${currentValue}°',
+                attributeState("temperature", label:'${currentValue}°', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/temperature.png"
                     backgroundColors:[
                         [value: 0, color: "#153591"],
                         [value: 5, color: "#1e9cbb"],
@@ -94,22 +95,23 @@ metadata {
             }
         }
         standardTile("humidity", "device.humidity", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
-            state "default", label:'${currentValue}%', icon:"st.Weather.weather12"
+            state "default", label:'${currentValue}%', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/humidity.png"
         }
         standardTile("pressure", "device.pressure", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
-            state "default", label:'${currentValue}', icon:"st.Weather.weather1"
+            state "default", label:'${currentValue}', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/pressure.png"
         }
         valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
-            state "default", label:'${currentValue}%', unit:"",
-            backgroundColors:[
-                [value: 0, color: "#c0392b"],
-                [value: 25, color: "#f1c40f"],
-                [value: 50, color: "#e67e22"],
-                [value: 75, color: "#27ae60"]
-            ]
+            state "default", label:'${currentValue}%'+"\n", unit:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Battery.png",
+            	backgroundColors: [
+			[value: 0, color: "#ff1800"],
+			[value: 10, color: "#fb854a"],
+			[value: 25, color: "#ceec24"],
+			[value: 50, color: "#71f044"],
+			[value: 75, color: "#33d800"]
+            	]
         }
         valueTile("temperature2", "device.temperature", decoration: "flat", inactiveLabel: false) {
-            state "temperature", label:'${currentValue}°', icon: "st.Weather.weather2",
+            state "temperature", label:'${currentValue}°', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/room-env-icon.png",
                 backgroundColors:[
                     [value: 0, color: "#153591"],
                     [value: 5, color: "#1e9cbb"],
@@ -130,10 +132,10 @@ metadata {
             state "default", label:'Last Checkin:\n ${currentValue}'
         }
         valueTile("batteryRuntime", "device.batteryRuntime", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
-            state "batteryRuntime", label:'Battery Changed (tap to reset):\n ${currentValue}', unit:"", action:"resetBatteryRuntime"
+            state "batteryRuntime", label:'Battery Changed: ${currentValue}'+"\n(Tap to Reset)", unit:"", action:"resetBatteryRuntime"
         }
         standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
-            state "default", action:"refresh.refresh", icon:"st.secondary.refresh"
+		state "default", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
         }
 
         main(["temperature2"])
