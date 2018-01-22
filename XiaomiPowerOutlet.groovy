@@ -40,8 +40,8 @@ metadata {
     tiles(scale: 2) {
         multiAttributeTile(name:"switch", type: "lighting", width: 6, height: 4, canChangeIcon: false){
             tileAttribute ("device.switch", key: "PRIMARY_CONTROL") { 
-                attributeState "on", label:"On", action:"switch.off", icon:"", backgroundColor:"#359148", nextState:"turningOff"
-                attributeState "off", label:"Off", action:"switch.on", icon:"", backgroundColor:"#ed0000", nextState:"turningOn"
+                attributeState "on", label:"\non", action:"switch.off", icon:"", backgroundColor:"#359148", nextState:"turningOff"
+                attributeState "off", label:"\noff", action:"switch.on", icon:"", backgroundColor:"#ed0000", nextState:"turningOn"
                 attributeState "turningOn", label:"Turning On", action:"switch.off", icon:"", backgroundColor:"#359148", nextState:"turningOff"
                 attributeState "turningOff", label:"Turning Off", action:"switch.on", icon:"", backgroundColor:"#ed0000", nextState:"turningOn"
             }
@@ -50,7 +50,7 @@ metadata {
 	    }
         }
         valueTile("temperature", "device.temperature", width: 2, height: 2) {
-			state("temperature", label:'${currentValue}°',
+			state("temperature", label:'${currentValue}°', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/temperature.png",
 				backgroundColors:[
 					[value: 31, color: "#153591"],
 					[value: 44, color: "#1e9cbb"],
@@ -62,7 +62,10 @@ metadata {
 				]
 			)
 		}
-        standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
+        standardTile("blank", "device.refresh", inactiveLabel: true, decoration: "flat", width: 2, height: 2) {
+  	    state "default", label:"", action:""
+	}
+	standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
   	    state "default", label:"", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
         }
 
@@ -76,7 +79,7 @@ metadata {
 	}
 	    
 	main (["switch2", "temperature"])
-        details(["switch", "temperature", "refresh"])
+        details(["switch", "temperature", "blank", "refresh"])
     }
 }
 
