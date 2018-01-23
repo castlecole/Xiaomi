@@ -64,8 +64,8 @@ metadata {
     tiles(scale: 2) {
         multiAttributeTile(name:"water", type: "generic", width: 6, height: 4){
             tileAttribute ("device.water", key: "PRIMARY_CONTROL") {
-                attributeState "dry", label:"Dry", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Water_NoLeak.png"
-                attributeState "wet", label:"Wet", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Water_Leak.png"
+                attributeState "dry", label:"Dry", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Water_NoLeak.png", backgroundColor:"#00a0dc"
+                attributeState "wet", label:"Wet", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Water_Leak.png", backgroundColor:"#e86d13"
             }
             tileAttribute("device.lastWet", key: "SECONDARY_CONTROL") {
                 attributeState("default", label:'Last Wet: ${currentValue}',icon: "st.Health & Wellness.health9")
