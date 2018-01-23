@@ -20,7 +20,7 @@
  *
  */
 metadata {
-	definition (name: "Xiaomi Zigbee Button", namespace: "castlecole", author: "a4refillpad") {	
+	definition (name: "Xiaomi Aqara Button", namespace: "castlecole", author: "a4refillpad") {	
     capability "Battery"
 		capability "Button"
 		capability "Holdable Button"
@@ -35,7 +35,7 @@ metadata {
 		attribute "batterylevel", "string"
 		attribute "lastCheckin", "string"
         
-    	fingerprint profileId: "0104", deviceId: "0104", inClusters: "0000, 0003", outClusters: "0000, 0004, 0003, 0006, 0008, 0005", manufacturer: "LUMI", model: "lumi.sensor_switch", deviceJoinName: "Xiaomi Button"
+    		fingerprint profileId: "0104", deviceId: "0104", inClusters: "0000, 0003", outClusters: "0000, 0004, 0003, 0006, 0008, 0005", manufacturer: "LUMI", model: "lumi.sensor_switch", deviceJoinName: "Xiaomi Button"
 
 	}
     
@@ -50,16 +50,15 @@ metadata {
     }
 
 	tiles(scale: 2) {
-
 		multiAttributeTile(name:"switch", type: "lighting", width: 6, height: 4, canChangeIcon: true) {
 			tileAttribute ("device.switch", key: "PRIMARY_CONTROL") {
-           		attributeState("on", label:' push', action: "momentary.push", backgroundColor:"#53a7c0")
-            	attributeState("off", label:' push', action: "momentary.push", backgroundColor:"#ffffff", nextState: "on")   
+           			attributeState("on", label:' push', action: "momentary.push", backgroundColor:"#e86d13")
+            			attributeState("off", label:' push', action: "momentary.push", backgroundColor:"#00a0dc", nextState: "on")   
  			}
-            tileAttribute("device.lastCheckin", key: "SECONDARY_CONTROL") {
-    			attributeState("default", label:'Last Update: ${currentValue}',icon: "st.Health & Wellness.health9")
-            }
-		}        
+			tileAttribute("device.lastCheckin", key: "SECONDARY_CONTROL") {
+    				attributeState("default", label:'Last Update: ${currentValue}',icon: "st.Health & Wellness.health9")
+            		}
+		}
        
         valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
 			state "battery", label:'${currentValue}% battery', unit:""
