@@ -45,8 +45,6 @@ metadata {
 
 	attribute "lastCheckin", "String"
         attribute "lastWet", "String"
-        attribute "lastWetDate", "Date"
-        attribute "lastCheckinDate", "Date"
         attribute "batteryRuntime", "String"
 
         fingerprint endpointId: "01", profileId: "0104", deviceId: "0402", inClusters: "0000,0003,0001", outClusters: "0019", manufacturer: "LUMI", model: "lumi.sensor_wleak.aq1", deviceJoinName: "Xiaomi Leak Sensor"
@@ -76,7 +74,7 @@ metadata {
             tileAttribute ("device.water", key: "PRIMARY_CONTROL") {
                 attributeState "dry", label:"DRY", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Water_NoLeak.png", backgroundColor:"#00a0dc"
                 attributeState "wet", label:"WET / LEAK", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Water_Leak.png", backgroundColor:"#e86d13"
-            }
+	    }
 	}
 	valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
            state "default", label:'${currentValue}%'+"\n", unit:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Battery.png",
@@ -114,9 +112,7 @@ def parse(String description) {
 
     // send event for heartbeat
     def now = new Date().format("EEE MMM dd yyyy h:mm:ss a", location.timeZone)
-    def nowDate = new Date(now).getTime()
     sendEvent(name: "lastCheckin", value: now)
-    sendEvent(name: "lastCheckinDate", value: nowDate, displayed: false)
 
     Map map = [:]
 
@@ -124,7 +120,6 @@ def parse(String description) {
         map = parseZoneStatusMessage(description)
         if (map.value == "wet") {
             sendEvent(name: "lastWet", value: now, displayed: false)
-            sendEvent(name: "lastWetDate", value: nowDate, displayed: false)
         }
     } else if (description?.startsWith('catchall:')) {
         map = parseCatchAllMessage(description)
@@ -254,10 +249,8 @@ def resetDry() {
 
 def resetWet() {
     def now = new Date().format("EEE MMM dd yyyy h:mm:ss a", location.timeZone)
-    def nowDate = new Date(now).getTime()
     sendEvent(name:"water", value:"wet")
     sendEvent(name: "lastWet", value: now)
-    sendEvent(name: "lastWetDate", value: nowDate)
 }
 
 def resetBatteryRuntime() {
