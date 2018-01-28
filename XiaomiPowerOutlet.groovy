@@ -40,10 +40,10 @@ metadata {
     tiles(scale: 2) {
         multiAttributeTile(name:"switch", type: "lighting", width: 6, height: 4, canChangeIcon: false){
             tileAttribute ("device.switch", key: "PRIMARY_CONTROL") { 
-                attributeState "on", label:"\n on", action:"switch.off", icon:"", backgroundColor:"#e86d13", nextState:"turningOff"
-                attributeState "off", label:"\n off", action:"switch.on", icon:"", backgroundColor:"#00a0dc", nextState:"turningOn"
-                attributeState "turningOn", label:"Turning On", action:"switch.off", icon:"", backgroundColor:"#e86d13", nextState:"turningOff"
-                attributeState "turningOff", label:"Turning Off", action:"switch.on", icon:"", backgroundColor:"#00a0dc", nextState:"turningOn"
+                attributeState "on", label:"", action:"switch.off", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Power_On.png", backgroundColor:"#e86d13", nextState:"turningOff"
+                attributeState "off", label:"", action:"switch.on", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Power_Off.png", backgroundColor:"#00a0dc", nextState:"turningOn"
+                attributeState "turningOn", label:'\n\n Turning On', action:"switch.off", icon:"", backgroundColor:"#e86d13", nextState:"turningOff"
+                attributeState "turningOff", label:'\n\n Turning Off', action:"switch.on", icon:"", backgroundColor:"#00a0dc", nextState:"turningOn"
             }
             tileAttribute("device.lastCheckin", key: "SECONDARY_CONTROL") {
     		attributeState("default", label:'Last Update: ${currentValue}',icon: "st.Health & Wellness.health9")
