@@ -61,8 +61,8 @@ metadata {
     tiles(scale: 2) {
         multiAttributeTile(name:"motion", type: "generic", width: 6, height: 4) {
             tileAttribute ("device.motion", key: "PRIMARY_CONTROL") {
-		attributestate "active",label:'', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/motion-detector-icon.png", backgroundColor:"#e86d13"
-		attributestate "inactive",label:'', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/motion-detector-icon2.png", backgroundColor:"#00a0dc"
+		attributestate("active",label:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/motion-detector-icon.png", backgroundColor:"#e86d13")
+		attributestate("inactive",label:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/motion-detector-icon2.png", backgroundColor:"#00a0dc")
             }
             tileAttribute("device.lastMotion", key: "SECONDARY_CONTROL") {
                 attributeState("default", label:'Last Motion: ${currentValue}', icon: "st.secondary.activity")
