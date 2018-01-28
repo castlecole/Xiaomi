@@ -72,8 +72,8 @@ metadata {
             }
         }
 
-	valueTile("water2", "device.battery", decoration: "flat", inactiveLabel: false) {
-                state "dry", label:"DRY", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Water_NoLeak.png", backgroundColor:"#00a0dc"
+	valueTile("water2", "device.water", decoration: "flat", inactiveLabel: false) {
+		state "dry", label:"DRY", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Water_NoLeak.png", backgroundColor:"#00a0dc"
                 state "wet", label:"WET/LEAK", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Water_Leak.png", backgroundColor:"#e86d13"
     	}
 	valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
