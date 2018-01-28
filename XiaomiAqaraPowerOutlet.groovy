@@ -16,7 +16,7 @@
  */
 
 metadata {
-    definition (name: "Xiaomi Power Outlet", namespace: "castlecole", author: "a4refillpad") {
+    definition (name: "Xiaomi Aqara Power Outlet", namespace: "castlecole", author: "a4refillpad") {
         capability "Actuator"
         capability "Configuration"
         capability "Refresh"
