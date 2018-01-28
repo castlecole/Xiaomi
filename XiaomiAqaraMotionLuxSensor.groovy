@@ -61,8 +61,8 @@ metadata {
     tiles(scale: 2) {
         multiAttributeTile(name:"motion", type: "generic", width: 6, height: 4) {
             tileAttribute ("device.motion", key: "PRIMARY_CONTROL") {
-		attributestate("active",label:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/motion-detector-icon.png", backgroundColor:"#e86d13")
-		attributestate("inactive",label:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/motion-detector-icon2.png", backgroundColor:"#00a0dc")
+		attributeState("active", label:"", icon: "https://raw.githubusercontent.com/castlecole/Xiaomi/master/motion-detector-icon.png", backgroundColor:"#e86d13")
+		attributeState("inactive", label:"", icon: "https://raw.githubusercontent.com/castlecole/Xiaomi/master/motion-detector-icon2.png", backgroundColor:"#00a0dc")
             }
             tileAttribute("device.lastMotion", key: "SECONDARY_CONTROL") {
                 attributeState("default", label:'Last Motion: ${currentValue}', icon: "st.secondary.activity")
@@ -70,8 +70,8 @@ metadata {
 	}
 
 	standardTile("motion2","device.motion", width: 2, height: 2) {
-		state "active",label:'Motion', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/motion-detector-icon.png", backgroundColor:"#e86d13"
-		state "inactive",label:'No motion', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/motion-detector-icon2.png", backgroundColor:"#00a0dc"
+		state "active", label:'Motion', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/motion-detector-icon.png", backgroundColor:"#e86d13"
+		state "inactive", label:'No motion', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/motion-detector-icon2.png", backgroundColor:"#00a0dc"
 	}
    
 	valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
