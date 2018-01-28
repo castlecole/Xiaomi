@@ -57,7 +57,6 @@ metadata {
         
         fingerprint endpointId: "01", profileId: "0104", deviceId: "5F01", inClusters: "0000,FFFF,0006", outClusters: "0000,0004,FFFF", manufacturer: "LUMI", model: "lumi.sensor_switch.aq2", deviceJoinName: "Xiaomi Aqara Button"
     }
-    
     simulator {
         status "button 1 pressed": "on/off: 0"
       	status "button 1 released": "on/off: 1"
@@ -72,8 +71,8 @@ metadata {
 
         multiAttributeTile(name:"button", type: "lighting", width: 6, height: 4, canChangeIcon: false) {
 		tileAttribute ("device.button", key: "PRIMARY_CONTROL") {
-                	attributeState("pushed", label:'${name}', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/push-button-green-icon.png", backgroundColor:"#359148")
-                	attributeState("released", label:'${name}', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/push-button-red-icon.png", backgroundColor:"#00a0dc")
+                	attributeState("pushed", label:'', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/push-button-green-icon.png", backgroundColor:"#359148")
+                	attributeState("released", label:'', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/push-button-red-icon.png", backgroundColor:"#00a0dc")
              	}
             	tileAttribute("device.lastCheckin", key: "SECONDARY_CONTROL") {
                 	attributeState("default", label:'Last Update: ${currentValue}',icon: "st.Health & Wellness.health9")
