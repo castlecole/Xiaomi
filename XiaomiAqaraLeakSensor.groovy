@@ -64,14 +64,19 @@ metadata {
     tiles(scale: 2) {
         multiAttributeTile(name:"water", type: "generic", width: 6, height: 4){
             tileAttribute ("device.water", key: "PRIMARY_CONTROL") {
-                attributeState "dry", label:"Dry", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Water_NoLeak.png", backgroundColor:"#00a0dc"
-                attributeState "wet", label:"Wet", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Water_Leak.png", backgroundColor:"#e86d13"
+                attributeState "dry", label:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Water_NoLeak.png", backgroundColor:"#00a0dc"
+                attributeState "wet", label:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Water_Leak.png", backgroundColor:"#e86d13"
             }
             tileAttribute("device.lastWet", key: "SECONDARY_CONTROL") {
                 attributeState("default", label:'Last Wet: ${currentValue}',icon: "st.Health & Wellness.health9")
             }
         }
-        valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
+
+	valueTile("water2", "device.battery", decoration: "flat", inactiveLabel: false) {
+                state "dry", label:"DRY", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Water_NoLeak.png", backgroundColor:"#00a0dc"
+                state "wet", label:"WET/LEAK", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Water_Leak.png", backgroundColor:"#e86d13"
+    	}
+	valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
            state "default", label:'${currentValue}%'+"\n", unit:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Battery.png",
 		backgroundColors:[
 			[value: 0, color: "#ff1800"],
@@ -97,7 +102,7 @@ metadata {
             state "batteryRuntime", label:'Battery Changed (tap to reset):\n ${currentValue}', unit:"", action:"resetBatteryRuntime"
         }
 
-        main (["water"])
+        main (["water2"])
         details(["water","battery","resetDry","resetWet","lastcheckin","batteryRuntime","refresh"])
     }
 }
