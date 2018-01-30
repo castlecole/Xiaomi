@@ -20,7 +20,8 @@
 metadata {
 	
     definition (name: "BroadLink LAN Switch", namespace: "castlecole", author: "BeckyR") {
-	      capability "Switch"
+	
+	capability "Switch"
         capability "Actuator"
         capability "Configuration"
         capability "Refresh"
@@ -99,12 +100,24 @@ private put(toggle) {
     def url1="192.168.1.21:7474"
     def userpassascii="root:Universe-02"
     def userpass = "Basic " + userpassascii.encodeAsBase64().toString()
+    
+    switch (toggle) {
+    	case "on":
+	    def toReplace = device.deviceNetworkId
+	    break
+        case "off":
+	    def toReplace = device.deviceNetworkId + 1
+            break
+        default:
+            break
+    }
+
     def toReplace = device.deviceNetworkId
-	  def replaced = toReplace.replaceAll(' ', '%20')
- 	  def hubaction = new physicalgraph.device.HubAction(
-				       method: "GET",
-               path: "/send?deviceMac=$replaced",
-               headers: [HOST: "${url1}", AUTHORIZATION: "${userpass}"],
+    def replaced = toReplace.replaceAll(' ', '%20')
+    def hubaction = new physicalgraph.device.HubAction(
+	method: "GET",
+        path: "/send?deviceMac=$replaced",
+        headers: [HOST: "${url1}", AUTHORIZATION: "${userpass}"],
     )
     return hubaction
 }
