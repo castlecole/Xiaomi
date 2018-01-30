@@ -1,5 +1,5 @@
 /**
- *  Broadlink Switch
+ *  Broadlink Light Switch
  *
  *  Copyright 2016 BeckyR
  *
@@ -19,7 +19,7 @@
 // 09/01/2016 - itsamti - Added new switch definition below 
 metadata {
 	
-    definition (name: "BroadLink LAN Switch", namespace: "castlecole", author: "BeckyR") {
+    definition (name: "BroadLink LAN Light Switch", namespace: "castlecole", author: "BeckyR") {
 	capability "Switch"
         capability "Actuator"
         capability "Configuration"
@@ -51,9 +51,9 @@ metadata {
         }
         standardTile("blank", "device.refresh", inactiveLabel: true, decoration: "flat", width: 4, height: 2) {
             state "default", label:"", action:""
-	      }
-	      standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
-  	        state "default", label:"", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
+	}
+	standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
+  	    state "default", label:"", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
         }
 
         multiAttributeTile(name:"switch2", type: "lighting", width: 6, height: 4, canChangeIcon: false){
