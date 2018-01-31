@@ -93,10 +93,10 @@ metadata {
             state "default", label:'Last Checkin:\n${currentValue}'
         }
         standardTile("resetClosed", "device.resetClosed", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
-            state "default", action:"resetClosed", label: "Override Close", icon:"st.contact.contact.closed"
+		state "default", action:"resetClosed", label: "Override Close", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/door-sensor2.png"
         }
         standardTile("resetOpen", "device.resetOpen", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
-            state "default", action:"resetOpen", label: "Override Open", icon:"st.contact.contact.open"
+		state "default", action:"resetOpen", label: "Override Open", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/door-sensor-open2.png"
         }
         standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
 	    state "default", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
