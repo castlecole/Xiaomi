@@ -106,8 +106,8 @@ private put(toggle) {
 	    def toReplace = device.deviceNetworkId
 	    break
         case "off":
-	    def toReplace = device.deviceNetworkId
-	    toReplace = String.valueOf(Integer.parseInt(toReplace) + 1)
+	    def toReplace = device.deviceNetworkId.split('=')
+	    toReplace = toReplace[0] + '=' + String.valueOf(Integer.parseInt(toReplace[1]) + 1)
 	    break
         default:
             break
