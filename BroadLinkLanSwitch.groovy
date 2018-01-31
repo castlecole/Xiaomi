@@ -60,9 +60,9 @@ metadata {
         multiAttributeTile(name:"switch2", type: "lighting", width: 6, height: 4, canChangeIcon: false){
             tileAttribute ("device.switch", key: "PRIMARY_CONTROL") { 
                 attributeState "on", label:'${name}', action:"switch.off", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Power_Off.png", backgroundColor:"#359148", nextState:"turningOff"
-                attributeState "off", label:'${name}', action:"switch.on", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Power_Off.png", backgroundColor:"#00a0dc", nextState:"turningOn"
-                attributeState "turningOn", label:'${name}', action:"switch.off", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/light_bulb_on.png", backgroundColor:"#359148", nextState:"turningOff"
-                attributeState "turningOff", label:'${name}', action:"switch.on", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/light_bulb_off.png", backgroundColor:"#00a0dc", nextState:"turningOn"
+                attributeState "off", label:'${name}', action:"switch.on", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Power_On.png", backgroundColor:"#00a0dc", nextState:"turningOn"
+                attributeState "turningOn", label:'${name}', action:"switch.off", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Power_On.png", backgroundColor:"#359148", nextState:"turningOff"
+                attributeState "turningOff", label:'${name}', action:"switch.on", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Power_Off.png", backgroundColor:"#00a0dc", nextState:"turningOn"
             }
 	}
         
@@ -106,7 +106,12 @@ private put(toggle) {
 	    def toReplace = device.deviceNetworkId
 	    break
         case "off":
-	    def toReplace = device.deviceNetworkId + 1
+	    def toReplace = device.deviceNetworkId
+	    def tt1=""
+	    tt1 = toReplace.reverse().substring(1)
+	    toReplace = toReplace.reverse().drop(1).reverse()
+	    tt1 = tt1.isInteger() ? Integer.toString((tt1 as int)+1) : null
+	    toReplace = toReplace + tt1
             break
         default:
             break
