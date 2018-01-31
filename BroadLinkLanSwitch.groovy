@@ -110,7 +110,7 @@ private put(toggle) {
 	    def tt1 = ""
 	    det tt2 = 0
 	    tt1 = toReplace.reverse().substring(1)
-	    toReplace = toReplace.reverse().drop(1).reverse()
+	    toReplace = toReplace.drop(1).reverse()
 	    tt2 = tt1.isInteger() ? (tt1 as int) : null
 	    tt1 = Integer.toString(tt2 + 1)
 	    toReplace = trim(toReplace + tt1)
