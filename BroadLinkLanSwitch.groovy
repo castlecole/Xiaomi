@@ -101,13 +101,15 @@ private put(toggle) {
     def userpassascii="root:Universe-02"
     def userpass = "Basic " + userpassascii.encodeAsBase64().toString()
     
+    def toReplace = device.deviceNetworkId
+
     switch (toggle) {
     	case "on":
-	    def toReplace = device.deviceNetworkId
 	    break
         case "off":
-	    def toReplace = device.deviceNetworkId.split('=')
-	    toReplace = toReplace[0] + '=' + String.valueOf(Integer.parseInt(toReplace[1]) + 1)
+	    def trouble = device.deviceNetworkId.split('=')
+	    toReplace = trouble[0] + '=' + String.valueOf(Integer.parseInt(trouble[1]) + 1)
+    	    log.debug "Device = $(device.deviceNetworkId)    Mac = $trouble[0]    Id = $trouble[1]"
 	    break
         default:
             break
