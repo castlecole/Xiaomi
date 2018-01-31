@@ -107,12 +107,14 @@ private put(toggle) {
 	    break
         case "off":
 	    def toReplace = device.deviceNetworkId
-	    def tt1=""
+	    def tt1 = ""
+	    det tt2 = 0
 	    tt1 = toReplace.reverse().substring(1)
 	    toReplace = toReplace.reverse().drop(1).reverse()
-	    tt1.isInteger() ? (tt1 = Integer.toString((tt1 as int)+1)) : null
-	    toReplace = toReplace + tt1
-            break
+	    tt2 = tt1.isInteger() ? (tt1 as int) : null
+	    tt1 = Integer.toString(tt2 + 1)
+	    toReplace = trim(toReplace + tt1)
+	    break
         default:
             break
     }
