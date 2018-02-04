@@ -29,7 +29,16 @@ metadata {
 	command "offPhysical"
     }
 
-    // simulator metadata
+    preferences {
+    	input("server", "text", title: "Server", description: "Your BroadLink RM Bridge HTTP Server IP")
+    	input("port", "text", title: "Port", description: "Your BroadLink RM Bridge HTTP Server Port")
+    	input("userId", "text", title: "User Id", description: "Your BroadLink RM Bridge User Id")
+    	input("userPass", "text", title: "Password", description: "Your BroadLink RM Bridge Password")
+    	input("macAddress", "text", title: "Mac Address [aa:bb:cc:dd:ee:ff]", description: "Mac Address for the device (e.g. 34:ea:34:e4:84:7e)")
+	input("deviceIdOn", "text", title: "Device Code [xxx]", description: "Code ID for the ON server device command (i.e. switch ON the device)")
+	input("deviceIdOff", "text", title: "Device Code [xxx]", description: "Code ID for the OFF server device command (i.e. switch OFF the device)")
+    }
+
     simulator {
         // status messages
         status "on": "on/off: 1"
@@ -76,22 +85,22 @@ def parse(String description) {
 }
 
 def on() {
-	  sendEvent(name: "switch", value: "on")
+	  sendEvent(name: "light", value: "on")
 	  put('on')
 }
 
 def off() {
-	  sendEvent(name: "switch", value: "off")
+	  sendEvent(name: "light", value: "off")
 	  put('off')
 }
 
 def onPhysical() {
-	  sendEvent(name: "switch", value: "on", type: "physical")
+	  sendEvent(name: "light", value: "on", type: "physical")
 	  put('on')
 }
 
 def offPhysical() {
-	  sendEvent(name: "switch", value: "off", type: "physical")
+	  sendEvent(name: "light", value: "off", type: "physical")
 	  put('off')
 }
 
@@ -100,11 +109,54 @@ private put(toggle) {
     def userpassascii="root:Universe-02"
     def userpass = "Basic " + userpassascii.encodeAsBase64().toString()
     def toReplace = device.deviceNetworkId
-	  def replaced = toReplace.replaceAll(' ', '%20')
- 	  def hubaction = new physicalgraph.device.HubAction(
-				       method: "GET",
+    def replaced = toReplace.replaceAll(' ', '%20')
+    def hubaction = new physicalgraph.device.HubAction(method: "GET",
                path: "/send?deviceMac=$replaced",
                headers: [HOST: "${url1}", AUTHORIZATION: "${userpass}"],
     )
     return hubaction
+
+
+	
+	
+private put(toggle) {
+    def url1 = "${settings.server}:${settings.port}"
+    def userpassascii="${userId.trim()}:${userPass.trim()}"
+    def userpass = "Basic " + userpassascii.encodeAsBase64().toString()
+
+    if ( toggle == "on" )
+    {
+        def ad = "${settings.macAddress.strip(":")}&codeId=$(settings.deviceOn)"
+	    def uri = "/send?deviceMac=${ip}"
+    	def turnOn = new physicalgraph.device.HubAction("""GET /lights/label:${encodedName}/on?_method=put HTTP/1.1\r\nHOST: $ip\r\n\r\n""", physicalgraph.device.Protocol.LAN, "${deviceNetworkId}")
+    }
+    else if ( bulbRequest == "off" )
+    {
+    	def uri = "/lights/label:${name}/off?_method=put"
+    	def turnOff = new physicalgraph.device.HubAction("""GET /lights/label:${encodedName}/off?_method=put HTTP/1.1\r\nHOST: $ip\r\n\r\n""", physicalgraph.device.Protocol.LAN, "${deviceNetworkId}")
+    }
+
+	
+
+
+	
+sendHubCommand(new physicalgraph.device.HubAction("""GET /xml/device_description.xml HTTP/1.1\r\nHOST: $ip\r\n\r\n""", physicalgraph.device.Protocol.LAN, myMAC, [callback: calledBackHandler]))
+
+...
+
+// the below calledBackHandler() is triggered when the device responds to the sendHubCommand() with "device_description.xml" resource
+
+void calledBackHandler(physicalgraph.device.HubResponse hubResponse) {
+    log.debug "Entered calledBackHandler()..."
+    def body = hubResponse.xml
+    def devices = getDevices()
+    def device = devices.find { it?.key?.contains(body?.device?.UDN?.text()) }
+    if (device) {
+        device.value << [name: body?.device?.roomName?.text(), model: body?.device?.modelName?.text(), serialNumber: body?.device?.serialNum?.text(), verified: true]
+    }
+    log.debug "device in calledBackHandler() is: ${device}"
+    log.debug "body in calledBackHandler() is: ${body}"
+}
+	
+
 }
