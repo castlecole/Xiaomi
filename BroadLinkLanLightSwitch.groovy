@@ -71,7 +71,7 @@ metadata {
 	}
 	    
 	main(["switch2"])
-    details(["switch", "blank", "refresh"])
+    	details(["switch", "blank", "refresh"])
     
     }
 }
@@ -128,35 +128,23 @@ private put(toggle) {
     {
         def ad = "${settings.macAddress.replace(':','')}&codeId=${settings.deviceIdOn.trim()}"
         uri = "/send?deviceMac=$ad"
-
-		log.debug "URL1 is: ${url1}"
-        log.debug "URI is : ${uri}"
-        log.debug "User is : ${userpassascii}"
-
-        def hubaction = new physicalgraph.device.HubAction(method: "GET",
-                   path: "$uri",
-                   headers: [HOST: "$url1", AUTHORIZATION: "$userpass"],
-        )
-
-        return hubaction
     }
     else if ( toggle == "off" )
     {
         def ad = "${settings.macAddress.replace(':','')}&codeId=${settings.deviceIdOff.trim()}"
         uri = "/send?deviceMac=$ad"
-
-		log.debug "URL1 is: ${url1}"
-        log.debug "URI is : ${uri}"
-        log.debug "User is : ${userpassascii}"
-
-        def hubaction = new physicalgraph.device.HubAction(method: "GET",
-                   path: "$uri",
-                   headers: [HOST: "$url1", AUTHORIZATION: "$userpass"],
-        )
-
-        return hubaction
     }
 
+    log.debug "URL1 is: ${url1}"
+    log.debug "URI is : ${uri}"
+    log.debug "User is : ${userpassascii}"
+
+    def hubaction = new physicalgraph.device.HubAction(method: "GET",
+	path: "$uri",
+	headers: [HOST: "$url1", AUTHORIZATION: "$userpass"],
+    )
+
+    return hubaction
 	
 	
 //sendHubCommand(new physicalgraph.device.HubAction("""GET /xml/device_description.xml HTTP/1.1\r\nHOST: $ip\r\n\r\n""", physicalgraph.device.Protocol.LAN, myMAC, [callback: calledBackHandler]))
