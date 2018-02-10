@@ -52,10 +52,8 @@ metadata {
     tiles(scale: 2) {
         multiAttributeTile(name:"switch", type: "lighting", width: 6, height: 4, canChangeIcon: false){
             tileAttribute ("device.switch", key: "PRIMARY_CONTROL") { 
-                attributeState "on", label:"", action:"switch.off", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/light_bulb_on.png", backgroundColor:"#359148", nextState:"turningOff"
-                attributeState "off", label:"", action:"switch.on", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/light_bulb_off.png", backgroundColor:"#00a0dc", nextState:"turningOn"
-                attributeState "turningOn", label:'\n\n Turning On', action:"switch.off", icon:"", backgroundColor:"#359148", nextState:"turningOff"
-                attributeState "turningOff", label:'\n\n Turning Off', action:"switch.on", icon:"", backgroundColor:"#00a0dc", nextState:"turningOn"
+                attributeState "on", label:'${name}', action:"switch.off", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/light_bulb_on.png", backgroundColor:"#359148", nextState:"off"
+                attributeState "off", label:'${name}', action:"switch.on", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/light_bulb_off.png", backgroundColor:"#00a0dc", nextState:"on"
             }
         }
         standardTile("blank", "device.refresh", inactiveLabel: true, decoration: "flat", width: 4, height: 2) {
@@ -67,15 +65,14 @@ metadata {
 
         multiAttributeTile(name:"switch2", type: "lighting", width: 6, height: 4, canChangeIcon: false){
             tileAttribute ("device.switch", key: "PRIMARY_CONTROL") { 
-                attributeState "on", label:'${name}', action:"switch.off", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/light_bulb_on.png", backgroundColor:"#359148", nextState:"turningOff"
-                attributeState "off", label:'${name}', action:"switch.on", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/light_bulb_off.png", backgroundColor:"#00a0dc", nextState:"turningOn"
-                attributeState "turningOn", label:'${name}', action:"switch.off", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/light_bulb_on.png", backgroundColor:"#359148", nextState:"turningOff"
-                attributeState "turningOff", label:'${name}', action:"switch.on", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/light_bulb_off.png", backgroundColor:"#00a0dc", nextState:"turningOn"
+                attributeState "on", label:'${name}', action:"switch.off", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/light_bulb_on.png", backgroundColor:"#359148", nextState:"off"
+                attributeState "off", label:'${name}', action:"switch.on", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/light_bulb_off.png", backgroundColor:"#00a0dc", nextState:"on"
             }
 	}
 	    
 	main(["switch2"])
-        details(["switch", "blank", "refresh"])
+    details(["switch", "blank", "refresh"])
+    
     }
 }
 
@@ -123,29 +120,46 @@ private put(toggle) {
     def url1 = "${settings.server}:${settings.port}"
     def userpassascii="${userId.trim()}:${userPass.trim()}"
     def userpass = "Basic " + userpassascii.encodeAsBase64().toString()
+    def uri = ""
+
+    log.debug "Toggle is: ${toggle}"
 
     if ( toggle == "on" )
     {
-	def ad = "${settings.macAddress.replace(':','')}&codeId=${settings.deviceIdOn.trim()}"
-        def uri = "/send?deviceMac=$ad"
+        def ad = "${settings.macAddress.replace(':','')}&codeId=${settings.deviceIdOn.trim()}"
+        uri = "/send?deviceMac=$ad"
+
+		log.debug "URL1 is: ${url1}"
+        log.debug "URI is : ${uri}"
+        log.debug "User is : ${userpassascii}"
+
+        def hubaction = new physicalgraph.device.HubAction(method: "GET",
+                   path: "$uri",
+                   headers: [HOST: "$url1", AUTHORIZATION: "$userpass"],
+        )
+
+        return hubaction
     }
-    else if ( bulbRequest == "off" )
+    else if ( toggle == "off" )
     {
-	def ad = "${settings.macAddress.replace(':','')}&codeId=${settings.deviceIdOff.trim()}"
-        def uri = "/send?deviceMac=$ad"
+        def ad = "${settings.macAddress.replace(':','')}&codeId=${settings.deviceIdOff.trim()}"
+        uri = "/send?deviceMac=$ad"
+
+		log.debug "URL1 is: ${url1}"
+        log.debug "URI is : ${uri}"
+        log.debug "User is : ${userpassascii}"
+
+        def hubaction = new physicalgraph.device.HubAction(method: "GET",
+                   path: "$uri",
+                   headers: [HOST: "$url1", AUTHORIZATION: "$userpass"],
+        )
+
+        return hubaction
     }
 
-    def hubaction = new physicalgraph.device.HubAction(method: "GET",
-	path: "$uri",
-        headers: [HOST: "${url1}", AUTHORIZATION: "${userpass}"],
-    )
-
-    return hubaction
 	
 	
 //sendHubCommand(new physicalgraph.device.HubAction("""GET /xml/device_description.xml HTTP/1.1\r\nHOST: $ip\r\n\r\n""", physicalgraph.device.Protocol.LAN, myMAC, [callback: calledBackHandler]))
-
-...
 
 // the below calledBackHandler() is triggered when the device responds to the sendHubCommand() with "device_description.xml" resource
 /*
