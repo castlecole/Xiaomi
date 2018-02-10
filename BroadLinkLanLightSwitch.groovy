@@ -131,7 +131,7 @@ private put(toggle) {
 
     def hubaction = new physicalgraph.device.HubAction(method: "GET",
 	path: "$uri",
-	headers: [HOST: "$url1", AUTHORIZATION: "$userpass"],
+	headers: [HOST: "$url1", AUTHORIZATION: "$userpass"]
     )
 
     return hubaction
