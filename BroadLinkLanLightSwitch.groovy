@@ -126,18 +126,18 @@ private put(toggle) {
 
     if ( toggle == "on" )
     {
-        def ad = "${settings.macAddress.strip(":")}&codeId=$(settings.deviceIdOn)"
-        def uri = "/send?deviceMac=${ad}"
+	def ad = "${settings.macAddress.replace(':','')}&codeId=${settings.deviceIdOn.trim()}"
+        def uri = "/send?deviceMac=$ad"
     }
     else if ( bulbRequest == "off" )
     {
-        def ad = "${settings.macAddress.strip(":")}&codeId=$(settings.deviceIdOff)"
-        def uri = "/send?deviceMac=${ad}"
+	def ad = "${settings.macAddress.replace(':','')}&codeId=${settings.deviceIdOff.trim()}"
+        def uri = "/send?deviceMac=$ad"
     }
 
     def hubaction = new physicalgraph.device.HubAction(method: "GET",
-               path: uri,
-               headers: [HOST: "${url1}", AUTHORIZATION: "${userpass}"],
+	path: "$uri",
+        headers: [HOST: "${url1}", AUTHORIZATION: "${userpass}"],
     )
 
     return hubaction
