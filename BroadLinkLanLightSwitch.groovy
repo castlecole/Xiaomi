@@ -54,8 +54,8 @@ metadata {
             tileAttribute ("device.switch", key: "PRIMARY_CONTROL") { 
                 attributeState "on", label:"", action:"switch.off", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/light_bulb_on.png", backgroundColor:"#359148", nextState:"turningOff"
                 attributeState "off", label:"", action:"switch.on", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/light_bulb_off.png", backgroundColor:"#00a0dc", nextState:"turningOn"
-                attributeState "turningOn", label:'\n Turning On', action:"switch.off", icon:"", backgroundColor:"#359148", nextState: "turningOff"
-                attributeState "turningOff", label:'\n Turning Off', action:"switch.on", icon:"", backgroundColor:"#00a0dc", nextState: "turningOn"
+                attributeState "turningOn", label:'Turning \n On', action:"switch.off", icon:"", backgroundColor:"#359148", nextState: "turningOff"
+                attributeState "turningOff", label:'Turning \n Off', action:"switch.on", icon:"", backgroundColor:"#00a0dc", nextState: "turningOn"
             }
         }
         standardTile("blank", "device.refresh", inactiveLabel: true, decoration: "flat", width: 4, height: 2) {
