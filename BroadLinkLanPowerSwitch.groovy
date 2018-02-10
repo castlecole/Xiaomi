@@ -30,6 +30,16 @@ metadata {
         command "offPhysical"
     }
 
+    preferences {
+    	input("server", "text", title: "Server", description: "Your BroadLink RM Bridge HTTP Server IP")
+    	input("port", "text", title: "Port", description: "Your BroadLink RM Bridge HTTP Server Port")
+    	input("userId", "text", title: "User Id", description: "Your BroadLink RM Bridge User Id")
+    	input("userPass", "text", title: "Password", description: "Your BroadLink RM Bridge Password")
+    	input("macAddress", "text", title: "Mac Address [aa:bb:cc:dd:ee:ff]", description: "Mac Address for the device (e.g. 34:ea:34:e4:84:7e)")
+	input("deviceIdOn", "text", title: "Device Code [xxx]", description: "Code ID for the ON server device command (i.e. switch ON the device)")
+	input("deviceIdOff", "text", title: "Device Code [xxx]", description: "Code ID for the OFF server device command (i.e. switch OFF the device)")
+    }
+
     // simulator metadata
     simulator {
         // status messages
@@ -96,31 +106,35 @@ def offPhysical() {
 	  put('off')
 }
 
-private put(toggle) {
-    def url1="192.168.1.21:7474"
-    def userpassascii="root:Universe-02"
-    def userpass = "Basic " + userpassascii.encodeAsBase64().toString()
-    
-    def toReplace = device.deviceNetworkId
 
-    switch (toggle) {
-    	case "on":
-	    break
-        case "off":
-	    def trouble = device.deviceNetworkId.split('=')
-	    toReplace = trouble[0] + '=' + String.valueOf(Integer.parseInt(trouble[1]) + 1)
-    	    log.debug "Device = $(device.deviceNetworkId)    Mac = $trouble[0]    Id = $trouble[1]"
-	    break
-        default:
-            break
+private put(toggle) {
+    def url1 = "${settings.server}:${settings.port}"
+    def userpassascii="${userId.trim()}:${userPass.trim()}"
+    def userpass = "Basic " + userpassascii.encodeAsBase64().toString()
+    def uri = ""
+
+    log.debug "Toggle is: ${toggle}"
+
+    if ( toggle == "on" )
+    {
+        def ad = "${settings.macAddress.replace(':','')}&codeId=${settings.deviceIdOn.trim()}"
+        uri = "/send?deviceMac=$ad"
+    }
+    else if ( toggle == "off" )
+    {
+        def ad = "${settings.macAddress.replace(':','')}&codeId=${settings.deviceIdOff.trim()}"
+        uri = "/send?deviceMac=$ad"
     }
 
-    def toReplace = device.deviceNetworkId
-    def replaced = toReplace.replaceAll(' ', '%20')
-    def hubaction = new physicalgraph.device.HubAction(
-	method: "GET",
-        path: "/send?deviceMac=$replaced",
-        headers: [HOST: "${url1}", AUTHORIZATION: "${userpass}"],
+    log.debug "URL1 is: ${url1}"
+    log.debug "URI is : ${uri}"
+    log.debug "User is : ${userpassascii}"
+
+    def hubaction = new physicalgraph.device.HubAction(method: "GET",
+	path: "$uri",
+	headers: [HOST: "$url1", AUTHORIZATION: "$userpass"]
     )
+
     return hubaction
+
 }
