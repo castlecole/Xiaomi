@@ -19,7 +19,7 @@
 // 09/01/2016 - itsamti - Added new switch definition below 
 metadata {
 	
-    definition (name: "BroadLink LAN Switch", namespace: "castlecole", author: "BeckyR") {
+    definition (name: "BroadLink LAN Power Switch", namespace: "castlecole", author: "BeckyR") {
 	
 	capability "Switch"
         capability "Actuator"
