@@ -104,6 +104,7 @@ def offPhysical() {
 	  put('off')
 }
 
+/*
 private put(toggle) {
     def url1="192.168.1.21:7474"
     def userpassascii="root:Universe-02"
@@ -115,9 +116,8 @@ private put(toggle) {
                headers: [HOST: "${url1}", AUTHORIZATION: "${userpass}"],
     )
     return hubaction
+*/
 
-
-	
 	
 private put(toggle) {
     def url1 = "${settings.server}:${settings.port}"
@@ -126,26 +126,29 @@ private put(toggle) {
 
     if ( toggle == "on" )
     {
-        def ad = "${settings.macAddress.strip(":")}&codeId=$(settings.deviceOn)"
-	    def uri = "/send?deviceMac=${ip}"
-    	def turnOn = new physicalgraph.device.HubAction("""GET /lights/label:${encodedName}/on?_method=put HTTP/1.1\r\nHOST: $ip\r\n\r\n""", physicalgraph.device.Protocol.LAN, "${deviceNetworkId}")
+        def ad = "${settings.macAddress.strip(":")}&codeId=$(settings.deviceIdOn)"
+        def uri = "/send?deviceMac=${ad}"
     }
     else if ( bulbRequest == "off" )
     {
-    	def uri = "/lights/label:${name}/off?_method=put"
-    	def turnOff = new physicalgraph.device.HubAction("""GET /lights/label:${encodedName}/off?_method=put HTTP/1.1\r\nHOST: $ip\r\n\r\n""", physicalgraph.device.Protocol.LAN, "${deviceNetworkId}")
+        def ad = "${settings.macAddress.strip(":")}&codeId=$(settings.deviceIdOff)"
+        def uri = "/send?deviceMac=${ad}"
     }
 
-	
+    def hubaction = new physicalgraph.device.HubAction(method: "GET",
+               path: uri,
+               headers: [HOST: "${url1}", AUTHORIZATION: "${userpass}"],
+    )
 
-
+    return hubaction
 	
-sendHubCommand(new physicalgraph.device.HubAction("""GET /xml/device_description.xml HTTP/1.1\r\nHOST: $ip\r\n\r\n""", physicalgraph.device.Protocol.LAN, myMAC, [callback: calledBackHandler]))
+	
+//sendHubCommand(new physicalgraph.device.HubAction("""GET /xml/device_description.xml HTTP/1.1\r\nHOST: $ip\r\n\r\n""", physicalgraph.device.Protocol.LAN, myMAC, [callback: calledBackHandler]))
 
 ...
 
 // the below calledBackHandler() is triggered when the device responds to the sendHubCommand() with "device_description.xml" resource
-
+/*
 void calledBackHandler(physicalgraph.device.HubResponse hubResponse) {
     log.debug "Entered calledBackHandler()..."
     def body = hubResponse.xml
@@ -157,6 +160,6 @@ void calledBackHandler(physicalgraph.device.HubResponse hubResponse) {
     log.debug "device in calledBackHandler() is: ${device}"
     log.debug "body in calledBackHandler() is: ${body}"
 }
-	
+*/	
 
 }
