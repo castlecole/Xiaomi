@@ -52,8 +52,10 @@ metadata {
     tiles(scale: 2) {
         multiAttributeTile(name:"switch", type: "lighting", width: 6, height: 4, canChangeIcon: false){
             tileAttribute ("device.switch", key: "PRIMARY_CONTROL") { 
-                attributeState "on", label:'${name}', action:"switch.off", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/light_bulb_on.png", backgroundColor:"#359148", nextState:"off"
-                attributeState "off", label:'${name}', action:"switch.on", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/light_bulb_off.png", backgroundColor:"#00a0dc", nextState:"on"
+                attributeState "on", label:'${name}', action:"switch.off", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/light_bulb_on.png", backgroundColor:"#359148", nextState:"turningOff"
+                attributeState "off", label:'${name}', action:"switch.on", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/light_bulb_off.png", backgroundColor:"#00a0dc", nextState:"turningOn"
+                attributeState "turningOn", label:'\n\n Turning On', action:"switch.off", icon:"", backgroundColor:"#359148", nextState:"turningOff"
+                attributeState "turningOff", label:'\n\n Turning Off', action:"switch.on", icon:"", backgroundColor:"#00a0dc", nextState:"turningOn"
             }
         }
         standardTile("blank", "device.refresh", inactiveLabel: true, decoration: "flat", width: 4, height: 2) {
@@ -65,8 +67,10 @@ metadata {
 
         multiAttributeTile(name:"switch2", type: "lighting", width: 6, height: 4, canChangeIcon: false){
             tileAttribute ("device.switch", key: "PRIMARY_CONTROL") { 
-                attributeState "on", label:'${name}', action:"switch.off", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/light_bulb_on.png", backgroundColor:"#359148", nextState:"off"
-                attributeState "off", label:'${name}', action:"switch.on", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/light_bulb_off.png", backgroundColor:"#00a0dc", nextState:"on"
+                attributeState "on", label:'${name}', action:"switch.off", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/light_bulb_on.png", backgroundColor:"#359148", nextState:"turningOff"
+                attributeState "off", label:'${name}', action:"switch.on", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/light_bulb_off.png", backgroundColor:"#00a0dc", nextState:"turningOn"
+                attributeState "turningOn", label:'\n\n Turning On', action:"switch.off", icon:"", backgroundColor:"#359148", nextState:"turningOff"
+                attributeState "turningOff", label:'\n\n Turning Off', action:"switch.on", icon:"", backgroundColor:"#00a0dc", nextState:"turningOn"
             }
 	}
 	    
@@ -100,20 +104,6 @@ def offPhysical() {
 	  sendEvent(name: "light", value: "off", type: "physical")
 	  put('off')
 }
-
-/*
-private put(toggle) {
-    def url1="192.168.1.21:7474"
-    def userpassascii="root:Universe-02"
-    def userpass = "Basic " + userpassascii.encodeAsBase64().toString()
-    def toReplace = device.deviceNetworkId
-    def replaced = toReplace.replaceAll(' ', '%20')
-    def hubaction = new physicalgraph.device.HubAction(method: "GET",
-               path: "/send?deviceMac=$replaced",
-               headers: [HOST: "${url1}", AUTHORIZATION: "${userpass}"],
-    )
-    return hubaction
-*/
 
 	
 private put(toggle) {
