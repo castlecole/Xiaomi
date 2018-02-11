@@ -24,7 +24,6 @@ metadata {
         capability "Relative Humidity Measurement"
         capability "Illuminance Measurement"
         capability "Sensor"
-        capability "Battery"
         capability "Refresh"
         capability "Health Check"
 
@@ -91,32 +90,42 @@ metadata {
             state "default", label:'${currentValue}%', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/humidity.png"
         }
         valueTile("air", "device.air", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
-            state "default", label:'${currentValue}', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/pressure.png"
+            state "air",
+			labels:[
+				[value: 0, label: "Perfect"],
+				[value: 1, label: "Normal"],
+				[value: 2, label: "Poor"]
+			],
+			backgroundColors:[
+                    		[value: 0, color: "#C5C08B"],
+                    		[value: 1, color: "#8E8400"],
+                    		[value: 2, color: "#000000"]
+			]
         }
         valueTile("light", "device.light", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
-		state "light", label:'${currentValue}\n${unit}', unit:"lux",
+		state "light",
+			labels:[
+				[value: 0, label: "Dark"],
+				[value: 1, label: "Normal"],
+				[value: 2, label: "Bright"]
+			],
 			backgroundColors:[
                     		[value: 0, color: "#000000"],
-                    		[value: 1, color: "#060053"],
-                    		[value: 3, color: "#3E3900"],
-                    		[value: 12, color: "#8E8400"],
-                    		[value: 24, color: "#C5C08B"],
-                    		[value: 36, color: "#DAD7B6"],
-                    		[value: 128, color: "#F3F2E9"],
-                    		[value: 1000, color: "#FFFFFF"]
+                    		[value: 1, color: "#8E8400"],
+                    		[value: 2, color: "#C5C08B"]
 			]
         }
         valueTile("noisy", "device.noisy", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
-		state "noisy", label:'${currentValue}\n${unit}', unit:"lux",
+            	state "noisy",
+			labels:[
+				[value: 0, label: "Silent"],
+				[value: 1, label: "Normal"],
+				[value: 2, label: "Noisy"]
+			],
 			backgroundColors:[
                     		[value: 0, color: "#000000"],
-                    		[value: 1, color: "#060053"],
-                    		[value: 3, color: "#3E3900"],
-                    		[value: 12, color: "#8E8400"],
-                    		[value: 24, color: "#C5C08B"],
-                    		[value: 36, color: "#DAD7B6"],
-                    		[value: 128, color: "#F3F2E9"],
-                    		[value: 1000, color: "#FFFFFF"]
+                    		[value: 1, color: "#8E8400"],
+                    		[value: 2, color: "#C5C08B"]
 			]
         }
         valueTile("temperature2", "device.temperature", decoration: "flat", inactiveLabel: false) {
