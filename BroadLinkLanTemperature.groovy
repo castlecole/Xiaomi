@@ -1,5 +1,5 @@
 /**
- *  Broadlink Temperature Sensor
+ *  Broadlink A1 Temperature Sensor
  *
  *  Copyright 2016 BeckyR
  *
@@ -12,14 +12,15 @@
  *  on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License
  *  for the specific language governing permissions and limitations under the License.
  *
- *  1/7/17 - updated with better switch displays and use of device ID from user itsamti
+ *  HTTP Result of call:
+ *       {"temperature":2.7,"light":0.0,"status":"ok","noisy":0.0,"timestamp":"1518381427205","humidity":66.2,"deviceMac":"b4430dfbf413","air":0.0,"uri":"/a1_status"}
  */
  
  
 // 09/01/2016 - itsamti - Added new switch definition below 
 metadata {
 	
-    definition (name: "BroadLink LAN Temperature Sensor", namespace: "castlecole", author: "BeckyR") {
+    definition (name: "BroadLink LAN A1 Temperature Sensor", namespace: "castlecole", author: "BeckyR") {
         capability "Temperature Measurement"
         capability "Relative Humidity Measurement"
         capability "Illuminance Measurement"
@@ -170,12 +171,14 @@ def installed() {
 // Device wakes up every 1 hour, this interval allows us to miss one wakeup notification before marking offline
     log.debug "Configured health checkInterval when installed()"
     sendEvent(name: "checkInterval", value: 2 * 60 * 60 + 2 * 60, displayed: false, data: [protocol: "zigbee", hubHardwareId: device.hub.hardwareID])
+    put()
 }
 
 def updated() {
 // Device wakes up every 1 hours, this interval allows us to miss one wakeup notification before marking offline
     log.debug "Configured health checkInterval when updated()"
     sendEvent(name: "checkInterval", value: 2 * 60 * 60 + 2 * 60, displayed: false, data: [protocol: "zigbee", hubHardwareId: device.hub.hardwareID])
+    put()
 }
 
 // Parse incoming device messages to generate events
@@ -365,38 +368,29 @@ private Map parseReadAttr(String description) {
 def refresh(){
     log.debug "${device.displayName}: refreshing"
 //    return zigbee.readAttribute(0x0000, 0x0001) + zigbee.configureReporting(0x0000, 0x0001, 0x21, 600, 21600, 0x01) + zigbee.configureReporting(0x0402, 0x0000, 0x29, 30, 3600, 0x0064)
+	
+    put()
 }
 
 def configure() {
-    state.battery = 0
     // Device-Watch allows 2 check-in misses from device + ping (plus 1 min lag time)
     // enrolls with default periodic reporting until newer 5 min interval is confirmed
-    sendEvent(name: "checkInterval", value: 2 * 60 * 60 + 1 * 60, displayed: false, data: [protocol: "zigbee", hubHardwareId: device.hub.hardwareID])
-
+//    sendEvent(name: "checkInterval", value: 2 * 60 * 60 + 1 * 60, displayed: false, data: [protocol: "zigbee", hubHardwareId: device.hub.hardwareID])
+    put()
     // temperature minReportTime 30 seconds, maxReportTime 5 min. Reporting interval if no activity
     // battery minReport 30 seconds, maxReportTime 6 hrs by default
 //    return zigbee.readAttribute(0x0000, 0x0001) + zigbee.configureReporting(0x0000, 0x0001, 0x21, 600, 21600, 0x01) + zigbee.configureReporting(0x0402, 0x0000, 0x29, 30, 3600, 0x0064)
 }
 
 	
-private put(toggle) {
+private put() {
     def url1 = "${settings.server}:${settings.port}"
     def userpassascii="${userId.trim()}:${userPass.trim()}"
     def userpass = "Basic " + userpassascii.encodeAsBase64().toString()
     def uri = ""
 
-    log.debug "Toggle is: ${toggle}"
-
-    if ( toggle == "on" )
-    {
-        def ad = "${settings.macAddress.replace(':','')}&codeId=${settings.deviceIdOn.trim()}"
-        uri = "/send?deviceMac=$ad"
-    }
-    else if ( toggle == "off" )
-    {
-        def ad = "${settings.macAddress.replace(':','')}&codeId=${settings.deviceIdOff.trim()}"
-        uri = "/send?deviceMac=$ad"
-    }
+    def ad = "${settings.macAddress.replace(':','')}
+    uri = "/send?deviceMac=$ad"
 
     log.debug "URL1 is: ${url1}"
     log.debug "URI is : ${uri}"
