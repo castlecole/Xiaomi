@@ -209,8 +209,9 @@ def refresh() {		//read enrolled state and zone type from IAS cluster
 	]
     log.debug "refreshing"
 }	
+
 private Map getBatteryResult(rawValue) {
-	//log.debug 'Battery'
+	log.debug 'Battery raw value: ' + rawValue
 	def linkText = getLinkText(device)
 
 	//log.debug rawValue
@@ -220,20 +221,22 @@ private Map getBatteryResult(rawValue) {
 		value: '--'
 	]
     
-	def volts = rawValue / 1
+	//def battLevel = rawValue / 1
+    def battLevel = rawValue * 10
     
-    def maxVolts = 100
+    def maxBatt = 100
 
-	if (volts > maxVolts) {
-				volts = maxVolts
+	if (battLevel > maxBatt) {
+				battLevel = maxBatt
     }
 
-    result.value = volts
+    log.debug 'Returning battery percentage as: ' + battLevel
+
+    result.value = battLevel
 	result.descriptionText = "${linkText} battery was ${result.value}%"
 
 	return result
 }
-
 def configure() {
 
 	String zigbeeId = swapEndianHex(device.hub.zigbeeId)
