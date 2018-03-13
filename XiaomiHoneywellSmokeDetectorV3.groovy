@@ -102,16 +102,16 @@ metadata {
 	tiles(scale: 2) {
 		multiAttributeTile(name:"smoke", type: "lighting", width: 6, height: 4) {
 			tileAttribute ("device.smoke", key: "PRIMARY_CONTROL") {
-           			attributeState( "clear", label:'CLEAR', icon:"st.alarm.smoke.clear", backgroundColor:"#359148")
-				attributeState( "tested", label:"TEST", icon:"st.alarm.smoke.test", backgroundColor:"#e86d13")
-				attributeState( "detected", label:'SMOKE', icon:"st.alarm.smoke.smoke", backgroundColor:"#ed0000")   
+           			attributeState( "clear", label:'CLEAR', icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/alarm-clear0.png", backgroundColor:"#359148")
+				attributeState( "tested", label:"TEST", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/alarm-notclear0.png", backgroundColor:"#e86d13")
+				attributeState( "detected", label:'SMOKE', icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/alarm-notclear0.png", backgroundColor:"#ed0000")   
  			}
            		 tileAttribute("device.lastSmoke", key: "SECONDARY_CONTROL") {
                 		attributeState "default", label:'Smoke last detected:\n ${currentValue}'
 			}	
 		}
         	valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
-            		state "battery", label:'${currentValue}%', unit:"%", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Battery.png",
+            		state "battery", label:'${currentValue}%'+"\n", unit:"%", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Battery.png",
 			backgroundColors:[
 				[value: 0, color: "#ff1800"],
 				[value: 10, color: "#fb854a"],
