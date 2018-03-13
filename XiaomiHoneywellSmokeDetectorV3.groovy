@@ -102,21 +102,31 @@ metadata {
 	tiles(scale: 2) {
 		multiAttributeTile(name:"smoke", type: "lighting", width: 6, height: 4) {
 			tileAttribute ("device.smoke", key: "PRIMARY_CONTROL") {
-           			attributeState( "clear", label:'CLEAR', icon:"st.alarm.smoke.clear", backgroundColor:"#ffffff")
+           			attributeState( "clear", label:'CLEAR', icon:"st.alarm.smoke.clear", backgroundColor:"#359148")
 				attributeState( "tested", label:"TEST", icon:"st.alarm.smoke.test", backgroundColor:"#e86d13")
-				attributeState( "detected", label:'SMOKE', icon:"st.alarm.smoke.smoke", backgroundColor:"#ed0920")   
+				attributeState( "detected", label:'SMOKE', icon:"st.alarm.smoke.smoke", backgroundColor:"#ed0000")   
  			}
            		 tileAttribute("device.lastSmoke", key: "SECONDARY_CONTROL") {
                 		attributeState "default", label:'Smoke last detected:\n ${currentValue}'
 			}	
 		}
         	valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
-            		state "battery", label:'${currentValue}%', unit:"%", icon:"https://raw.githubusercontent.com/bspranger/Xiaomi/master/images/XiaomiBattery.png",
+            		state "battery", label:'${currentValue}%', unit:"%", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Battery.png",
 			backgroundColors:[
-                		[value: 10, color: "#bc2323"],
-                		[value: 26, color: "#f1d801"],
-                		[value: 51, color: "#44b621"]
+				[value: 0, color: "#ff1800"],
+				[value: 10, color: "#fb854a"],
+				[value: 25, color: "#ceec24"],
+				[value: 50, color: "#71f044"],
+				[value: 75, color: "#33d800"]
 			]
+		}
+
+		multiAttributeTile(name:"smoke2", type: "lighting", width: 6, height: 4) {
+			tileAttribute ("device.smoke", key: "PRIMARY_CONTROL") {
+           			attributeState( "clear", label:'CLEAR', icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/House-Normal.png", backgroundColor:"#359148")
+				attributeState( "tested", label:"TEST", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/House-Fire.png", backgroundColor:"#e86d13")
+				attributeState( "detected", label:'SMOKE', icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/House-Fire.png", backgroundColor:"#ed0000")   
+ 			}
 		}
 /*
 		// Will only override applications settings not physical device
@@ -140,7 +150,7 @@ metadata {
             		state "batteryRuntime", label:'Battery Changed: ${currentValue}'
         	}
 		
-		main (["smoke"])
+		main (["smoke2"])
 		details(["smoke", "battery",  
 //			"resetClear", "resetSmoke",	 
 			 "lastTested", "lastcheckin", "spacer", "batteryRuntime", "spacer"])
