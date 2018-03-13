@@ -140,20 +140,19 @@ metadata {
 		valueTile("lastTested", "device.lastTested", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
             		state "default", label:'Last Tested:\n ${currentValue}'
 		}
-		valueTile("spacer", "spacer", decoration: "flat", inactiveLabel: false, width: 1, height: 1) {
-	    		state "default", label:''
-		}
 		valueTile("lastcheckin", "device.lastCheckin", inactiveLabel: false, decoration:"flat", width: 4, height: 1) {
             		state "lastcheckin", label:'Last Event:\n ${currentValue}'
         	}
-        	valueTile("batteryRuntime", "device.batteryRuntime", inactiveLabel: false, decoration:"flat", width: 4, height: 1) {
+        	valueTile("batteryRuntime", "device.batteryRuntime", inactiveLabel: false, decoration:"flat", width: 4, height: 2) {
             		state "batteryRuntime", label:'Battery Changed: ${currentValue}'
+        	}
+		standardTile("refresh", "device.refresh", inactiveLabel: False, decoration: "flat", width: 2, height: 2) {
+			state "default", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
         	}
 		
 		main (["smoke2"])
 		details(["smoke", "battery",  
-//			"resetClear", "resetSmoke",	 
-			 "lastTested", "lastcheckin", "spacer", "batteryRuntime", "spacer"])
+			 "lastTested", "lastcheckin", "batteryRuntime", "refresh"])
 	}
 }
 
