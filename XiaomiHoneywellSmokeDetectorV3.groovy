@@ -112,9 +112,9 @@ metadata {
 				attributeState( "tested", label:"TEST", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/alarm-notclear0.png", backgroundColor:"#e86d13")
 				attributeState( "detected", label:'SMOKE', icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/alarm-notclear0.png", backgroundColor:"#ed0000")   
  			}
-           		 tileAttribute("device.lastSmoke", key: "SECONDARY_CONTROL") {
-                		attributeState "default", label:'Smoke last detected:\n ${currentValue}'
-			}	
+			tileAttribute("device.lastCheckin", key: "SECONDARY_CONTROL") {
+				attributeState("default", label:'Last Checkin: ${currentValue}', icon: "st.Health & Wellness.health9")
+			}
 		}
         	valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
             		state "battery", label:'${currentValue}%'+"\n", unit:"%", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Battery.png",
