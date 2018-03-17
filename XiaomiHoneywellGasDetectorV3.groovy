@@ -88,13 +88,6 @@ metadata {
 		input description: "", type: "paragraph", element: "paragraph", title: "DATE & CLOCK"    
 		input name: "dateformat", type: "enum", title: "Set Date Format\nUS (MDY) - UK (DMY) - Other (YMD)", description: "Date Format", options:["US","UK","Other"]
 		input name: "clockformat", type: "bool", title: "Use 24 hour clock?"
-		//Battery Reset Config
-		input description: "If you have installed a new battery, the toggle below will reset the Changed Battery date to help remember when it was changed.", type: "paragraph", element: "paragraph", title: "CHANGED BATTERY DATE RESET"
-		input name: "battReset", type: "bool", title: "Battery Changed?", description: ""
-		//Battery Voltage Offset
-		input description: "Only change the settings below if you know what you're doing.", type: "paragraph", element: "paragraph", title: "ADVANCED SETTINGS"
-		input name: "voltsmax", title: "Max Volts\nA battery is at 100% at __ volts.\nRange 2.8 to 3.4", type: "decimal", range: "2.8..3.4", defaultValue: 3.25
-		input name: "voltsmin", title: "Min Volts\nA battery is at 0% (needs replacing)\nat __ volts.  Range 2.0 to 2.7", type: "decimal", range: "2..2.7", defaultValue: 2.5
 		input description: "Version: ${version()}", type: "paragraph", element: "paragraph", title: ""
 	}
 	
@@ -118,11 +111,11 @@ metadata {
  			}
 		}
 		valueTile("lastTested", "device.lastTested", inactiveLabel: false, decoration: "flat", width: 4, height: 2) {
-        state "default", label:'Last Tested:\n ${currentValue}'
+        		state "default", label:'Last Tested:\n ${currentValue}'
 		}
 		standardTile("refresh", "device.refresh", inactiveLabel: False, decoration: "flat", width: 2, height: 2) {
-		    state "default", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
-    }
+		    	state "default", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
+    		}
 		
 		main (["smoke2"])
 		details(["smoke", "lastTested", "refresh"])
@@ -203,19 +196,6 @@ private Map parseCatchAllMessage(String description) {
 	def catchall = zigbee.parse(description)
 	log.debug catchall
 
-	if (catchall.clusterId == 0x0000) {
-		def MsgLength = catchall.data.size()
-		// Original Xiaomi CatchAll does not have identifiers, first UINT16 is Battery
-		if ((catchall.data.get(0) == 0x01 || catchall.data.get(0) == 0x02) && (catchall.data.get(1) == 0xFF)) {
-			for (int i = 4; i < (MsgLength-3); i++) {
-				if (catchall.data.get(i) == 0x21) { // check the data ID and data type
-					// next two bytes are the battery voltage
-					resultMap = getBatteryResult((catchall.data.get(i+2)<<8) + catchall.data.get(i+1))
-					break
-				}
-			}
-		}
-	}
 	return resultMap
 }
 
@@ -259,10 +239,6 @@ def configure() {
 // updated() will run twice every time user presses save in preference settings page
 def updated() {
 	checkIntervalEvent("updated")
-	if(battReset) {
-		resetBatteryRuntime()
-		device.updateSetting("battReset", false)
-	}
 }
 
 // Device wakes up every 1 hours, this interval allows us to miss one wakeup notification before marking offline	
