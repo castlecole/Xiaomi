@@ -76,7 +76,6 @@ metadata {
 		attribute "lastCheckin", "string"
 		attribute "lastSmoke", "String"
 		attribute "lastSmokeDate", "Date"		
-		attribute "batteryRuntime", "String"
 	
 		fingerprint endpointId: "01", profileID: "0104", deviceID: "0402", inClusters: "0000,0003,0012,0500,000C,0001", outClusters: "0019", manufacturer: "LUMI", model: "lumi.sensor_smoke", deviceJoinName: "Xiaomi Honeywell Smoke Detector"
 	}       
