@@ -68,7 +68,6 @@ metadata {
 
 		command "resetClear"
 		command "resetSmoke"
-		command "resetBatteryRuntime"
 		command "enrollResponse"
 		attribute "lastTested", "String"
 		attribute "lastTestedDate", "Date"
