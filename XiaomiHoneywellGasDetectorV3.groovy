@@ -91,7 +91,7 @@ metadata {
 		input name: "clockformat", type: "bool", title: "Use 24 hour clock?"
 		input description: "Version: ${version()}", type: "paragraph", element: "paragraph", title: ""
 	}
-	
+
 	tiles(scale: 2) {
 		multiAttributeTile(name:"smoke", type: "lighting", width: 6, height: 4) {
 			tileAttribute ("device.smoke", key: "PRIMARY_CONTROL") {
@@ -111,15 +111,18 @@ metadata {
 				attributeState( "detected", label:'SMOKE', icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/House-Fire.png", backgroundColor:"#ed0000")   
  			}
 		}
-		valueTile("lastTested", "device.lastTested", inactiveLabel: false, decoration: "flat", width: 4, height: 2) {
+		valueTile("lastDescription", "device.lastTested", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
         		state "default", label:'Last Tested:\n ${currentValue}'
+		}
+		valueTile("lastTested", "device.lastDescription", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
+        		state "default", label:'${currentValue}'
 		}
 		standardTile("refresh", "device.refresh", inactiveLabel: False, decoration: "flat", width: 2, height: 2) {
 		    	state "default", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
     		}
 		
 		main (["smoke2"])
-		details(["smoke", "lastTested", "refresh"])
+		details(["smoke", "lastDescription", "lastTested", "refresh"])
 	}
 }
 
@@ -136,7 +139,7 @@ def parse(String description) {
 	// However, only a non-parseable report results in lastCheckin being displayed in events log
 	sendEvent(name: "lastCheckin", value: now, displayed: true)
 	sendEvent(name: "lastCheckinDate", value: nowDate, displayed: false)
-	sendEvent(name: "lastDescription", value: description, displayed: true)
+	// sendEvent(name: "lastDescription", value: description, displayed: true)
 
 	// getEvent automatically retrieves temp and humidity in correct unit as integer
 	Map map = zigbee.getEvent(description)
@@ -175,7 +178,7 @@ def parse(String description) {
 // Parse the IAS messages
 private Map parseZoneStatusMessage(String description) {
 	def result = [
-		name: 'gas',
+		name: 'smoke',
 		value: value,
 		descriptionText: 'gas detected'
 	]
