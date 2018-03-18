@@ -149,11 +149,11 @@ def parse(String description) {
 		if (map.value == "detected") {
 			sendEvent(name: "lastSmoke", value: now, displayed: true)
 			sendEvent(name: "lastSmokeDate", value: nowDate, displayed: false)
-			sendEvent(name: "lastDescription", value: map.descriptionText, displayed: true)
+			sendEvent(name: "lastDescription", value: map.descriptionText, displayed: false)
 		} else if (map.value == "tested") {
 			sendEvent(name: "lastTested", value: now, displayed: true)
 			sendEvent(name: "lastTestedDate", value: nowDate, displayed: false)
-			sendEvent(name: "lastDescription", value: map.descriptionText, displayed: true)
+			sendEvent(name: "lastDescription", value: map.descriptionText, displayed: false)
 		}
 	} else if (description?.startsWith('catchall:')) {
 		map = parseCatchAllMessage(description)
@@ -186,10 +186,10 @@ private Map parseZoneStatusMessage(String description) {
 		if (description?.startsWith('zone status 0x0002')) { // User Test
 			result.value = "tested"
 			result.descriptionText = "${device.displayName} has been tested"
-		} else if (description?.startsWith('zone status 0x0001')) { // smoke detected
+		} else if (description?.startsWith('zone status 0x0001')) { // gas detected
 			result.value = "detected"
 			result.descriptionText = "${device.displayName} has detected gas!!!"
-		} else if (description?.startsWith('zone status 0x0000')) { // situation normal... no smoke
+		} else if (description?.startsWith('zone status 0x0000')) { // situation normal... no gas
 			result.value = "clear"
 			result.descriptionText = "${device.displayName} is all clear"
 		}
@@ -235,13 +235,29 @@ def resetClear() {
 }
 
 def resetSmoke() {
-	sendEvent(name:"smoke", value:"smoke")
+    sendEvent(name:"smoke", value:"smoke")
 }
 
 // configure() runs after installed() when a sensor is paired
 def configure() {
-	log.debug "${device.displayName}: configuring"
-	return
+    log.debug "${device.displayName}: configuring"
+    return zigbee.configureReporting(0x0006, 0x0000, 0x10, 1, 7200, null) +
+    // cluster 0x0006, attr 0x0000, datatype 0x10 (boolean), min 1 sec, max 7200 sec, reportableChange = null (because boolean)
+    zigbee.readAttribute(0x0006, 0x0000) 
+    // Read cluster 0x0006 (on/off status)
+    return
+}
+
+def refresh() {
+    log.debug "${device.displayName}: refreshing"
+    return zigbee.readAttribute(0x0006, 0x0000) +
+    // Read cluster 0x0006 (on/off status)
+    zigbee.configureReporting(0x0006, 0x0000, 0x10, 1, 7200, null)
+    // cluster 0x0006, attr 0x0000, datatype 0x10 (boolean), min 1 sec, max 7200 sec, reportableChange = null (because boolean)
+}
+
+def installed() {
+    checkIntervalEvent("installed");
 }
 
 // updated() will run twice every time user presses save in preference settings page
