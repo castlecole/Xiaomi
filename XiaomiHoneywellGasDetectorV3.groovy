@@ -83,7 +83,7 @@ metadata {
     	// simulator metadata
 	simulator {
     	}
-	
+
 	preferences {
 		//Date & Time Config
 		input description: "", type: "paragraph", element: "paragraph", title: "DATE & CLOCK"    
@@ -114,15 +114,15 @@ metadata {
 		valueTile("lastDescription", "device.lastTested", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
         		state "default", label:'Last Tested:\n ${currentValue}'
 		}
-		valueTile("lastTested", "device.lastDescription", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
-        		state "default", label:'${currentValue}'
-		}
 		standardTile("refresh", "device.refresh", inactiveLabel: False, decoration: "flat", width: 2, height: 2) {
 		    	state "default", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
     		}
+		valueTile("lastTested", "device.lastDescription", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
+        		state "default", label:'${currentValue}'
+		}
 		
 		main (["smoke2"])
-		details(["smoke", "lastDescription", "lastTested", "refresh"])
+		details(["smoke", "lastDescription", "refresh", "lastTested"])
 	}
 }
 
@@ -149,11 +149,11 @@ def parse(String description) {
 		if (map.value == "detected") {
 			sendEvent(name: "lastSmoke", value: now, displayed: true)
 			sendEvent(name: "lastSmokeDate", value: nowDate, displayed: false)
-			sendEvent(name: "lastDescription", value: map.descriptionText, displayed: false)
+			sendEvent(name: "lastDescription", value: map.descriptionText, displayed: true)
 		} else if (map.value == "tested") {
 			sendEvent(name: "lastTested", value: now, displayed: true)
 			sendEvent(name: "lastTestedDate", value: nowDate, displayed: false)
-			sendEvent(name: "lastDescription", value: map.descriptionText, displayed: false)
+			sendEvent(name: "lastDescription", value: map.descriptionText, displayed: true)
 		}
 	} else if (description?.startsWith('catchall:')) {
 		map = parseCatchAllMessage(description)
@@ -231,7 +231,7 @@ private Map parseReadAttr(String description) {
 }
 
 def resetClear() {
-	sendEvent(name:"smoke", value:"clear")
+    sendEvent(name:"smoke", value:"clear")
 }
 
 def resetSmoke() {
@@ -262,13 +262,13 @@ def installed() {
 
 // updated() will run twice every time user presses save in preference settings page
 def updated() {
-	checkIntervalEvent("updated")
+    checkIntervalEvent("updated")
 }
 
 // Device wakes up every 1 hours, this interval allows us to miss one wakeup notification before marking offline	
 private checkIntervalEvent(text) {
-	log.debug "${device.displayName}: Configured health checkInterval when ${text}()"
-	sendEvent(name: "checkInterval", value: 2 * 60 * 60 + 2 * 60, displayed: false, data: [protocol: "zigbee", hubHardwareId: device.hub.hardwareID])
+    log.debug "${device.displayName}: Configured health checkInterval when ${text}()"
+    sendEvent(name: "checkInterval", value: 2 * 60 * 60 + 2 * 60, displayed: false, data: [protocol: "zigbee", hubHardwareId: device.hub.hardwareID])
 }
 
 def formatDate(batteryReset) {
