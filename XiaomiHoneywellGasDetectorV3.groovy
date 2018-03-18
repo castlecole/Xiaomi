@@ -74,7 +74,8 @@ metadata {
 		attribute "lastCheckinDate", "Date"		
 		attribute "lastCheckin", "string"
 		attribute "lastSmoke", "String"
-		attribute "lastSmokeDate", "Date"		
+		attribute "lastSmokeDate", "Date"
+		attribute "lastDescription", "String"
 	
 		fingerprint endpointId: "01", profileID: "0104", deviceID: "0402", inClusters: "0000,0003,0012,0500,000C,0001", outClusters: "0019", manufacturer: "LUMI", model: "lumi.sensor_natgas", deviceJoinName: "Xiaomi Honeywell Gas Detector"
 	}
@@ -133,7 +134,8 @@ def parse(String description) {
 	// Any report - test, smoke, clear in a lastCheckin event and update to Last Checkin tile
 	// However, only a non-parseable report results in lastCheckin being displayed in events log
 	sendEvent(name: "lastCheckin", value: now, displayed: true)
-	sendEvent(name: "lastCheckinDate", value: nowDate, displayed: true)
+	sendEvent(name: "lastCheckinDate", value: nowDate, displayed: false)
+	sendEvent(name: "lastDescription", value: description, displayed: true)
 
 	// getEvent automatically retrieves temp and humidity in correct unit as integer
 	Map map = zigbee.getEvent(description)
