@@ -44,7 +44,7 @@
  *        01 - number of out clusters
  *        0019 - outClusters
  *        manufacturer "LUMI" - must match manufacturer field in fingerprint
- *        model "lumi.sensor_smoke" - must match model in fingerprint
+ *        model "lumi.sensor_natgas" - must match model in fingerprint
  *
  *
  *  Change Log:
@@ -76,8 +76,8 @@ metadata {
 		attribute "lastSmoke", "String"
 		attribute "lastSmokeDate", "Date"		
 	
-		fingerprint endpointId: "01", profileID: "0104", deviceID: "0402", inClusters: "0000,0003,0012,0500,000C,0001", outClusters: "0019", manufacturer: "LUMI", model: "lumi.sensor_smoke", deviceJoinName: "Xiaomi Honeywell Smoke Detector"
-	}       
+		fingerprint endpointId: "01", profileID: "0104", deviceID: "0402", inClusters: "0000,0003,0012,0500,000C,0001", outClusters: "0019", manufacturer: "LUMI", model: "lumi.sensor_natgas", deviceJoinName: "Xiaomi Honeywell Gas Detector"
+	}
 
     	// simulator metadata
 	simulator {
@@ -132,8 +132,8 @@ def parse(String description) {
 
 	// Any report - test, smoke, clear in a lastCheckin event and update to Last Checkin tile
 	// However, only a non-parseable report results in lastCheckin being displayed in events log
-	sendEvent(name: "lastCheckin", value: now, displayed: false)
-	sendEvent(name: "lastCheckinDate", value: nowDate, displayed: false)
+	sendEvent(name: "lastCheckin", value: now, displayed: true)
+	sendEvent(name: "lastCheckinDate", value: nowDate, displayed: true)
 
 	// getEvent automatically retrieves temp and humidity in correct unit as integer
 	Map map = zigbee.getEvent(description)
@@ -260,10 +260,10 @@ def formatDate(batteryReset) {
 		correctedTimezone = location.timeZone
 	}
 	if (dateformat == "US" || dateformat == "" || dateformat == null) {
-			return new Date().format("EEE MMM dd yyyy ${timeString}", correctedTimezone)
+		return new Date().format("EEE MMM dd yyyy ${timeString}", correctedTimezone)
 	} else if (dateformat == "UK") {
-			return new Date().format("EEE dd MMM yyyy ${timeString}", correctedTimezone)
+		return new Date().format("EEE dd MMM yyyy ${timeString}", correctedTimezone)
 	} else {
-			return new Date().format("EEE yyyy MMM dd ${timeString}", correctedTimezone)
+		return new Date().format("EEE yyyy MMM dd ${timeString}", correctedTimezone)
 	}
 }
