@@ -125,6 +125,7 @@ metadata {
 
 // Parse incoming device messages to generate events
 def parse(String description) {
+	
 	log.debug "${device.displayName}: Parsing description: ${description}"
 
 	// Determine current time and date in the user-selected date format and clock style
@@ -143,12 +144,14 @@ def parse(String description) {
 	if (description?.startsWith('zone status')) {
 		map = parseZoneStatusMessage(description)
 		if (map.value == "detected") {
-			sendEvent(name: "lastSmoke", value: now, displayed: false)
+			sendEvent(name: "lastSmoke", value: now, displayed: true)
 			sendEvent(name: "lastSmokeDate", value: nowDate, displayed: false)
+			sendEvent(name: "lastDescription", value: map.descriptionText, displayed: true)
 		} else if (map.value == "tested") {
-			sendEvent(name: "lastTested", value: now, displayed: false)
+			sendEvent(name: "lastTested", value: now, displayed: true)
 			sendEvent(name: "lastTestedDate", value: nowDate, displayed: false)
-		}	
+			sendEvent(name: "lastDescription", value: map.descriptionText, displayed: true)
+		}
 	} else if (description?.startsWith('catchall:')) {
 		map = parseCatchAllMessage(description)
 	} else if (description?.startsWith('read attr - raw:')) {
@@ -159,7 +162,7 @@ def parse(String description) {
 		result = cmds?.collect { new physicalgraph.device.HubAction(it) }
 	} else {
 		log.debug "${device.displayName}: was unable to parse ${description}"
-		sendEvent(name: "lastCheckin", value: now) 
+		sendEvent(name: "lastCheckin", value: now, displayed: true) 
 	}
 	if (map) {
 		log.debug "${device.displayName}: Parse returned ${map}"
@@ -172,9 +175,9 @@ def parse(String description) {
 // Parse the IAS messages
 private Map parseZoneStatusMessage(String description) {
 	def result = [
-		name: 'smoke',
+		name: 'gas',
 		value: value,
-		descriptionText: 'smoke detected'
+		descriptionText: 'gas detected'
 	]
 	if (description?.startsWith('zone status')) {
 		if (description?.startsWith('zone status 0x0002')) { // User Test
@@ -182,7 +185,7 @@ private Map parseZoneStatusMessage(String description) {
 			result.descriptionText = "${device.displayName} has been tested"
 		} else if (description?.startsWith('zone status 0x0001')) { // smoke detected
 			result.value = "detected"
-			result.descriptionText = "${device.displayName} has detected smoke"
+			result.descriptionText = "${device.displayName} has detected gas!!!"
 		} else if (description?.startsWith('zone status 0x0000')) { // situation normal... no smoke
 			result.value = "clear"
 			result.descriptionText = "${device.displayName} is all clear"
