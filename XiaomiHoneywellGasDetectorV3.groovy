@@ -66,7 +66,7 @@ metadata {
 		capability "Health Check"		
 		capability "Sensor"
 
-		command "resetClear"
+   		command "resetClear"
 		command "resetSmoke"
 		command "enrollResponse"
 		attribute "lastTested", "String"
@@ -106,19 +106,19 @@ metadata {
 
 		multiAttributeTile(name:"smoke2", type: "lighting", width: 6, height: 4) {
 			tileAttribute ("device.smoke", key: "PRIMARY_CONTROL") {
-   			attributeState( "clear", label:'CLEAR', icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/House-Normal.png", backgroundColor:"#359148")
+   				attributeState( "clear", label:'CLEAR', icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/House-Normal.png", backgroundColor:"#359148")
 				attributeState( "tested", label:"TEST", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/House-GAS-Event.png", backgroundColor:"#e86d13")
 				attributeState( "detected", label:'SMOKE', icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/House-GAS-Event.png", backgroundColor:"#ed0000")   
  			}
 		}
 		valueTile("lastSmoke", "device.lastSmoke", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
-        		state "default", label:'Last Detected:\n ${currentValue}'
+        		state "default", label:'Last GAS Detected:\n ${currentValue}'
 		}
 		standardTile("refresh", "device.refresh", inactiveLabel: False, decoration: "flat", width: 2, height: 2) {
 		    	state "default", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
     		}
-		valueTile("lastTested", "device.lastDescription", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
-        		state "default", label:'${currentValue}'
+		valueTile("lastTested", "device.lastTested", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
+        		state "default", label:'Last Tested:\n ${currentValue}'
 		}
 		
 		main (["smoke2"])
