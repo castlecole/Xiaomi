@@ -113,11 +113,24 @@ metadata {
 				attributeState( "detected", label:'SMOKE', icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/House-GAS-Event.png", backgroundColor:"#ed0000")   
  			}
 		}
+        	valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
+            		state "battery", label:'99%'+"\n", unit:"%", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Battery.png",
+				backgroundColors:[
+					[value: 0, color: "#ff1800"],
+					[value: 10, color: "#fb854a"],
+					[value: 25, color: "#ceec24"],
+					[value: 50, color: "#71f044"],
+					[value: 75, color: "#33d800"]
+				]
+		}
+		valueTile("lastCheckin", "device.lastCheckin",  inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
+			state "default", label:'', icon: "st.Health & Wellness.health9", backgroundColor: "#ceec24"
+		}
 		valueTile("lastSmoke", "device.lastSmoke", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
         		state "default", label:'Last GAS Detected:\n ${currentValue}'
 		}
 		standardTile("refresh", "device.refresh", inactiveLabel: False, decoration: "flat", width: 2, height: 2) {
-		    	state "default", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
+		    	state "default", action:"device.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
     		}
 		valueTile("lastTested", "device.lastTested", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
         		state "default", label:'Last Tested:\n ${currentValue}'
