@@ -139,7 +139,7 @@ def parse(String description) {
 	// However, only a non-parseable report results in lastCheckin being displayed in events log
 	sendEvent(name: "lastCheckin", value: now, displayed: true)
 	sendEvent(name: "lastCheckinDate", value: nowDate, displayed: false)
-	// sendEvent(name: "lastDescription", value: description, displayed: true)
+	sendEvent(name: "lastDescription", value: description, displayed: false)
 
 	// getEvent automatically retrieves temp and humidity in correct unit as integer
 	Map map = zigbee.getEvent(description)
@@ -241,18 +241,18 @@ def resetSmoke() {
 // configure() runs after installed() when a sensor is paired
 def configure() {
     log.debug "${device.displayName}: configuring"
-    return zigbee.configureReporting(0x0006, 0x0000, 0x10, 1, 7200, null) +
+    //return zigbee.configureReporting(0x0006, 0x0000, 0x10, 1, 7200, null) +
     // cluster 0x0006, attr 0x0000, datatype 0x10 (boolean), min 1 sec, max 7200 sec, reportableChange = null (because boolean)
-    zigbee.readAttribute(0x0006, 0x0000) 
+    //zigbee.readAttribute(0x0006, 0x0000) 
     // Read cluster 0x0006 (on/off status)
     return
 }
 
 def refresh() {
     log.debug "${device.displayName}: refreshing"
-    return zigbee.readAttribute(0x0006, 0x0000) +
+    //return zigbee.readAttribute(0x0006, 0x0000) +
     // Read cluster 0x0006 (on/off status)
-    zigbee.configureReporting(0x0006, 0x0000, 0x10, 1, 7200, null)
+    //zigbee.configureReporting(0x0006, 0x0000, 0x10, 1, 7200, null)
     // cluster 0x0006, attr 0x0000, datatype 0x10 (boolean), min 1 sec, max 7200 sec, reportableChange = null (because boolean)
 }
 
