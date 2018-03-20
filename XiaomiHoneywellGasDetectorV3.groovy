@@ -250,6 +250,8 @@ def configure() {
 
 def refresh() {
     log.debug "${device.displayName}: refreshing"
+    sendEvent(name: "smoke", value: "clear", displayed: true)
+
     //return zigbee.readAttribute(0x0006, 0x0000) +
     // Read cluster 0x0006 (on/off status)
     //zigbee.configureReporting(0x0006, 0x0000, 0x10, 1, 7200, null)
