@@ -60,6 +60,7 @@ def version() {
 
 metadata {
 	definition (name: "Xiaomi Honeywell Gas Detector V3", namespace: "castlecole", author: "bspranger") {
+		capability "Battery" //attributes: battery
 		capability "Configuration" //commands: configure()
 		capability "Smoke Detector" //attributes: smoke ("detected","clear","tested")
 
@@ -205,6 +206,20 @@ private Map parseCatchAllMessage(String description) {
 	def catchall = zigbee.parse(description)
 	log.debug catchall
 
+	if (catchall.clusterId == 0x0000) {
+		def MsgLength = catchall.data.size()
+		// Original Xiaomi CatchAll does not have identifiers, first UINT16 is Battery
+		if ((catchall.data.get(0) == 0x01 || catchall.data.get(0) == 0x02) && (catchall.data.get(1) == 0xFF)) {
+			for (int i = 4; i < (MsgLength-3); i++) {
+				if (catchall.data.get(i) == 0x21) { // check the data ID and data type
+					// next two bytes are the battery voltage
+					resultMap = getBatteryResult((catchall.data.get(i+2)<<8) + catchall.data.get(i+1))
+					break
+				}
+			}
+		}
+	}
+	
 	return resultMap
 }
 
@@ -231,17 +246,54 @@ private Map parseReadAttr(String description) {
 	return resultMap
 }
 
+// Convert raw 4 digit integer voltage value into percentage based on minVolts/maxVolts range
+
+private Map getBatteryResult(rawValue) {
+
+	// raw voltage is normally supplied as a 4 digit integer that needs to be divided by 1000
+	// but in the case the final zero is dropped then divide by 100 to get actual voltage value 
+	def rawVolts = rawValue / 1000
+	def minVolts
+	def maxVolts
+
+	if (voltsmin == null || voltsmin == ""){
+		minVolts = 2.5
+	} else {
+		minVolts = voltsmin
+	}
+
+	if (voltsmax == null || voltsmax == "") {
+		maxVolts = 3.0
+	} else {
+		maxVolts = voltsmax
+	}
+
+	def pct = (rawVolts - minVolts) / (maxVolts - minVolts)
+	def roundedPct = Math.min(100, Math.round(pct * 100))
+
+	def result = [
+		name: 'battery',
+		value: roundedPct,
+		unit: "%",
+		isStateChange: true,	
+		descriptionText : "${device.displayName} Battery at ${roundedPct}% (${rawVolts} Volts)"
+	]
+
+	return result
+
+}
 def resetClear() {
-    sendEvent(name:"smoke", value:"clear")
+    sendEvent(name:"smoke", value:"clear", display: false)
 }
 
 def resetSmoke() {
-    sendEvent(name:"smoke", value:"smoke")
+    sendEvent(name:"smoke", value:"smoke", display: false)
 }
 
 // configure() runs after installed() when a sensor is paired
 def configure() {
     log.debug "${device.displayName}: configuring"
+    state.battery = 0
     //return zigbee.configureReporting(0x0006, 0x0000, 0x10, 1, 7200, null) +
     // cluster 0x0006, attr 0x0000, datatype 0x10 (boolean), min 1 sec, max 7200 sec, reportableChange = null (because boolean)
     //zigbee.readAttribute(0x0006, 0x0000) 
@@ -260,6 +312,7 @@ def refresh() {
 }
 
 def installed() {
+    state.battery = 0
     checkIntervalEvent("installed")
 }
 
