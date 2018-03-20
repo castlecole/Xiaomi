@@ -111,8 +111,8 @@ metadata {
 				attributeState( "detected", label:'SMOKE', icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/House-GAS-Event.png", backgroundColor:"#ed0000")   
  			}
 		}
-		valueTile("lastDescription", "device.lastTested", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
-        		state "default", label:'Last Tested:\n ${currentValue}'
+		valueTile("lastSmoke", "device.lastSmoke", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
+        		state "default", label:'Last Detected:\n ${currentValue}'
 		}
 		standardTile("refresh", "device.refresh", inactiveLabel: False, decoration: "flat", width: 2, height: 2) {
 		    	state "default", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
@@ -122,7 +122,7 @@ metadata {
 		}
 		
 		main (["smoke2"])
-		details(["smoke", "lastDescription", "refresh", "lastTested"])
+		details(["smoke", "lastSmoke", "refresh", "lastTested"])
 	}
 }
 
