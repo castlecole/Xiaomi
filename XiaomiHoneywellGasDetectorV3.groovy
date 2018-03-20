@@ -252,7 +252,7 @@ private Map getBatteryResult(rawValue) {
 
 	// raw voltage is normally supplied as a 4 digit integer that needs to be divided by 1000
 	// but in the case the final zero is dropped then divide by 100 to get actual voltage value 
-	def rawVolts = rawValue / 1000
+/*	def rawVolts = rawValue / 1000
 	def minVolts
 	def maxVolts
 
@@ -270,13 +270,13 @@ private Map getBatteryResult(rawValue) {
 
 	def pct = (rawVolts - minVolts) / (maxVolts - minVolts)
 	def roundedPct = Math.min(100, Math.round(pct * 100))
-
+*/
 	def result = [
 		name: 'battery',
-		value: roundedPct,
+		value: 100,
 		unit: "%",
 		isStateChange: true,	
-		descriptionText : "${device.displayName} Battery at ${roundedPct}% (${rawVolts} Volts)"
+		descriptionText : "${device.displayName} Battery at 100% - Mains power"
 	]
 
 	return result
