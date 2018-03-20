@@ -75,6 +75,7 @@ metadata {
 		attribute "lastCheckin", "string"
 		attribute "lastSmoke", "String"
 		attribute "lastSmokeDate", "Date"
+		attribute "checkInterval", "String"
 		attribute "lastDescription", "String"
 	
 		fingerprint endpointId: "01", profileID: "0104", deviceID: "0402", inClusters: "0000,0003,0012,0500,000C,0001", outClusters: "0019", manufacturer: "LUMI", model: "lumi.sensor_natgas", deviceJoinName: "Xiaomi Honeywell Gas Detector"
@@ -210,7 +211,7 @@ private Map parseCatchAllMessage(String description) {
 // Parse raw data on reset button press
 private Map parseReadAttr(String description) {
 	Map resultMap = [:]
-
+	
 	def cluster = description.split(",").find {it.split(":")[0].trim() == "cluster"}?.split(":")[1].trim()
 	def attrId = description.split(",").find {it.split(":")[0].trim() == "attrId"}?.split(":")[1].trim()
 	def value = description.split(",").find {it.split(":")[0].trim() == "value"}?.split(":")[1].trim()
@@ -259,12 +260,16 @@ def refresh() {
 }
 
 def installed() {
-    checkIntervalEvent("installed");
+    checkIntervalEvent("installed")
 }
 
 // updated() will run twice every time user presses save in preference settings page
 def updated() {
     checkIntervalEvent("updated")
+}
+
+def ping() {
+    return zigbee.readAttribute(zigbee.POWER_CONFIGURATION_CLUSTER, 0x0020) // Read the Battery Level
 }
 
 // Device wakes up every 1 hours, this interval allows us to miss one wakeup notification before marking offline	
