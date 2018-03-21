@@ -307,15 +307,16 @@ def resetSmoke() {
 def configure() {
     log.debug "${device.displayName}: configuring"
     state.battery = 0
-    //return zigbee.configureReporting(0x0006, 0x0000, 0x10, 1, 7200, null) +
+    return zigbee.configureReporting(0x0006, 0x0000, 0x10, 1, 7200, null)
     // cluster 0x0006, attr 0x0000, datatype 0x10 (boolean), min 1 sec, max 7200 sec, reportableChange = null (because boolean)
     //zigbee.readAttribute(0x0006, 0x0000) 
     // Read cluster 0x0006 (on/off status)
-    return
+    // return
 }
 
 def refresh() {
     log.debug "${device.displayName}: refreshing"
+    zigbee.configureReporting(0x0006, 0x0000, 0x10, 1, 7200, null)
     sendEvent(name: "smoke", value: "clear", displayed: true)
     checkIntervalEvent("refreshed")
 
@@ -342,6 +343,7 @@ def ping() {
 // Device wakes up every 6 to 10 hours, a 12 hour interval allows us to miss one wakeup notification before marking offline	
 private checkIntervalEvent(text) {
     log.debug "${device.displayName}: Configured health checkInterval when ${text}()"
+    zigbee.configureReporting(0x0006, 0x0000, 0x10, 1, 7200, null)
     sendEvent(name: "checkInterval", value: 12 * 60 * 60 + 2 * 60, displayed: false, data: [protocol: "zigbee", hubHardwareId: device.hub.hardwareID])
 }
 
