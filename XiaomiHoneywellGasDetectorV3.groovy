@@ -34,15 +34,20 @@
  *	Inconsistent rendering of user interface text/graphics between iOS and Android devices - This is due to SmartThings, not this device handler
  *	Pairing Xiaomi sensors can be difficult as they were not designed to use with a SmartThings hub, for this one, normally just tap main button 3 times
  *
+ *
+ *  zbjoin: {"dni":"6C10","d":"00158D000103901E","capabilities":"8E","endpoints":[
+ *				{"simple":"01 0104 0101 02 07 0000 0004 0003 0001 0002 000A 0500 02 0019 000A","application":"08","manufacturer":"LUMI","model":"lumi.sensor_natgas"}]
+ *				,"parent":"0000","joinType":1}
+ *
  *  Fingerprint Endpoint data:
  *        01 - endpoint id
  *        0104 - profile id
- *        0402 - device id
- *        01 - ignored
- *        06 - number of in clusters
- *        0000 0003 0012 0500 000C 0001 - inClusters
- *        01 - number of out clusters
- *        0019 - outClusters
+ *        0101 - device id
+ *        02 - ignored (Version)
+ *        07 - number of in clusters
+ *        0000 0004 0003 0001 0002 000A 0500 - inClusters
+ *        02 - number of out clusters
+ *        0019 000A - outClusters
  *        manufacturer "LUMI" - must match manufacturer field in fingerprint
  *        model "lumi.sensor_natgas" - must match model in fingerprint
  *
@@ -78,7 +83,7 @@ metadata {
 		attribute "lastSmokeDate", "Date"
 		attribute "lastDescription", "String"
 	
-		fingerprint endpointId: "01", profileID: "0104", deviceID: "0402", inClusters: "0000,0003,0012,0500,000C,0001", outClusters: "0019", manufacturer: "LUMI", model: "lumi.sensor_natgas", deviceJoinName: "Xiaomi Honeywell Gas Detector"
+		fingerprint endpointId: "01", profileID: "0104", deviceID: "0101", inClusters: "0000,0004,0003,0001,0002,000A,0500", outClusters: "0019,000A", manufacturer: "LUMI", model: "lumi.sensor_natgas", deviceJoinName: "Xiaomi Honeywell Gas Detector"
 	}
 
     	// simulator metadata
