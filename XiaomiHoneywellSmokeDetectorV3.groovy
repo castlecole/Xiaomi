@@ -150,7 +150,10 @@ metadata {
 		valueTile("lastcheckin", "device.lastCheckin", inactiveLabel: false, decoration:"flat", width: 4, height: 1) {
             		state "lastcheckin", label:'Last Event:\n ${currentValue}'
         	}
-        	valueTile("batteryRuntime", "device.batteryRuntime", inactiveLabel: false, decoration:"flat", width: 4, height: 2) {
+		valueTile("blank", "", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
+            		state "default", label:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Battery.png"
+		}
+        	valueTile("batteryRuntime", "device.batteryRuntime", inactiveLabel: false, decoration:"flat", width: 4, height: 1) {
             		state "batteryRuntime", label:'Battery Changed: ${currentValue}'
         	}
 		standardTile("refresh", "device.refresh", inactiveLabel: False, decoration: "flat", width: 2, height: 2) {
@@ -158,7 +161,7 @@ metadata {
         	}
 		
 		main (["smoke2"])
-		details(["smoke", "battery", "lastSmoke", "lastTested", "batteryRuntime", "refresh"])
+		details(["smoke", "battery", "lastSmoke", "lastTested", "blank", "batteryRuntime", "refresh"])
 	}
 }
 
