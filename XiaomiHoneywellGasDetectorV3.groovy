@@ -76,7 +76,6 @@ metadata {
 		attribute "lastCheckin", "string"
 		attribute "lastSmoke", "String"
 		attribute "lastSmokeDate", "Date"
-		attribute "checkInterval", "String"
 		attribute "lastDescription", "String"
 	
 		fingerprint endpointId: "01", profileID: "0104", deviceID: "0402", inClusters: "0000,0003,0012,0500,000C,0001", outClusters: "0019", manufacturer: "LUMI", model: "lumi.sensor_natgas", deviceJoinName: "Xiaomi Honeywell Gas Detector"
@@ -164,11 +163,11 @@ def parse(String description) {
 		if (map.value == "detected") {
 			sendEvent(name: "lastSmoke", value: now, displayed: true)
 			sendEvent(name: "lastSmokeDate", value: nowDate, displayed: false)
-			sendEvent(name: "lastDescription", value: map.descriptionText, displayed: true)
+			sendEvent(name: "lastDescription", value: map.descriptionText, displayed: false)
 		} else if (map.value == "tested") {
 			sendEvent(name: "lastTested", value: now, displayed: true)
 			sendEvent(name: "lastTestedDate", value: nowDate, displayed: false)
-			sendEvent(name: "lastDescription", value: map.descriptionText, displayed: true)
+			sendEvent(name: "lastDescription", value: map.descriptionText, displayed: false)
 		}
 	} else if (description?.startsWith('catchall:')) {
 		map = parseCatchAllMessage(description)
@@ -307,6 +306,11 @@ def resetSmoke() {
 def configure() {
     log.debug "${device.displayName}: configuring"
     state.battery = 0
+    lastTested = "--"
+    lastTestedDate = 0
+    lastSmoke = "--"
+    lastSmokeDate = 0
+
     return zigbee.configureReporting(0x0006, 0x0000, 0x10, 1, 7200, null)
     // cluster 0x0006, attr 0x0000, datatype 0x10 (boolean), min 1 sec, max 7200 sec, reportableChange = null (because boolean)
     //zigbee.readAttribute(0x0006, 0x0000) 
@@ -319,6 +323,10 @@ def refresh() {
     zigbee.configureReporting(0x0006, 0x0000, 0x10, 1, 7200, null)
     sendEvent(name: "smoke", value: "clear", displayed: true)
     checkIntervalEvent("refreshed")
+    lastTested = "--"
+    lastTestedDate = 0
+    lastSmoke = "--"
+    lastSmokeDate = 0
 
     //return zigbee.readAttribute(0x0006, 0x0000) +
     // Read cluster 0x0006 (on/off status)
@@ -327,7 +335,7 @@ def refresh() {
 }
 
 def installed() {
-    state.battery = 0
+    state.battery = 100
     checkIntervalEvent("installed")
 }
 
