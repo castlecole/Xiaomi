@@ -63,9 +63,8 @@ def version() {
 
 metadata {
 	definition (name: "Xiaomi Honeywell Smoke Detector V3", namespace: "castlecole", author: "bspranger") {
-		capability "Battery" //attributes: battery
-		capability "Configuration" //commands: configure()
-		capability "Smoke Detector" //attributes: smoke ("detected","clear","tested")
+		capability "Battery" //attributes: battery		capability "Configuration" //commands: configure()
+		capability "Smoke Detector" //attributes: smoke 	("detected","clear","tested")
 
 		capability "Health Check"		
 		capability "Sensor"
@@ -101,7 +100,7 @@ metadata {
 		input description: "Only change the settings below if you know what you're doing.", type: "paragraph", element: "paragraph", title: "ADVANCED SETTINGS"
 		input name: "voltsmax", title: "Max Volts\nA battery is at 100% at __ volts.\nRange 2.8 to 3.4", type: "decimal", range: "2.8..3.4", defaultValue: 3.25
 		input name: "voltsmin", title: "Min Volts\nA battery is at 0% (needs replacing)\nat __ volts.  Range 2.0 to 2.7", type: "decimal", range: "2..2.7", defaultValue: 2.5
-		input description: "Version: ${version()}", type: "paragraph", element: "paragraph", title: ""
+		input description: 'Version: ${version()}', type: "paragraph", element: "paragraph", title: ""
 	}
 	
 	tiles(scale: 2) {
