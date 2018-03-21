@@ -141,6 +141,9 @@ metadata {
             		state "default", action:"resetClear", label:'Override Smoke', icon:"st.alarm.smoke.clear"
 		}
 */		
+		valueTile("lastSmoke", "device.lastSmoke", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
+            		state "default", label:'Last Smoke Detected:\n ${currentValue}'
+		}
 		valueTile("lastTested", "device.lastTested", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
             		state "default", label:'Last Tested:\n ${currentValue}'
 		}
@@ -155,8 +158,7 @@ metadata {
         	}
 		
 		main (["smoke2"])
-		details(["smoke", "battery",  
-			 "lastTested", "lastcheckin", "batteryRuntime", "refresh"])
+		details(["smoke", "battery", "lastSmoke", "lastTested", "batteryRuntime", "refresh"])
 	}
 }
 
