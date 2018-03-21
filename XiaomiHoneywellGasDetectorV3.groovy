@@ -130,7 +130,7 @@ metadata {
         		state "default", label:'Last GAS Detected:\n ${currentValue}'
 		}
 		standardTile("refresh", "device.refresh", inactiveLabel: False, decoration: "flat", width: 2, height: 2) {
-		    	state "default", action:"device.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
+		    	state "default", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
     		}
 		valueTile("lastTested", "device.lastTested", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
         		state "default", label:'Last Tested:\n ${currentValue}'
@@ -317,6 +317,7 @@ def configure() {
 def refresh() {
     log.debug "${device.displayName}: refreshing"
     sendEvent(name: "smoke", value: "clear", displayed: true)
+    checkIntervalEvent("refreshed")
 
     //return zigbee.readAttribute(0x0006, 0x0000) +
     // Read cluster 0x0006 (on/off status)
