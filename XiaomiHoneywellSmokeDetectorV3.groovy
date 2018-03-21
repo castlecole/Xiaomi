@@ -1,5 +1,5 @@
 /**
- *  Xiaomi Mijia Honeywell Fire Detector
+ *  Xiaomi Mijia Honeywell Smoke Detector
  *  Version 0.51
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
