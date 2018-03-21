@@ -102,8 +102,8 @@ metadata {
 		multiAttributeTile(name:"smoke", type: "lighting", width: 6, height: 4) {
 			tileAttribute ("device.smoke", key: "PRIMARY_CONTROL") {
            			attributeState( "clear", label:'CLEAR', icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/alarm-clear0.png", backgroundColor:"#359148")
-				attributeState( "tested", label:"TEST", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/alarm-notclear0.png", backgroundColor:"#e86d13")
-				attributeState( "detected", label:'SMOKE', icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/alarm-notclear0.png", backgroundColor:"#ed0000")   
+				attributeState( "tested", label:"TESTED", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/alarm-notclear0.png", backgroundColor:"#e86d13")
+				attributeState( "detected", label:'GAS DETECTED', icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/alarm-notclear0.png", backgroundColor:"#ed0000")   
  			}
 			tileAttribute("device.lastCheckin", key: "SECONDARY_CONTROL") {
 				attributeState("default", label:'Last Checkin: ${currentValue}', icon: "st.Health & Wellness.health9")
@@ -113,8 +113,8 @@ metadata {
 		multiAttributeTile(name:"smoke2", type: "lighting", width: 6, height: 4) {
 			tileAttribute ("device.smoke", key: "PRIMARY_CONTROL") {
    				attributeState( "clear", label:'CLEAR', icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/House-Normal.png", backgroundColor:"#359148")
-				attributeState( "tested", label:"TEST", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/House-GAS-Event.png", backgroundColor:"#e86d13")
-				attributeState( "detected", label:'SMOKE', icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/House-GAS-Event.png", backgroundColor:"#ed0000")   
+				attributeState( "tested", label:"TESTED", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/House-GAS-Event.png", backgroundColor:"#e86d13")
+				attributeState( "detected", label:'GAS DETECTED', icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/House-GAS-Event.png", backgroundColor:"#ed0000")   
  			}
 		}
         	valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
@@ -171,11 +171,11 @@ def parse(String description) {
 		if (map.value == "detected") {
 			sendEvent(name: "lastSmoke", value: now, displayed: true)
 			sendEvent(name: "lastSmokeDate", value: nowDate, displayed: false)
-			sendEvent(name: "lastDescription", value: map.descriptionText, displayed: true)
+			sendEvent(name: "lastDescription", value: map.descriptionText, displayed: false)
 		} else if (map.value == "tested") {
 			sendEvent(name: "lastTested", value: now, displayed: true)
 			sendEvent(name: "lastTestedDate", value: nowDate, displayed: false)
-			sendEvent(name: "lastDescription", value: map.descriptionText, displayed: true)
+			sendEvent(name: "lastDescription", value: map.descriptionText, displayed: false)
 		}
 	} else if (description?.startsWith('catchall:')) {
 		map = parseCatchAllMessage(description)
@@ -202,7 +202,8 @@ private Map parseZoneStatusMessage(String description) {
 	def result = [
 		name: 'smoke',
 		value: value,
-		descriptionText: 'gas detected'
+		descriptionText: 'Gas detected',
+		displayed: true
 	]
 	if (description?.startsWith('zone status')) {
 		if (description?.startsWith('zone status 0x0002')) { // User Test
