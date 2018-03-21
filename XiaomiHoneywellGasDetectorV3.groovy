@@ -338,10 +338,10 @@ def ping() {
     return zigbee.readAttribute(zigbee.POWER_CONFIGURATION_CLUSTER, 0x0020) // Read the Battery Level
 }
 
-// Device wakes up every 1 hours, this interval allows us to miss one wakeup notification before marking offline	
+// Device wakes up every 6 to 10 hours, a 12 hour interval allows us to miss one wakeup notification before marking offline	
 private checkIntervalEvent(text) {
     log.debug "${device.displayName}: Configured health checkInterval when ${text}()"
-    sendEvent(name: "checkInterval", value: 2 * 60 * 60 + 2 * 60, displayed: false, data: [protocol: "zigbee", hubHardwareId: device.hub.hardwareID])
+    sendEvent(name: "checkInterval", value: 12 * 60 * 60 + 2 * 60, displayed: false, data: [protocol: "zigbee", hubHardwareId: device.hub.hardwareID])
 }
 
 def formatDate(batteryReset) {
