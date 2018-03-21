@@ -151,10 +151,10 @@ metadata {
             		state "lastcheckin", label:'Last Event:\n ${currentValue}'
         	}
 		valueTile("blank", "", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
-            		state "default", label:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Battery.png"
+            		state "default", label:""
 		}
         	valueTile("batteryRuntime", "device.batteryRuntime", inactiveLabel: false, decoration:"flat", width: 4, height: 1) {
-            		state "batteryRuntime", label:'Battery Changed: ${currentValue}'
+            		state "batteryRuntime", label:'Battery Changed: ${currentValue}', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Battery.png"
         	}
 		standardTile("refresh", "device.refresh", inactiveLabel: False, decoration: "flat", width: 2, height: 2) {
 			state "default", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
