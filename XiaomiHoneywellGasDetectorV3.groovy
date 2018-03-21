@@ -134,6 +134,9 @@ metadata {
 		valueTile("lastTested", "device.lastTested", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
         		state "default", label:'Last Tested:\n ${currentValue}'
 		}
+		valueTile("lastDescription", "device.lastDescription", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
+        		state "default", label:'${currentValue}'
+		}
 		
 		main (["smoke2"])
 		details(["smoke", "lastSmoke", "refresh", "lastTested"])
@@ -163,11 +166,11 @@ def parse(String description) {
 		if (map.value == "detected") {
 			sendEvent(name: "lastSmoke", value: now, displayed: true)
 			sendEvent(name: "lastSmokeDate", value: nowDate, displayed: false)
-			sendEvent(name: "lastDescription", value: map.descriptionText, displayed: false)
+			sendEvent(name: "lastDescription", value: map.descriptionText, displayed: true)
 		} else if (map.value == "tested") {
 			sendEvent(name: "lastTested", value: now, displayed: true)
 			sendEvent(name: "lastTestedDate", value: nowDate, displayed: false)
-			sendEvent(name: "lastDescription", value: map.descriptionText, displayed: false)
+			sendEvent(name: "lastDescription", value: map.descriptionText, displayed: true)
 		}
 	} else if (description?.startsWith('catchall:')) {
 		map = parseCatchAllMessage(description)
