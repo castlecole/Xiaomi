@@ -18,6 +18,7 @@
  *	Review in english photos dimensions etc... https://blog.tlpa.nl/2017/11/12/xiaomi-also-mijia-and-honeywell-smart-fire-detector/
  *	Device purchased here (€20.54)... https://www.gearbest.com/alarm-systems/pp_615081.html
  *	RaspBee packet sniffer... https://github.com/dresden-elektronik/deconz-rest-plugin/issues/152
+
  *	Instructions in English.. http://files.xiaomi-mi.com/files/MiJia_Honeywell/MiJia_Honeywell_Smoke_Detector_EN.pdf
  *	Fire Certification is CCCF... https://www.china-certification.com/en/ccc-certification-for-fire-safety-products-cccf/
  *	... in order to be covered by your insurance and for piece of mind, please also use correctly certified detectors if CCCF is not accepted in your country  
@@ -153,15 +154,15 @@ metadata {
 		valueTile("blank", "", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
             		state "default", label:""
 		}
-        	valueTile("batteryRuntime", "device.batteryRuntime", inactiveLabel: false, decoration:"flat", width: 4, height: 2) {
-            		state "batteryRuntime", label:'Battery Changed: ${currentValue}', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Battery.png"
+        	valueTile("batteryRuntime", "device.batteryRuntime", inactiveLabel: false, decoration:"flat", width: 4, height: 1) {
+            		state "batteryRuntime", label:'Battery Changed: ${currentValue}'
         	}
 		standardTile("refresh", "device.refresh", inactiveLabel: False, decoration: "flat", width: 2, height: 2) {
 			state "default", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
         	}
 		
 		main (["smoke2"])
-		details(["smoke", "battery", "lastSmoke", "lastTested", "batteryRuntime", "refresh"])
+		details(["smoke", "battery", "lastSmoke", "lastTested", "blank", "batteryRuntime", "refresh"])
 	}
 }
 
