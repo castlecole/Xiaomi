@@ -144,7 +144,7 @@ metadata {
 		}
 		
 		main (["smoke2"])
-		details(["smoke", "lastSmoke", "lastTested", "refresh"
+		details(["smoke", "lastSmoke", "lastTested", "refresh"])
 	}
 }
 
