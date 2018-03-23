@@ -102,8 +102,8 @@ metadata {
 		multiAttributeTile(name:"smoke", type: "lighting", width: 6, height: 4) {
 			tileAttribute ("device.smoke", key: "PRIMARY_CONTROL") {
            			attributeState( "clear", label:'CLEAR', icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/alarm-clear0.png", backgroundColor:"#359148")
-				attributeState( "tested", label:"TESTED", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/alarm-notclear0.png", backgroundColor:"#e86d13")
-				attributeState( "detected", label:'GAS DETECTED', icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/alarm-notclear0.png", backgroundColor:"#ed0000")   
+				attributeState( "tested", label:"TESTED!", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/alarm-notclear0.png", backgroundColor:"#e86d13")
+				attributeState( "detected", label:'GAS DETECTED!', icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/alarm-notclear0.png", backgroundColor:"#ed0000")   
  			}
 			tileAttribute("device.lastCheckin", key: "SECONDARY_CONTROL") {
 				attributeState("default", label:'Last Checkin: ${currentValue}', icon: "st.Health & Wellness.health9")
@@ -113,8 +113,8 @@ metadata {
 		multiAttributeTile(name:"smoke2", type: "lighting", width: 6, height: 4) {
 			tileAttribute ("device.smoke", key: "PRIMARY_CONTROL") {
    				attributeState( "clear", label:'CLEAR', icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/House-Normal.png", backgroundColor:"#359148")
-				attributeState( "tested", label:"TESTED", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/House-GAS-Event.png", backgroundColor:"#e86d13")
-				attributeState( "detected", label:'GAS DETECTED', icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/House-GAS-Event.png", backgroundColor:"#ed0000")   
+				attributeState( "tested", label:"TESTED!", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/House-GAS-Event.png", backgroundColor:"#e86d13")
+				attributeState( "detected", label:'GAS DETECTED!', icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/House-GAS-Event.png", backgroundColor:"#ed0000")   
  			}
 		}
         	valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
@@ -144,7 +144,7 @@ metadata {
 		}
 		
 		main (["smoke2"])
-		details(["smoke", "lastSmoke", "refresh", "lastTested"])
+		details(["smoke", "lastSmoke", "lastTested", "refresh"
 	}
 }
 
@@ -315,10 +315,9 @@ def resetSmoke() {
 def configure() {
     log.debug "${device.displayName}: configuring"
     state.battery = 0
-    lastTested = "--"
-    lastTestedDate = 0
-    lastSmoke = "--"
-    lastSmokeDate = 0
+
+    sendEvent(name: "lastSmoke", value: "--", displayed: true)
+    sendEvent(name: "lastTested", value: "--", displayed: true)
 
     return zigbee.configureReporting(0x0006, 0x0000, 0x10, 1, 7200, null)
     // cluster 0x0006, attr 0x0000, datatype 0x10 (boolean), min 1 sec, max 7200 sec, reportableChange = null (because boolean)
@@ -328,14 +327,13 @@ def configure() {
 }
 
 def refresh() {
+
     log.debug "${device.displayName}: refreshing"
     zigbee.configureReporting(0x0006, 0x0000, 0x10, 1, 7200, null)
+    sendEvent(name: "lastSmoke", value: "--", displayed: true)
+    sendEvent(name: "lastTested", value: "--", displayed: true)
     sendEvent(name: "smoke", value: "clear", displayed: true)
     checkIntervalEvent("refreshed")
-    lastTested = "--"
-    lastTestedDate = 0
-    lastSmoke = "--"
-    lastSmokeDate = 0
 
     //return zigbee.readAttribute(0x0006, 0x0000) +
     // Read cluster 0x0006 (on/off status)
@@ -345,6 +343,8 @@ def refresh() {
 
 def installed() {
     state.battery = 100
+    sendEvent(name: "lastSmoke", value: "--", displayed: true)
+    sendEvent(name: "lastTested", value: "--", displayed: true)
     checkIntervalEvent("installed")
 }
 
