@@ -153,7 +153,7 @@ metadata {
             		state "default", label:"n/a"
 		}
         	valueTile("batteryRuntime", "device.batteryRuntime", inactiveLabel: false, decoration:"flat", width: 4, height: 1) {
-            		state "batteryRuntime", action:"resetBatteryRuntime", label:'Battery Changed (tap to reset):\n ${currentValue}', unit:"",
+            		state "batteryRuntime", action:"resetBatteryRuntime", label:'Battery Changed (tap to reset):\n ${currentValue}', unit:""
         	}
 		standardTile("refresh", "device.refresh", inactiveLabel: False, decoration: "flat", width: 2, height: 2) {
 			state "default", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
