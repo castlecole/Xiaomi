@@ -69,6 +69,7 @@ metadata {
 
 		capability "Health Check"		
 		capability "Sensor"
+		capability "Refresh"
 
 		command "resetClear"
 		command "resetSmoke"
@@ -94,9 +95,6 @@ metadata {
 		input description: "", type: "paragraph", element: "paragraph", title: "DATE & CLOCK"    
 		input name: "dateformat", type: "enum", title: "Set Date Format\nUS (MDY) - UK (DMY) - Other (YMD)", description: "Date Format", options:["US","UK","Other"]
 		input name: "clockformat", type: "bool", title: "Use 24 hour clock?"
-		//Battery Reset Config
-		input description: "If you have installed a new battery, the toggle below will reset the Changed Battery date to help remember when it was changed.", type: "paragraph", element: "paragraph", title: "CHANGED BATTERY DATE RESET"
-		input name: "battReset", type: "bool", title: "Battery Changed?", description: ""
 		//Battery Voltage Offset
 		input description: "Only change the settings below if you know what you're doing.", type: "paragraph", element: "paragraph", title: "ADVANCED SETTINGS"
 		input name: "voltsmax", title: "Max Volts\nA battery is at 100% at __ volts.\nRange 2.8 to 3.4", type: "decimal", range: "2.8..3.4", defaultValue: 3.25
@@ -152,17 +150,17 @@ metadata {
             		state "lastcheckin", label:'Last Event:\n ${currentValue}'
         	}
 		valueTile("blank", "", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
-            		state "default", label:""
+            		state "default", label:"n/a"
 		}
         	valueTile("batteryRuntime", "device.batteryRuntime", inactiveLabel: false, decoration:"flat", width: 4, height: 1) {
-            		state "batteryRuntime", label:'Battery Changed: ${currentValue}'
+            		state "batteryRuntime", action:"resetBatteryRuntime", label:'Battery Changed (tap to reset):\n ${currentValue}', unit:"",
         	}
 		standardTile("refresh", "device.refresh", inactiveLabel: False, decoration: "flat", width: 2, height: 2) {
 			state "default", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
         	}
 		
 		main (["smoke2"])
-		details(["smoke", "battery", "lastSmoke", "lastTested", "blank", "batteryRuntime", "refresh"])
+		details(["smoke", "battery", "lastSmoke", "blank", "lastTested", "batteryRuntime", "refresh"])
 	}
 }
 
@@ -332,6 +330,8 @@ def resetBatteryRuntime(paired) {
 // installed() runs just after a sensor is paired using the "Add a Thing" method in the SmartThings mobile app
 def installed() {
 	state.battery = 0
+	sendEvent(name: "lastSmoke", value: "--", displayed: false)
+	sendEvent(name: "lastTested", value: "--", displayed: false)
 	if (!batteryRuntime) resetBatteryRuntime(true){
 		checkIntervalEvent("installed")
 	}
@@ -345,6 +345,13 @@ def configure() {
 		checkIntervalEvent("configured")
 	}
 	return
+}
+
+def refresh() {
+
+	sendEvent(name: "lastSmoke", value: "--", displayed: false)
+	sendEvent(name: "lastTested", value: "--", displayed: false)
+
 }
 
 // updated() will run twice every time user presses save in preference settings page
