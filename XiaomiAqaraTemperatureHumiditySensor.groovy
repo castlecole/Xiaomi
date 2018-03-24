@@ -105,10 +105,10 @@ metadata {
             }
         }
         valueTile("humidity", "device.humidity", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
-            state "default", label:'${currentValue}%', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/humidity.png", backgroundColor: "#ffff00"
+            state "default", label:'${currentValue}%', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/humidity.png", backgroundColor: "#ff9600"
         }
         valueTile("pressure", "device.pressure", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
-            state "default", label:'${currentValue.round(0)}', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/pressure.png", backgroundColor: "#ffff00"
+            state "default", label:'${(Math.round(currentValue))}', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/pressure.png", backgroundColor: "#ff9600"
         }
         valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
             state "default", label:'${currentValue}%'+"\n", unit:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Battery.png",
