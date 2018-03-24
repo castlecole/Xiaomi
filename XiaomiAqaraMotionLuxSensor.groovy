@@ -28,6 +28,7 @@
  *  bspranger - renamed to bspranger to remove confusion of a4refillpad
  */
 
+
 def version() {
 	return "v2 (20170324)\nXiaomi Aqara Motion Lux Sensor - Zigbee"
 }
