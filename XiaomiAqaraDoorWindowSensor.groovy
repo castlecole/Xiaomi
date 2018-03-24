@@ -34,6 +34,10 @@
  *  veeceoh - added new refresh & configure code, fixed open/close override code
  */
 
+def version() {
+	return "v2 (20170324)\nXiaomi Aqara Door/Window Sensor - Zigbee"
+}
+
 metadata {
     definition (name: "Xiaomi Aqara Door/Window Sensor", namespace: "castlecole", author: "bspranger") {
         capability "Configuration"
@@ -60,6 +64,9 @@ metadata {
         status "open": "on/off: 1"
     }
 
+   preferences{
+ 	input description: "Version: ${version()}", type: "paragraph", element: "paragraph", title: ""
+   }
 
    tiles(scale: 2) {
         multiAttributeTile(name:"contact", type: "generic", width: 6, height: 4){
