@@ -61,7 +61,6 @@ metadata {
     preferences {
         input "motionReset", "number", title: "Number of seconds after the last reported activity to report that motion is inactive (in seconds). \n\n(The device will always remain blind to motion for 60seconds following first detected motion. This value just clears the 'active' status after the number of seconds you set here but the device will still remain blind for 60seconds in normal operation.)", description: "", value:120, displayDuringSetup: true
  	input description: "Version: ${version()}", type: "paragraph", element: "paragraph", title: ""
-
     }
 
     tiles(scale: 2) {
@@ -106,9 +105,9 @@ metadata {
         standardTile("reset", "device.reset", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
             state "default", action:"reset", label: "Reset Motion", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/motion-detector-icon2.png"
         }
-            tileAttribute("device.lastMotion", key: "SECONDARY_CONTROL") {
-                attributeState("default", label:'Last Motion: ${currentValue}', icon: "st.secondary.activity")
-            }
+        valueTile("lastMotion", "device.lastMotion", decoration: "flat", inactiveLabel: false, width: 4, height: 1) {
+            state "default", label:'Last Motion Detected:\n ${currentValue}'
+	}
         valueTile("lastcheckin", "device.lastCheckin", decoration: "flat", inactiveLabel: false, width: 4, height: 1) {
             state "default", label:'Last Checkin:\n ${currentValue}', backgroundColor:"#00a0dc"
         }
