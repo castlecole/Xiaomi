@@ -28,6 +28,10 @@
  *  bspranger - renamed to bspranger to remove confusion of a4refillpad
  */
 
+def version() {
+	return "v2 (20170324)\nXiaomi Aqara Motion Lux Sensor - Zigbee"
+}
+
 metadata {
     definition (name: "Xiaomi Aqara Motion Lux Sensor", namespace: "castlecole", author: "bspranger") {
         capability "Motion Sensor"
@@ -56,6 +60,8 @@ metadata {
 
     preferences {
         input "motionReset", "number", title: "Number of seconds after the last reported activity to report that motion is inactive (in seconds). \n\n(The device will always remain blind to motion for 60seconds following first detected motion. This value just clears the 'active' status after the number of seconds you set here but the device will still remain blind for 60seconds in normal operation.)", description: "", value:120, displayDuringSetup: true
+ 	input description: "Version: ${version()}", type: "paragraph", element: "paragraph", title: ""
+
     }
 
     tiles(scale: 2) {
@@ -64,8 +70,8 @@ metadata {
 		attributeState("active", label:"", icon: "https://raw.githubusercontent.com/castlecole/Xiaomi/master/motion-detector-icon.png", backgroundColor:"#e86d13")
 		attributeState("inactive", label:"", icon: "https://raw.githubusercontent.com/castlecole/Xiaomi/master/motion-detector-icon2.png", backgroundColor:"#00a0dc")
             }
-            tileAttribute("device.lastMotion", key: "SECONDARY_CONTROL") {
-                attributeState("default", label:'Last Motion: ${currentValue}', icon: "st.secondary.activity")
+            tileAttribute("device.lastCheckin", key: "SECONDARY_CONTROL") {
+                attributeState("default", label:'Last Checkin: ${currentValue}', icon: "st.Health & Wellness.health9")
             }
 	}
 
@@ -85,7 +91,7 @@ metadata {
             ]
         }
         valueTile("light", "device.Light", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
-		state "light", label:'${currentValue}\n${unit}', unit:"lux",
+		state "light", label:'${currentValue}\n${unit}', unit: "lux",
 			backgroundColors:[
                     		[value: 0, color: "#000000"],
                     		[value: 1, color: "#060053"],
@@ -100,8 +106,11 @@ metadata {
         standardTile("reset", "device.reset", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
             state "default", action:"reset", label: "Reset Motion", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/motion-detector-icon2.png"
         }
+            tileAttribute("device.lastMotion", key: "SECONDARY_CONTROL") {
+                attributeState("default", label:'Last Motion: ${currentValue}', icon: "st.secondary.activity")
+            }
         valueTile("lastcheckin", "device.lastCheckin", decoration: "flat", inactiveLabel: false, width: 4, height: 1) {
-            state "default", label:'Last Checkin:\n ${currentValue}'
+            state "default", label:'Last Checkin:\n ${currentValue}', backgroundColor:"#00a0dc"
         }
 	standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
 	    state "default", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
@@ -111,7 +120,7 @@ metadata {
 	}
 
         main(["motion2"])
-        details(["motion", "battery", "light", "reset", "lastcheckin", "refresh", "batteryRuntime"])
+        details(["motion", "battery", "light", "reset", "lastMotion", "batteryRuntime", "refresh"])
     }
 }
 
@@ -120,7 +129,7 @@ def parse(String description) {
     
     // send event for heartbeat
     def now = new Date().format("EEE MMM dd yyyy h:mm:ss a", location.timeZone)
-    sendEvent(name: "lastCheckin", value: now)
+    sendEvent(name: "lastCheckin", value: now, displayed: true)
 
     Map map = [:]
     if (description?.startsWith('catchall:')) {
@@ -153,7 +162,7 @@ private Map parseIlluminanceMessage(String description) {
         value: Lux,
         unit: "Lux",
         isStateChange:true,
-        descriptionText : "${device.displayName} Light was ${Lux} Lux"
+        descriptionText : "${device.displayName} Light level was ${Lux} Lux"
     ]
     return result;
 }
@@ -171,8 +180,8 @@ private Map getBatteryResult(rawValue) {
         name: 'battery',
         value: roundedPct,
         unit: "%",
-        isStateChange:true,
-        descriptionText : "${device.displayName} raw battery is ${rawVolts}v"
+        isStateChange: true,
+	descriptionText: "${device.displayName} Battery is ${roundedPct}%\n(${rawVolts} Volts)"
     ]
     
     log.debug "${device.displayName}: ${result}"
@@ -227,7 +236,7 @@ private Map parseCatchAllMessage(String description) {
 
 
 def configure() {
-	state.battery = 0
+    state.battery = 0
     log.debug "${device.displayName}: configuring"
     return zigbee.readAttribute(0x0001, 0x0020) + zigbee.configureReporting(0x0001, 0x0020, 0x21, 600, 21600, 0x01)
 }
@@ -340,7 +349,7 @@ def reset() {
 
 def resetBatteryRuntime() {
     def now = new Date().format("MMM dd yyyy", location.timeZone)
-    sendEvent(name: "batteryRuntime", value: now)
+    sendEvent(name: "batteryRuntime", value: now, displayed: true)
 }
 
 def installed() {
