@@ -39,6 +39,11 @@
  *        deviceJoinName: whatever you want it to show in the app as a Thing
  *
  */
+
+def version() {
+	return "v2 (20170324)\nXiaomi Aqara Button - Zigbee"
+}
+
 metadata {
     definition (name: "Xiaomi Aqara Button", namespace: "castlecole", author: "bspranger") {
         capability "Battery"
@@ -65,7 +70,8 @@ metadata {
     preferences{
     	input ("ReleaseTime", "number", title: "Minimum time in seconds for a press to clear", defaultValue: 2, displayDuringSetup: false)
         input name: "PressType", type: "enum", options: ["Toggle", "Momentary"], description: "Effects how the button toggles", defaultValue: "Toggle", displayDuringSetup: true
-    }
+ 	input description: "Version: ${version()}", type: "paragraph", element: "paragraph", title: ""
+   }
     
     tiles(scale: 2) {
 
@@ -111,7 +117,7 @@ metadata {
         }
 	
 	valueTile("batteryblank", "", inactiveLabel: true, decoration: "flat", width: 4, height: 1) {
-	    state "batteryRuntime", label:""
+	    state "batteryRuntime", label:"n/a"
 	}
 	valueTile("batteryRuntime", "device.batteryRuntime", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
 	    state "batteryRuntime", label:"Battery Changed: "+'${currentValue}'+'\n(Tap To Reset)", unit:', action:"resetBatteryRuntime"
