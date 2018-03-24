@@ -161,7 +161,7 @@ private Map getBatteryResult(rawValue) {
         value: roundedPct,
         unit: "%",
         isStateChange: true,
-	    descriptionText: "${device.displayName} Battery is ${roundedPct}%\n(${rawVolts} Volts)"
+	descriptionText: "${device.displayName} Battery is ${roundedPct}%\n(${rawVolts} Volts)"
     ]
     
     log.debug "${device.displayName}: ${result}"
@@ -254,7 +254,9 @@ private Map getContactResult(result) {
 }
 
 def resetClosed() {
-    sendEvent(name:"contact", value:"closed", displayed: true)
+    def now = new Date().format("EEE MMM dd yyyy h:mm:ss a", location.timeZone)
+    sendEvent(name: "contact", value:"closed", displayed: true)
+    sendEvent(name: "lastCheckin", value: now, displayed: true)
 } 
 
 def resetOpen() {
