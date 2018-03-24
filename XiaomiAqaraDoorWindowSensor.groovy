@@ -127,7 +127,7 @@ def parse(String description) {
     // send event for heartbeat
     def now = new Date().format("EEE MMM dd yyyy h:mm:ss a", location.timeZone)
     def nowDate = new Date(now).getTime()
-    sendEvent(name: "lastCheckin", value: now)
+    sendEvent(name: "lastCheckin", value: now, displayed: true)
     sendEvent(name: "lastCheckinDate", value: nowDate, displayed: false)
 
     Map map = [:]
@@ -160,8 +160,8 @@ private Map getBatteryResult(rawValue) {
         name: 'battery',
         value: roundedPct,
         unit: "%",
-        isStateChange:true,
-        descriptionText : '${device.displayName} Battery is $(roundedPct)%\n(${rawVolts} Volts)'
+        isStateChange: true,
+	    descriptionText: "${device.displayName} Battery is ${roundedPct}%\n(${rawVolts} Volts)"
     ]
     
     log.debug "${device.displayName}: ${result}"
@@ -254,15 +254,15 @@ private Map getContactResult(result) {
 }
 
 def resetClosed() {
-    sendEvent(name:"contact", value:"closed")
+    sendEvent(name:"contact", value:"closed", displayed: true)
 } 
 
 def resetOpen() {
     def now = new Date().format("EEE MMM dd yyyy h:mm:ss a", location.timeZone)
     def nowDate = new Date(now).getTime()
-    sendEvent(name: "contact", value:"open")
-    sendEvent(name: "lastOpened", value: now)
-    sendEvent(name: "lastOpenedDate", value: nowDate)
+    sendEvent(name: "contact", value: "open", displayed: true)
+    sendEvent(name: "lastOpened", value: now, displayed: true)
+    sendEvent(name: "lastOpenedDate", value: nowDate, displayed: false)
 }
 
 def resetBatteryRuntime() {
