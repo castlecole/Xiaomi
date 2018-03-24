@@ -108,7 +108,7 @@ metadata {
             state "default", label:'${currentValue}%', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/humidity.png", backgroundColor: "#ff9600"
         }
         valueTile("pressure", "device.pressure", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
-            state "default", label:'${(Math.round(currentValue))}', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/pressure.png", backgroundColor: "#ff9600"
+            state "default", label:'${currentValue}', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/pressure.png", backgroundColor: "#ff9600"
         }
         valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
             state "default", label:'${currentValue}%'+"\n", unit:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Battery.png",
@@ -243,7 +243,7 @@ private Map parseHumidity(String description){
             name: 'humidity',
             value: pct,
             unit: "%",
-            isStateChange:true,
+            isStateChange: true,
             descriptionText : "${device.displayName} Humidity is ${pct}%"
         ]
         return result
@@ -312,22 +312,22 @@ private Map parseReadAttr(String description) {
         switch (PressureUnits) {
             case "mbar":
                 pressureval = (pressureval/10) as Float
-                pressureval = pressureval.round(1);
+                pressureval = pressureval.round(0);
                 break;
 
             case "kPa":
                 pressureval = (pressureval/100) as Float
-                pressureval = pressureval.round(2);
+                pressureval = pressureval.round(1);
                 break;
 
             case "inHg":
                 pressureval = (((pressureval/10) as Float) * 0.0295300)
-                pressureval = pressureval.round(2);
+                pressureval = pressureval.round(1);
                 break;
 
             case "mmHg":
                 pressureval = (((pressureval/10) as Float) * 0.750062)
-                pressureval = pressureval.round(2);
+                pressureval = pressureval.round(1);
                 break;
         }
 
@@ -336,7 +336,7 @@ private Map parseReadAttr(String description) {
 	if (pressOffset == null || pressOffset == "" ) pressOffset = 0    
 	if (pressOffset) {
             pressureval = (pressureval + pressOffset)
-            pressureval = pressureval.round(2);
+            pressureval = pressureval.round(1);
         }
         
         resultMap = [
@@ -344,7 +344,7 @@ private Map parseReadAttr(String description) {
             value: pressureval,
             unit: "${PressureUnits}",
             isStateChange:true,
-            descriptionText : "${device.displayName} Pressure is ${pressureval}${PressureUnits}"
+            descriptionText : "${device.displayName} Pressure is ${pressureval} ${PressureUnits}"
         ]
     } else if (cluster == "0000" && attrId == "0005")  {
         def model = value.split("01FF")[0]
