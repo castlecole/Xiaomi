@@ -52,7 +52,7 @@ metadata {
 	capability "Sensor"
         capability "Refresh"
         
-        attribute "lastPress", "string"
+        attribute "lastPressed", "string"
         attribute "batterylevel", "string"
         attribute "lastCheckin", "string"
         attribute "lastCheckinDate", "Date"
@@ -106,16 +106,17 @@ metadata {
 			]
         }
 	valueTile("lastcheckin", "device.lastCheckin", decoration: "flat", inactiveLabel: false, width: 4, height: 1) {
-            state "default", label:'Last Checkin:\n${currentValue}'
+            state "default", label:'Last Checkin:\n${currentValue}', backgroundColor:"#00a0dc"
         }
-        valueTile("lastpressed", "device.lastpressed", decoration: "flat", inactiveLabel: false, width: 4, height: 1) {
-            state "default", label:'Last Pressed:\n${currentValue}'
+	valueTile("checkinblank", "", inactiveLabel: true, decoration: "flat", width: 4, height: 1) {
+	    state "batteryRuntime", label:"n/a"
+	}
+        valueTile("lastPressed", "device.lastPressed", decoration: "flat", inactiveLabel: false, width: 4, height: 1) {
+            state "default", label:'Button Last Pressed:\n${currentValue}'
         }
         standardTile("refresh", "command.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
 	    state "default", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
-
         }
-	
 	valueTile("batteryblank", "", inactiveLabel: true, decoration: "flat", width: 4, height: 1) {
 	    state "batteryRuntime", label:"n/a"
 	}
@@ -124,7 +125,7 @@ metadata {
 	}
 	    
         main (["button2"])
-        details(["button","battery","lastcheckin","lastpressed","batteryblank","batteryRuntime","refresh"])
+        details(["button","battery", "lastpressed", "checkinblank", "batteryblank","batteryRuntime","refresh"])
    }
 }
 
@@ -141,7 +142,7 @@ def parse(String description) {
     //  send event for heartbeat    
     def now = new Date().format("EEE MMM dd yyyy h:mm:ss a", location.timeZone)
     def nowDate = new Date(now).getTime()
-    sendEvent(name: "lastCheckin", value: now)
+    sendEvent(name: "lastCheckin", value: now, displayed: true)
     sendEvent(name: "lastCheckinDate", value: nowDate, displayed: false) 
 
     Map map = [:]
@@ -149,7 +150,7 @@ def parse(String description) {
     if (description?.startsWith('on/off: ')) 
     {
         map = parseCustomMessage(description) 
-        sendEvent(name: "lastpressed", value: now, displayed: false)
+        sendEvent(name: "lastpressed", value: now, displayed: true)
         sendEvent(name: "lastpressedDate", value: nowDate, displayed: false)
     }
     else if (description?.startsWith('catchall:')) 
@@ -209,7 +210,6 @@ private Map parseReadAttrMessage(String description) {
         }
         return resultMap
     }
-    
     return [:]    
 }
 
@@ -249,8 +249,8 @@ private Map getBatteryResult(rawValue) {
         name: 'battery',
         value: roundedPct,
         unit: "%",
-        isStateChange:true,
-        descriptionText : "${device.displayName} raw battery is ${rawVolts}v"
+        isStateChange: true,
+	descriptionText: "${device.displayName} Battery is ${roundedPct}%\n(${rawVolts} Volts)"
     ]
     
     log.debug "${device.displayName}: ${result}"
