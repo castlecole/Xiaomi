@@ -161,7 +161,7 @@ private Map getBatteryResult(rawValue) {
         value: roundedPct,
         unit: "%",
         isStateChange:true,
-        descriptionText : "${device.displayName} Battery is $(roundedPct)%\n(${rawVolts} Volts)"
+        descriptionText : '${device.displayName} Battery is $(roundedPct)%\n(${rawVolts} Volts)'
     ]
     
     log.debug "${device.displayName}: ${result}"
