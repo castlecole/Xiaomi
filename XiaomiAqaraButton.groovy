@@ -53,6 +53,7 @@ metadata {
         capability "Refresh"
         
         attribute "lastPressed", "string"
+        attribute "lastPressedDate", "string"
         attribute "batterylevel", "string"
         attribute "lastCheckin", "string"
         attribute "lastCheckinDate", "Date"
@@ -105,7 +106,7 @@ metadata {
 				[value: 75, color: "#33d800"]
 			]
         }
-	valueTile("lastcheckin", "device.lastCheckin", decoration: "flat", inactiveLabel: false, width: 4, height: 1) {
+	valueTile("lastCheckin", "device.lastCheckin", decoration: "flat", inactiveLabel: false, width: 4, height: 1) {
             state "default", label:'Last Checkin:\n${currentValue}', backgroundColor:"#00a0dc"
         }
 	valueTile("checkinblank", "", inactiveLabel: true, decoration: "flat", width: 4, height: 1) {
@@ -125,7 +126,7 @@ metadata {
 	}
 	    
         main (["button2"])
-        details(["button","battery", "lastpressed", "checkinblank", "batteryblank","batteryRuntime","refresh"])
+        details(["button","battery", "lastPressed", "checkinblank", "batteryblank","batteryRuntime","refresh"])
    }
 }
 
@@ -150,8 +151,8 @@ def parse(String description) {
     if (description?.startsWith('on/off: ')) 
     {
         map = parseCustomMessage(description) 
-        sendEvent(name: "lastpressed", value: now, displayed: true)
-        sendEvent(name: "lastpressedDate", value: nowDate, displayed: false)
+        sendEvent(name: "lastPressed", value: now, displayed: true)
+        sendEvent(name: "lastPressedDate", value: nowDate, displayed: false)
     }
     else if (description?.startsWith('catchall:')) 
     {
