@@ -312,12 +312,12 @@ private Map parseReadAttr(String description) {
         switch (PressureUnits) {
             case "mbar":
                 pressureval = (pressureval/10) as Float
-                pressureval = pressureval.round(0);
+                pressureval = Math.round(pressureval).
                 break;
 
             case "kPa":
                 pressureval = (pressureval/100) as Float
-                pressureval = pressureval.round(1);
+                pressureval = pressureval.round(1)
                 break;
 
             case "inHg":
@@ -336,7 +336,7 @@ private Map parseReadAttr(String description) {
 	if (pressOffset == null || pressOffset == "" ) pressOffset = 0    
 	if (pressOffset) {
             pressureval = (pressureval + pressOffset)
-            pressureval = pressureval.round(1);
+            pressureval = Math.round(pressureval);
         }
         
         resultMap = [
