@@ -15,6 +15,10 @@
  *  02/2017 added multiattribute tile
  */
 
+def version() {
+	return "v2 (20170320)\nXiaomi Aqara Power Outlet - Zigbee"
+}
+
 metadata {
     definition (name: "Xiaomi Aqara Power Outlet", namespace: "castlecole", author: "a4refillpad") {
         capability "Actuator"
@@ -35,6 +39,10 @@ metadata {
         // reply messages
         reply "zcl on-off on": "on/off: 1"
         reply "zcl on-off off": "on/off: 0"
+    }
+
+    preferences {
+	input description: "Version: ${version()}", type: "paragraph", element: "paragraph", title: ""
     }
 
     tiles(scale: 2) {
@@ -59,9 +67,12 @@ metadata {
 					[value: 84, color: "#f1d801"],
 					[value: 95, color: "#d04e00"],
 					[value: 96, color: "#bc2323"]
-				]
-			)
-		}
+				])
+	}
+	valueTile("lastCheckin", "device.lastCheckin", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
+       	    state "default", label:'Last Checkin:\n ${currentValue}', backgroundColor:"#00a0dc"
+	}
+
         standardTile("blank", "device.refresh", inactiveLabel: true, decoration: "flat", width: 2, height: 2) {
   	    state "default", label:"", action:""
 	}
@@ -103,13 +114,14 @@ def parse(String description) {
         map = parseCustomMessage(description) 
     }
 
-	log.debug "Parse returned $map"
+    log.debug "Parse returned $map"
+    
     //  send event for heartbeat    
     def now = new Date()
     sendEvent(name: "lastCheckin", value: now)
     
-	def results = map ? createEvent(map) : null
-	return results;
+    def results = map ? createEvent(map) : null
+    return results;
 }
 
 private Map parseCatchAllMessage(String description) {
@@ -124,46 +136,45 @@ private Map parseCatchAllMessage(String description) {
         else if (onoff == 0)
             resultMap = createEvent(name: "switch", value: "off")
     }
-    
-	return resultMap
+    return resultMap
 }
 
 private Map parseReportAttributeMessage(String description) {
-	Map descMap = (description - "read attr - ").split(",").inject([:]) { map, param ->
-		def nameAndValue = param.split(":")
-		map += [(nameAndValue[0].trim()):nameAndValue[1].trim()]
-	}
-	//log.debug "Desc Map: $descMap"
- 
-	Map resultMap = [:]
+    Map descMap = (description - "read attr - ").split(",").inject([:]) { map, param ->
+        def nameAndValue = param.split(":")
+        map += [(nameAndValue[0].trim()):nameAndValue[1].trim()]
+    }
+    
+    //log.debug "Desc Map: $descMap"
+    Map resultMap = [:]
 
-	if (descMap.cluster == "0001" && descMap.attrId == "0020") {
-		resultMap = getBatteryResult(convertHexToInt(descMap.value / 2))
- 	}
+    if (descMap.cluster == "0001" && descMap.attrId == "0020") {
+	resultMap = getBatteryResult(convertHexToInt(descMap.value / 2))
+    }
     if (descMap.cluster == "0002" && descMap.attrId == "0000") {
-		resultMap = createEvent(name: "temperature", value: zigbee.parseHATemperatureValue("temperature: " + (convertHexToInt(descMap.value) / 2), "temperature: ", getTemperatureScale()), unit: getTemperatureScale())
-		log.debug "Temperature Hex convert to ${resultMap.value}%"
+	resultMap = createEvent(name: "temperature", value: zigbee.parseHATemperatureValue("temperature: " + (convertHexToInt(descMap.value) / 2), "temperature: ", getTemperatureScale()), unit: getTemperatureScale())
+	log.debug "Temperature Hex convert to ${resultMap.value}%"
     }
     else if (descMap.cluster == "0008" && descMap.attrId == "0000") {
     	resultMap = createEvent(name: "switch", value: "off")
     } 
-	return resultMap
+    return resultMap
 }
 
 def off() {
     log.debug "off()"
-	sendEvent(name: "switch", value: "off")
-	"st cmd 0x${device.deviceNetworkId} 1 6 0 {}"
+    sendEvent(name: "switch", value: "off")
+    "st cmd 0x${device.deviceNetworkId} 1 6 0 {}"
 }
 
 def on() {
-   log.debug "on()"
-	sendEvent(name: "switch", value: "on")
-	"st cmd 0x${device.deviceNetworkId} 1 6 1 {}"
+    log.debug "on()"
+    sendEvent(name: "switch", value: "on")
+    "st cmd 0x${device.deviceNetworkId} 1 6 1 {}"
 }
 
 def refresh() {
-	log.debug "refreshing"
+    log.debug "refreshing"
     [
         "st rattr 0x${device.deviceNetworkId} 1 6 0", "delay 500",
         "st rattr 0x${device.deviceNetworkId} 1 6 0", "delay 250",
@@ -174,17 +185,16 @@ def refresh() {
 }
 
 private Map parseCustomMessage(String description) {
-	def result
-	if (description?.startsWith('on/off: ')) {
-    	if (description == 'on/off: 0')
-    		result = createEvent(name: "switch", value: "off")
-    	else if (description == 'on/off: 1')
-    		result = createEvent(name: "switch", value: "on")
-	}
-    
+    def result
+    if (description?.startsWith('on/off: ')) {
+    if (description == 'on/off: 0')
+        result = createEvent(name: "switch", value: "off")
+    else if (description == 'on/off: 1')
+    	result = createEvent(name: "switch", value: "on")
+    }
     return result
 }
 
 private Integer convertHexToInt(hex) {
-	Integer.parseInt(hex,16)
+    Integer.parseInt(hex,16)
 }
