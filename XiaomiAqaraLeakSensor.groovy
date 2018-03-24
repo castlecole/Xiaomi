@@ -34,6 +34,10 @@
  *  veeceeoh - added wet/dry override capability
  */
 
+def version() {
+	return "v2 (20170324)\nXiaomi Aqara Leak Sensor - Zigbee"
+}
+
 metadata {
     definition (name: "Xiaomi Aqara Leak Sensor", namespace: "castlecole", author: "bspranger") {
         capability "Configuration"
@@ -59,14 +63,18 @@ metadata {
         status "wet": "on/off: 1"
     }
 
+    preferences {
+	input description: "Version: ${version()}", type: "paragraph", element: "paragraph", title: ""
+    }
+
     tiles(scale: 2) {
         multiAttributeTile(name:"water", type: "generic", width: 6, height: 4){
             tileAttribute ("device.water", key: "PRIMARY_CONTROL") {
                 attributeState "dry", label:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Water_NoLeak.png", backgroundColor:"#00a0dc"
                 attributeState "wet", label:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Water_Leak.png", backgroundColor:"#e86d13"
             }
-            tileAttribute("device.lastWet", key: "SECONDARY_CONTROL") {
-                attributeState("default", label:'Last Wet: ${currentValue}',icon: "st.Health & Wellness.health9")
+            tileAttribute("device.lastCheckin", key: "SECONDARY_CONTROL") {
+                attributeState("default", label:'Last Checkin: ${currentValue}',icon: "st.Health & Wellness.health9")
             }
         }
 
@@ -86,8 +94,11 @@ metadata {
 			[value: 75, color: "#33d800"]
 		]
         }
+        valueTile("lastWet", "device.lastWet", decoration: "flat", inactiveLabel: false, width: 4, height: 1) {
+            state "default", label:'Last Wet: \n${currentValue}'
+        }
         valueTile("lastcheckin", "device.lastCheckin", decoration: "flat", inactiveLabel: false, width: 4, height: 1) {
-            state "default", label:'Last Checkin:\n${currentValue}'
+            state "default", label:'Last Checkin:\n${currentValue}', backgroundColor:"#00a0dc"
         }
         standardTile("resetWet", "device.resetWet", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
             state "default", action:"resetWet", label: "Override Wet", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Water_Leak2.png"
@@ -96,14 +107,14 @@ metadata {
             state "default", action:"resetDry", label: "Override Dry", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Water_NoLeak2.png"
         }
         standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
-			state "default", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
+	    state "default", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
         }
         valueTile("batteryRuntime", "device.batteryRuntime", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
             state "batteryRuntime", label:'Battery Changed (tap to reset):\n ${currentValue}', unit:"", action:"resetBatteryRuntime"
         }
 
         main (["water2"])
-        details(["water","battery","resetDry","resetWet","lastcheckin","batteryRuntime","refresh"])
+        details(["water", "battery", "resetDry", "resetWet", "lastWet", "batteryRuntime", "refresh"])
     }
 }
 
@@ -164,8 +175,8 @@ private Map getBatteryResult(rawValue) {
         name: 'battery',
         value: roundedPct,
         unit: "%",
-        isStateChange:true,
-        descriptionText : "${device.displayName} raw battery is ${rawVolts}v"
+        isStateChange: true,
+	descriptionText: "${device.displayName} Battery is ${roundedPct}%\n(${rawVolts} Volts)"
     ]
 
     log.debug "${device.displayName}: ${result}"
@@ -244,7 +255,9 @@ def refresh() {
 }
 
 def resetDry() {
-    sendEvent(name:"water", value:"dry")
+    def now = new Date().format("EEE MMM dd yyyy h:mm:ss a", location.timeZone)
+    sendEvent(name: "water", value:"dry")
+    sendEvent(name: "lastCheckin", value: now)
 }
 
 def resetWet() {
