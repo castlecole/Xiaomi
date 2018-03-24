@@ -74,8 +74,8 @@ metadata {
 		attributeState "open", label:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/door-sensor-open.png", backgroundColor:"#e86d13"
                 attributeState "closed", label:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/door-sensor.png", backgroundColor:"#00a0dc"
 	    }
-            tileAttribute("device.lastOpened", key: "SECONDARY_CONTROL") {
-		    attributeState("default", label:'Last Opened: ${currentValue}', icon: "st.secondary.activity")
+            tileAttribute("device.lastCheckin", key: "SECONDARY_CONTROL") {
+		    attributeState("default", label:'Last Checkin: ${currentValue}', icon: "st.Health & Wellness.health9")
             }
         }
         
@@ -96,8 +96,12 @@ metadata {
 		[value: 75, color: "#33d800"]
            ]
         }
-        valueTile("lastcheckin", "device.lastCheckin", decoration: "flat", inactiveLabel: false, width: 4, height: 1) {
-            state "default", label:'Last Checkin:\n${currentValue}'
+
+	valueTile("lastOpened", "device.lastOpened", decoration: "flat", inactiveLabel: false, width: 4, height: 1) {
+            state "default", label:'Door Last Opened:\n${currentValue}'
+        }
+	valueTile("lastcheckin", "device.lastCheckin", decoration: "flat", inactiveLabel: false, width: 4, height: 1) {
+            state "default", label:'Last Checkin:\n${currentValue}', backgroundColor:"#00a0dc"
         }
         standardTile("resetClosed", "device.resetClosed", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
 		state "default", action:"resetClosed", label: "Override Close", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/door-sensor2.png"
@@ -113,7 +117,7 @@ metadata {
 	}
 	   
         main (["contact2"])
-        details(["contact","battery","resetClosed","resetOpen","lastcheckin","batteryRuntime","refresh"])
+        details(["contact","battery","resetClosed","resetOpen","lastOpened","batteryRuntime","refresh"])
    }
 }
 
@@ -157,7 +161,7 @@ private Map getBatteryResult(rawValue) {
         value: roundedPct,
         unit: "%",
         isStateChange:true,
-        descriptionText : "${device.displayName} raw battery is ${rawVolts}v"
+        descriptionText : "${device.displayName} Battery is $(roundedPct)%\n(${rawVolts} Volts)"
     ]
     
     log.debug "${device.displayName}: ${result}"
@@ -250,13 +254,13 @@ private Map getContactResult(result) {
 }
 
 def resetClosed() {
-	sendEvent(name:"contact", value:"closed")
+    sendEvent(name:"contact", value:"closed")
 } 
 
 def resetOpen() {
     def now = new Date().format("EEE MMM dd yyyy h:mm:ss a", location.timeZone)
     def nowDate = new Date(now).getTime()
-    sendEvent(name:"contact", value:"open")
+    sendEvent(name: "contact", value:"open")
     sendEvent(name: "lastOpened", value: now)
     sendEvent(name: "lastOpenedDate", value: nowDate)
 }
