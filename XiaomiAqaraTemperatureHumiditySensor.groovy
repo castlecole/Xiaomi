@@ -28,6 +28,10 @@
  *  bspranger - renamed to bspranger to remove confusion of a4refillpad
  */
 
+def version() {
+	return "v2 (20170324)\nXiaomi Aqara Temperature Humidity Sensor - Zigbee"
+}
+
 metadata {
 
     definition (name: "Xiaomi Aqara Temperature Humidity Sensor", namespace: "castlecole", author: "bspranger") {
@@ -69,6 +73,9 @@ metadata {
             input title: "Pressure Offset", description: "This feature allows you to correct any pressure variations by selecting an offset. Ex: If your sensor consistently reports a pressure that's 5 too high, you'd enter '-5'. If 3 too low, enter '+3'. Please note, any changes will take effect only on the NEXT pressure change.", displayDuringSetup: true, type: "paragraph", element: "paragraph"
             input "pressOffset", "number", title: "Pressure", description: "Adjust pressure by this many units", range: "*..*", displayDuringSetup: true, defaultValue: 0, required: true
         }
+	section {
+	    input description: "Version: ${version()}", type: "paragraph", element: "paragraph", title: ""
+	}
     }
 
     // UI tile definitions
@@ -93,15 +100,15 @@ metadata {
                     ]
                 )
             }
-            tileAttribute("device.temperature", key:"SECONDARY_CONTROL") {
-                attributeState("default", label:'', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/temperature2.png")
+            tileAttribute("device.lastCheckin", key:"SECONDARY_CONTROL") {
+                attributeState("default", label:'Last Checkin:\n ${currentValue}', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/temperature2.png")
             }
         }
         valueTile("humidity", "device.humidity", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
-            state "default", label:'${currentValue}%', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/humidity.png"
+            state "default", label:'${currentValue}%', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/humidity.png", backgroundColor: "#ffff00"
         }
         valueTile("pressure", "device.pressure", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
-            state "default", label:'${currentValue}', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/pressure.png"
+            state "default", label:'${currentValue.round(0)}', icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/pressure.png", backgroundColor: "#ffff00"
         }
         valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
             state "default", label:'${currentValue}%'+"\n", unit:"", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Battery.png",
@@ -132,7 +139,10 @@ metadata {
                 ]
         }
         valueTile("lastcheckin", "device.lastCheckin", decoration: "flat", inactiveLabel: false, width: 4, height: 1) {
-            state "default", label:'Last Checkin:\n ${currentValue}'
+            state "default", label:'Last Checkin:\n ${currentValue}', backgroundColor:"#00a0dc"
+        }
+        valueTile("blank", "", decoration: "flat", inactiveLabel: true, width: 4, height: 1) {
+            state "default", label:'n/a'
         }
         valueTile("batteryRuntime", "device.batteryRuntime", inactiveLabel: false, decoration: "flat", width: 4, height: 1) {
             state "batteryRuntime", label:'Battery Changed: ${currentValue}'+"\n(Tap to Reset)", unit:"", action:"resetBatteryRuntime"
@@ -142,7 +152,7 @@ metadata {
         }
 
         main(["temperature2"])
-        details(["temperature", "battery", "humidity", "pressure", "lastcheckin", "batteryRuntime", "refresh"])
+        details(["temperature", "battery", "humidity", "pressure", "blank", "batteryRuntime", "refresh"])
     }
 }
 
