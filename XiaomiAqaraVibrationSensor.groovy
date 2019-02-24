@@ -70,11 +70,11 @@ metadata {
 		// Motion used for sensor vibration/shake events
 		multiAttributeTile(name:"sensorStatus", type: "lighting", width: 6, height: 4) {
 			tileAttribute("device.sensorStatus", key: "PRIMARY_CONTROL") {
-				attributeState "default", label:'Stationary', backgroundColor:"#ffffff"
-				attributeState "Vibration", label:'Vibration', backgroundColor:"#00a0dc"
-				attributeState "Tilt", label:'Tilt', backgroundColor:"#00a0dc"
-				attributeState "Drop", label:'Drop', backgroundColor:"#00a0dc"
-				attributeState "Stationary", label:'Stationary', backgroundColor:"#ffffff"
+				attributeState "default", label:'Stationary', icon: "https://raw.githubusercontent.com/castlecole/Xiaomi/master/VibrationOff.png", backgroundColor:"#ffffff"
+				attributeState "Vibration", label:'Vibration', icon: "https://raw.githubusercontent.com/castlecole/Xiaomi/master/VibrationOn.png", backgroundColor:"#00a0dc"
+				attributeState "Tilt", label:'Tilt', icon: "https://raw.githubusercontent.com/castlecole/Xiaomi/master/VibrationTilt.png", backgroundColor:"#00a0dc"
+				attributeState "Drop", label:'Drop', icon: "https://raw.githubusercontent.com/castlecole/Xiaomi/master/VibrationDrop.png", backgroundColor:"#00a0dc"
+				attributeState "Stationary", label:'Stationary', icon: "https://raw.githubusercontent.com/castlecole/Xiaomi/master/VibrationOff.png", backgroundColor:"#ffffff"
 			}
 			tileAttribute("device.lastCheckin", key: "SECONDARY_CONTROL") {
 				attributeState("lastCheckin", label:'Last Event: ${currentValue}')
