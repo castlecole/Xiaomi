@@ -16,7 +16,7 @@
  */
 
 def version() {
-	return "v2 (20170320)\nXiaomi Aqara Power Outlet - Zigbee"
+	return "v2 (20190331)\nXiaomi Aqara Power Outlet - Zigbee"
 }
 
 metadata {
