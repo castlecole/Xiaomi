@@ -50,8 +50,8 @@ metadata {
             tileAttribute ("device.switch", key: "PRIMARY_CONTROL") { 
                 attributeState "on", label:"", action:"switch.off", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch1On.png", backgroundColor:"#359148", nextState:"turningOff"
                 attributeState "off", label:"", action:"switch.on", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch1Off.png", backgroundColor:"#00a0dc", nextState:"turningOn"
-                attributeState "turningOn", label:'\n\n Turning On', action:"switch.off", icon:"", backgroundColor:"#359148", nextState:"turningOff"
-                attributeState "turningOff", label:'\n\n Turning Off', action:"switch.on", icon:"", backgroundColor:"#00a0dc", nextState:"turningOn"
+                attributeState "turningOn", label:'\n\n Turning On', action:"switch.off", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch1On.png", backgroundColor:"#359148", nextState:"turningOff"
+                attributeState "turningOff", label:'\n\n Turning Off', action:"switch.on", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch1Off.png", backgroundColor:"#00a0dc", nextState:"turningOn"
             }
             tileAttribute("device.lastCheckin", key: "SECONDARY_CONTROL") {
     		attributeState("default", label:'Last Update: ${currentValue}',icon: "st.Health & Wellness.health9")
@@ -84,8 +84,8 @@ metadata {
             tileAttribute ("device.switch", key: "PRIMARY_CONTROL") { 
                 attributeState "on", label:'${name}', action:"switch.off", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch1On.png", backgroundColor:"#359148", nextState:"turningOff"
                 attributeState "off", label:'${name}', action:"switch.on", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch1Off.png", backgroundColor:"#00a0dc", nextState:"turningOn"
-                attributeState "turningOn", label:'${name}', action:"switch.off", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Power_On.png", backgroundColor:"#359148", nextState:"turningOff"
-                attributeState "turningOff", label:'${name}', action:"switch.on", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Power_Off.png", backgroundColor:"#00a0dc", nextState:"turningOn"
+                attributeState "turningOn", label:'${name}', action:"switch.off", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch1On.png", backgroundColor:"#359148", nextState:"turningOff"
+                attributeState "turningOff", label:'${name}', action:"switch.on", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch1Off.png", backgroundColor:"#00a0dc", nextState:"turningOn"
             }
 	}
 	    
