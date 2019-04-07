@@ -25,11 +25,11 @@ metadata {
         capability "Switch"
         capability "Health Check"
   
-        fingerprint profileId: "0104", inClusters: "0000, 0003, 0004, 0005, 0006"
-        fingerprint profileId: "0104", inClusters: "0000, 0003, 0006", outClusters: "0003, 0006, 0019, 0406", manufacturer: "Leviton", model: "ZSS-10", deviceJoinName: "Leviton Switch"
-        fingerprint profileId: "0104", inClusters: "0000, 0003, 0006", outClusters: "000A", manufacturer: "HAI", model: "65A21-1", deviceJoinName: "Leviton Wireless Load Control Module-30amp"
-        fingerprint profileId: "0104", inClusters: "0000, 0003, 0004, 0005, 0006", outClusters: "0003, 0006, 0008, 0019, 0406", manufacturer: "Leviton", model: "DL15A", deviceJoinName: "Leviton Lumina RF Plug-In Appliance Module"
-        fingerprint profileId: "0104", inClusters: "0000, 0003, 0004, 0005, 0006", outClusters: "0003, 0006, 0008, 0019, 0406", manufacturer: "Leviton", model: "DL15S", deviceJoinName: "Leviton Lumina RF Switch"
+        // fingerprint profileId: "0104", inClusters: "0000, 0003, 0004, 0005, 0006"
+        // fingerprint profileId: "0104", inClusters: "0000, 0003, 0006", outClusters: "0003, 0006, 0019, 0406", manufacturer: "Leviton", model: "ZSS-10", deviceJoinName: "Leviton Switch"
+        // fingerprint profileId: "0104", inClusters: "0000, 0003, 0006", outClusters: "000A", manufacturer: "HAI", model: "65A21-1", deviceJoinName: "Leviton Wireless Load Control Module-30amp"
+        // fingerprint profileId: "0104", inClusters: "0000, 0003, 0004, 0005, 0006", outClusters: "0003, 0006, 0008, 0019, 0406", manufacturer: "Leviton", model: "DL15A", deviceJoinName: "Leviton Lumina RF Plug-In Appliance Module"
+        // fingerprint profileId: "0104", inClusters: "0000, 0003, 0004, 0005, 0006", outClusters: "0003, 0006, 0008, 0019, 0406", manufacturer: "Leviton", model: "DL15S", deviceJoinName: "Leviton Lumina RF Switch"
 
        
         attribute "lastCheckin", "string"
@@ -37,7 +37,8 @@ metadata {
         attribute "switch1", "string"
     	attribute "switch2", "string"
         attribute "switch3", "string"
-    	command "on0"
+    	
+	command "on0"
     	command "off0"
     	command "on1"
     	command "off1"
@@ -93,21 +94,21 @@ metadata {
 	    }
         }
 	    
-	standardTile("switch1", "device.switch1", width: 2, height: 2){
+	standardTile("switch1", "device.switch1", width: 2, height: 2, canChangeIcon: true){
                 state("on", label:'SW1 On', action:"off1", icon:"st.switches.light.on", backgroundColor:"#00a0dc", nextState:"turningOff")
                 state("off", label:'SW1 Off', action:"on1", icon:"st.switches.light.off", backgroundColor:"#ffffff", nextState:"turningOn")
                 state("turningOn", label:'Turning On', action:"off1", icon:"st.switches.light.on", backgroundColor:"#00a0dc", nextState:"turningOff")
                 state("turningOff", label:'Turning Off', action:"on1", icon:"st.switches.light.off", backgroundColor:"#ffffff", nextState:"turningOn")
         }
 
-        standardTile("switch2", "device.switch2", width: 2, height: 2){
+        standardTile("switch2", "device.switch2", width: 2, height: 2, canChangeIcon: true){
                 state("on", label:'SW2 On', action:"off2", icon:"st.switches.light.on", backgroundColor:"#00a0dc", nextState:"turningOff")
                 state("off", label:'SW2 Off', action:"on2", icon:"st.switches.light.off", backgroundColor:"#ffffff", nextState:"turningOn")
                 state("turningOn", label:'Turning On', action:"off2", icon:"st.switches.light.on", backgroundColor:"#00a0dc", nextState:"turningOff")
                 state("turningOff", label:'Turning Off', action:"on2", icon:"st.switches.light.off", backgroundColor:"#ffffff", nextState:"turningOn")
         }
 
-        standardTile("switch3", "device.switch3", width: 2, height: 2){
+        standardTile("switch3", "device.switch3", width: 2, height: 2, canChangeIcon: true){
                 state("on", label:'SW3 On', action:"off3", icon:"st.switches.light.on", backgroundColor:"#00a0dc", nextState:"turningOff")
                 state("off", label:'SW3 Off', action:"on3", icon:"st.switches.light.off", backgroundColor:"#ffffff", nextState:"turningOn")
                 state("turningOn", label:'Turning On', action:"off3", icon:"st.switches.light.on", backgroundColor:"#00a0dc", nextState:"turningOff")
@@ -115,7 +116,7 @@ metadata {
         }
 
         standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
-            state "default", label:"", action:"refresh.refresh", icon:"st.secondary.refresh"
+            state "default", label:"", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
         }
         
 	main(["switch"])
