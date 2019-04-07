@@ -151,8 +151,9 @@ def parse(String description) {
         log.debug "On Off..."
         def refreshCmds = zigbee.readAttribute(0x0006, 0x0000, [destEndpoint: 0x10]) +
     			  zigbee.readAttribute(0x0006, 0x0000, [destEndpoint: 0x11]) +
- 			  zigbee.readAttribute(0x0006, 0x0000, [destEndpoint: 0x12])              
-    
+ 			  zigbee.readAttribute(0x0006, 0x0000, [destEndpoint: 0x12]) +             
+			  zigbee.readAttribute(0x0006, 0x0000, [destEndpoint: 0xFF])
+		
    	//return refreshCmds.collect { new physicalgraph.device.HubAction(it) }     
     	def resultMap = zigbee.getKnownDescription(description)
    	log.debug "${resultMap}"
@@ -207,6 +208,18 @@ private Map parseCatchAllMessage(String description) {
 	return resultMap
 }
 
+def off0() {
+    	log.debug "off0()"
+	sendEvent(name: "switch", value: "off")
+    	"st cmd 0x${device.deviceNetworkId} 0xFF 0x0006 0x0 {}" 
+}
+
+def on0() {
+   	log.debug "on0()"
+	sendEvent(name: "switch", value: "on")
+    	"st cmd 0x${device.deviceNetworkId} 0xFF 0x0006 0x1 {}" 
+}
+
 def off1() {
     	log.debug "off1()"
 	sendEvent(name: "switch1", value: "off")
@@ -243,24 +256,13 @@ def on3() {
     	"st cmd 0x${device.deviceNetworkId} 0x12 0x0006 0x1 {}" 
 }
     
-def off0() {
-    	log.debug "off0()"
-	sendEvent(name: "switch", value: "off")
-    	"st cmd 0x${device.deviceNetworkId} 0xFF 0x0006 0x0 {}" 
-}
-
-def on0() {
-   	log.debug "on0()"
-	sendEvent(name: "switch", value: "on")
-    	"st cmd 0x${device.deviceNetworkId} 0xFF 0x0006 0x1 {}" 
-}
-
 def refresh() {
 	log.debug "refreshing"
     	[
         "st rattr 0x${device.deviceNetworkId} 0x10 0x0006 0x0", "delay 1000",
         "st rattr 0x${device.deviceNetworkId} 0x11 0x0006 0x0", "delay 1000",
-    	"st rattr 0x${device.deviceNetworkId} 0x12 0x0006 0x0", "delay 1000"
+    	"st rattr 0x${device.deviceNetworkId} 0x12 0x0006 0x0", "delay 1000",
+    	"st rattr 0x${device.deviceNetworkId} 0xFF 0x0006 0x0", "delay 1000"
 	]
 }
 
