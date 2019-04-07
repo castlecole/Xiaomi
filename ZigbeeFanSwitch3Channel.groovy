@@ -31,6 +31,11 @@ metadata {
         // fingerprint profileId: "0104", inClusters: "0000, 0003, 0004, 0005, 0006", outClusters: "0003, 0006, 0008, 0019, 0406", manufacturer: "Leviton", model: "DL15A", deviceJoinName: "Leviton Lumina RF Plug-In Appliance Module"
         // fingerprint profileId: "0104", inClusters: "0000, 0003, 0004, 0005, 0006", outClusters: "0003, 0006, 0008, 0019, 0406", manufacturer: "Leviton", model: "DL15S", deviceJoinName: "Leviton Lumina RF Switch"
 
+	// zbjoin: {"dni":"8D26","d":"00124B001A441DE2","capabilities":"8E","endpoints":[
+	//  {"simple":"01 C05E 0000 02 05 0000 0003 0004 0005 0006 00","application":"01","manufacturer":"ShenZhen_Homa","model":"HOMA1005"},
+	//  {"simple":"02 C05E 0000 02 05 0000 0003 0004 0005 0006 00","application":"01","manufacturer":"ShenZhen_Homa","model":"HOMA1005"},
+	//  {"simple":"03 C05E 0000 02 05 0000 0003 0004 0005 0006 00","application":"01","manufacturer":"ShenZhen_Homa","model":"HOMA1005"},
+	//  {"simple":"0D C05E E15E 02 01 1000 01 1000","application":"","manufacturer":"","model":""}],"parent":"FFFF","joinType":15}
        
         attribute "lastCheckin", "string"
         attribute "switch", "string"
@@ -135,22 +140,24 @@ def parse(String description) {
     Map map = [:]
    
     if (description?.startsWith('catchall:')) {
+        log.debug "Catchall..."
 	map = parseCatchAllMessage(description)
     }
     else if (description?.startsWith('read attr -')) {
+        log.debug "Read Attribute..."
 	map = parseReportAttributeMessage(description)
     }
     else if (description?.startsWith('on/off: ')) {
-        log.debug "onoff"
+        log.debug "On Off..."
         def refreshCmds = zigbee.readAttribute(0x0006, 0x0000, [destEndpoint: 0x10]) +
     			  zigbee.readAttribute(0x0006, 0x0000, [destEndpoint: 0x11]) +
  			  zigbee.readAttribute(0x0006, 0x0000, [destEndpoint: 0x12])              
     
-   	return refreshCmds.collect { new physicalgraph.device.HubAction(it) }     
-    	//def resultMap = zigbee.getKnownDescription(description)
-   		//log.debug "${resultMap}"
+   	//return refreshCmds.collect { new physicalgraph.device.HubAction(it) }     
+    	def resultMap = zigbee.getKnownDescription(description)
+   	log.debug "${resultMap}"
         
-        //map = parseCustomMessage(description) 
+        map = parseCustomMessage(description) 
     }
 
     log.debug "Parse returned $map"
@@ -201,27 +208,27 @@ private Map parseCatchAllMessage(String description) {
 }
 
 def off1() {
-    	log.debug "off()"
+    	log.debug "off1()"
 	sendEvent(name: "switch1", value: "off")
    	"st cmd 0x${device.deviceNetworkId} 0x10 0x0006 0x0 {}" 
 }
 
 def on1() {
-   	log.debug "on()"
+   	log.debug "on1()"
 	sendEvent(name: "switch1", value: "on")
 	"st cmd 0x${device.deviceNetworkId} 0x10 0x0006 0x1 {}" 
 }
 
 def off2() {
-    log.debug "off2()"
+    	log.debug "off2()"
 	sendEvent(name: "switch2", value: "off")
-    "st cmd 0x${device.deviceNetworkId} 0x11 0x0006 0x0 {}" 
+    	"st cmd 0x${device.deviceNetworkId} 0x11 0x0006 0x0 {}" 
    }
 
 def on2() {
-   log.debug "on2()"
+   	log.debug "on2()"
 	sendEvent(name: "switch2", value: "on")
-    "st cmd 0x${device.deviceNetworkId} 0x11 0x0006 0x1 {}"
+    	"st cmd 0x${device.deviceNetworkId} 0x11 0x0006 0x1 {}"
 }
     
 def off3() {
