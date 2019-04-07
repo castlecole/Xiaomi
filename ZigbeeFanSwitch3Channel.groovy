@@ -211,59 +211,72 @@ private Map parseCatchAllMessage(String description) {
 def off0() {
     	log.debug "off0()"
 	sendEvent(name: "switch", value: "off")
-    	"st cmd 0x${device.deviceNetworkId} 0xFF 0x0006 0x0 {}" 
+	zigbee.off()
+    	// "st cmd 0x${device.deviceNetworkId} 0xFF 0x0006 0x0 {}" 
 }
 
 def on0() {
    	log.debug "on0()"
 	sendEvent(name: "switch", value: "on")
-    	"st cmd 0x${device.deviceNetworkId} 0xFF 0x0006 0x1 {}" 
+	zigbee.on()
+    	//"st cmd 0x${device.deviceNetworkId} 0xFF 0x0006 0x1 {}" 
 }
 
 def off1() {
     	log.debug "off1()"
 	sendEvent(name: "switch1", value: "off")
-   	"st cmd 0x${device.deviceNetworkId} 0x10 0x0006 0x0 {}" 
+	zigbee.off(1)
+   	//"st cmd 0x${device.deviceNetworkId} 0x10 0x0006 0x0 {}" 
 }
 
 def on1() {
    	log.debug "on1()"
 	sendEvent(name: "switch1", value: "on")
-	"st cmd 0x${device.deviceNetworkId} 0x10 0x0006 0x1 {}" 
+	zigbee.on(1)
+	//"st cmd 0x${device.deviceNetworkId} 0x10 0x0006 0x1 {}" 
 }
 
 def off2() {
     	log.debug "off2()"
 	sendEvent(name: "switch2", value: "off")
-    	"st cmd 0x${device.deviceNetworkId} 0x11 0x0006 0x0 {}" 
+	zigbee.off(2)
+    	//"st cmd 0x${device.deviceNetworkId} 0x11 0x0006 0x0 {}" 
    }
 
 def on2() {
    	log.debug "on2()"
 	sendEvent(name: "switch2", value: "on")
-    	"st cmd 0x${device.deviceNetworkId} 0x11 0x0006 0x1 {}"
+	zigbee.on(2)
+    	//"st cmd 0x${device.deviceNetworkId} 0x11 0x0006 0x1 {}"
 }
     
 def off3() {
     	log.debug "off3()"
 	sendEvent(name: "switch3", value: "off")
-    	"st cmd 0x${device.deviceNetworkId} 0x12 0x0006 0x0 {}"
+	zigbee.off(3)
+    	//"st cmd 0x${device.deviceNetworkId} 0x12 0x0006 0x0 {}"
 }
 
 def on3() {
    	log.debug "on3()"
 	sendEvent(name: "switch3", value: "on")
-    	"st cmd 0x${device.deviceNetworkId} 0x12 0x0006 0x1 {}" 
+	zigbee.on(3)
+    	//"st cmd 0x${device.deviceNetworkId} 0x12 0x0006 0x1 {}" 
 }
     
+def ping() {
+	return refresh()
+}
+
 def refresh() {
 	log.debug "refreshing"
-    	[
-        "st rattr 0x${device.deviceNetworkId} 0x10 0x0006 0x0", "delay 1000",
-        "st rattr 0x${device.deviceNetworkId} 0x11 0x0006 0x0", "delay 1000",
-    	"st rattr 0x${device.deviceNetworkId} 0x12 0x0006 0x0", "delay 1000",
-    	"st rattr 0x${device.deviceNetworkId} 0xFF 0x0006 0x0", "delay 1000"
-	]
+	zigbee.onOffRefresh()
+//	[
+//        "st rattr 0x${device.deviceNetworkId} 0x10 0x0006 0x0", "delay 1000",
+//        "st rattr 0x${device.deviceNetworkId} 0x11 0x0006 0x0", "delay 1000",
+//    	"st rattr 0x${device.deviceNetworkId} 0x12 0x0006 0x0", "delay 1000",
+//    	"st rattr 0x${device.deviceNetworkId} 0xFF 0x0006 0x0", "delay 1000"
+//	]
 }
 
 private Map parseCustomMessage(String description) {
