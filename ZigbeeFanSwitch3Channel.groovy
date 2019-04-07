@@ -93,25 +93,25 @@ metadata {
 	    }
         }
 	    
-        StandardTile("switch1", "device.switch1", width: 2, height: 2){
-                State("on", label:'SW1 On', action:"off", icon:"st.switches.light.on", backgroundColor:"#00a0dc", nextState:"turningOff")
-                State("off", label:'SW1 Off', action:"on", icon:"st.switches.light.off", backgroundColor:"#ffffff", nextState:"turningOn")
-                State("turningOn", label:'Turning On', action:"off", icon:"st.switches.light.on", backgroundColor:"#00a0dc", nextState:"turningOff")
-                State("turningOff", label:'Turning Off', action:"on", icon:"st.switches.light.off", backgroundColor:"#ffffff", nextState:"turningOn")
+	standardTile("switch1", "device.switch1", width: 2, height: 2){
+                state("on", label:'SW1 On', action:"off1", icon:"st.switches.light.on", backgroundColor:"#00a0dc", nextState:"turningOff")
+                state("off", label:'SW1 Off', action:"on1", icon:"st.switches.light.off", backgroundColor:"#ffffff", nextState:"turningOn")
+                state("turningOn", label:'Turning On', action:"off1", icon:"st.switches.light.on", backgroundColor:"#00a0dc", nextState:"turningOff")
+                state("turningOff", label:'Turning Off', action:"on1", icon:"st.switches.light.off", backgroundColor:"#ffffff", nextState:"turningOn")
         }
 
-        StandardTile("switch2", "device.switch2", width: 2, height: 2){
-                State("on", label:'SW2 On', action:"off", icon:"st.switches.light.on", backgroundColor:"#00a0dc", nextState:"turningOff")
-                State("off", label:'SW2 Off', action:"on", icon:"st.switches.light.off", backgroundColor:"#ffffff", nextState:"turningOn")
-                State("turningOn", label:'Turning On', action:"off", icon:"st.switches.light.on", backgroundColor:"#00a0dc", nextState:"turningOff")
-                State("turningOff", label:'Turning Off', action:"on", icon:"st.switches.light.off", backgroundColor:"#ffffff", nextState:"turningOn")
+        standardTile("switch2", "device.switch2", width: 2, height: 2){
+                state("on", label:'SW2 On', action:"off2", icon:"st.switches.light.on", backgroundColor:"#00a0dc", nextState:"turningOff")
+                state("off", label:'SW2 Off', action:"on2", icon:"st.switches.light.off", backgroundColor:"#ffffff", nextState:"turningOn")
+                state("turningOn", label:'Turning On', action:"off2", icon:"st.switches.light.on", backgroundColor:"#00a0dc", nextState:"turningOff")
+                state("turningOff", label:'Turning Off', action:"on2", icon:"st.switches.light.off", backgroundColor:"#ffffff", nextState:"turningOn")
         }
 
-        StandardTile("switch3", "device.switch3", width: 2, height: 2){
-                State("on", label:'SW3 On', action:"off", icon:"st.switches.light.on", backgroundColor:"#00a0dc", nextState:"turningOff")
-                State("off", label:'SW3 Off', action:"on", icon:"st.switches.light.off", backgroundColor:"#ffffff", nextState:"turningOn")
-                State("turningOn", label:'Turning On', action:"off", icon:"st.switches.light.on", backgroundColor:"#00a0dc", nextState:"turningOff")
-                State("turningOff", label:'Turning Off', action:"on", icon:"st.switches.light.off", backgroundColor:"#ffffff", nextState:"turningOn")
+        standardTile("switch3", "device.switch3", width: 2, height: 2){
+                state("on", label:'SW3 On', action:"off3", icon:"st.switches.light.on", backgroundColor:"#00a0dc", nextState:"turningOff")
+                state("off", label:'SW3 Off', action:"on3", icon:"st.switches.light.off", backgroundColor:"#ffffff", nextState:"turningOn")
+                state("turningOn", label:'Turning On', action:"off3", icon:"st.switches.light.on", backgroundColor:"#00a0dc", nextState:"turningOff")
+                state("turningOff", label:'Turning Off', action:"on3", icon:"st.switches.light.off", backgroundColor:"#ffffff", nextState:"turningOn")
         }
 
         standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
