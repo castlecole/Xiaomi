@@ -51,7 +51,7 @@ metadata {
         attribute "switch1","ENUM",["on","off"]
         attribute "switch2","ENUM",["on","off"]
         attribute "switch3","ENUM",["on","off"]    
-        attribute "switchstate","ENUM",["on","off"] 
+        // attribute "switchstate","ENUM",["on","off"] 
     
     }
 
@@ -86,6 +86,12 @@ metadata {
      	multiAttributeTile(name:"switch", type: "device.switch", width: 6, height: 4, canChangeIcon: false){
             tileAttribute ("device.switch", key: "PRIMARY_CONTROL") { 
                 attributeState "on", label:'${name}', action:"off0", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch3123On.png", backgroundColor:"#359148", nextState:"turningOff"
+                attributeState "on1", label:'${name}', action:"off0", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch31On.png", backgroundColor:"#359148", nextState:"turningOff"
+                attributeState "on2", label:'${name}', action:"off0", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch32On.png", backgroundColor:"#359148", nextState:"turningOff"
+                attributeState "on3", label:'${name}', action:"off0", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch33On.png", backgroundColor:"#359148", nextState:"turningOff"
+                attributeState "on12", label:'${name}', action:"off0", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch312On.png", backgroundColor:"#359148", nextState:"turningOff"
+                attributeState "on23", label:'${name}', action:"off0", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch323On.png", backgroundColor:"#359148", nextState:"turningOff"
+                attributeState "on13", label:'${name}', action:"off0", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch313On.png", backgroundColor:"#359148", nextState:"turningOff"
                 attributeState "off", label:'${name}', action:"on0", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch30Off.png", backgroundColor:"#00a0dc", nextState:"turningOn"
                 attributeState "turningOn", label:'${name}', action:"off0", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch3123On.png", backgroundColor:"#359148", nextState:"turningOff"
                 attributeState "turningOff", label:'${name}', action:"on0", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch30Off.png", backgroundColor:"#00a0dc", nextState:"turningOn"
@@ -237,18 +243,18 @@ def off0() {
     	
 	log.debug "ALL Off"
 	sendEvent(name: "switch", value: "off")
-	sendEvent(name: "switch1", value: "off")
-	sendEvent(name: "switch2", value: "off")
-	sendEvent(name: "switch3", value: "off")
+	sendEvent(name: "switch1", value: "off", displayed: false)
+	sendEvent(name: "switch2", value: "off", displayed: false)
+	sendEvent(name: "switch3", value: "off", displayed: false)
     	"st cmd 0x${device.deviceNetworkId} 0xFF 0x0006 0x0 {}" 
 }
 
 def on0() {
    	log.debug "ALL On"
 	sendEvent(name: "switch", value: "on")
-	sendEvent(name: "switch1", value: "on")
-	sendEvent(name: "switch2", value: "on")
-	sendEvent(name: "switch3", value: "on")
+	sendEvent(name: "switch1", value: "on", displayed: false)
+	sendEvent(name: "switch2", value: "on", displayed: false)
+	sendEvent(name: "switch3", value: "on", displayed: false)
     	"st cmd 0x${device.deviceNetworkId} 0xFF 0x0006 0x1 {}" 
 }
 
@@ -261,6 +267,7 @@ def off1() {
 def on1() {
    	log.debug "on1()"
 	sendEvent(name: "switch1", value: "on")
+	sendEvent(name: "switch", value: "on1", displayed: false)
 	"st cmd 0x${device.deviceNetworkId} 0x01 0x0006 0x1 {}" 
 }
 
@@ -273,6 +280,7 @@ def off2() {
 def on2() {
    	log.debug "on2()"
 	sendEvent(name: "switch2", value: "on")
+	sendEvent(name: "switch", value: "on2", displayed: false)
     	"st cmd 0x${device.deviceNetworkId} 0x02 0x0006 0x1 {}"
 }
     
@@ -285,6 +293,7 @@ def off3() {
 def on3() {
    	log.debug "on3()"
 	sendEvent(name: "switch3", value: "on")
+	sendEvent(name: "switch", value: "on3", displayed: false)
     	"st cmd 0x${device.deviceNetworkId} 0x03 0x0006 0x1 {}" 
 }
     
