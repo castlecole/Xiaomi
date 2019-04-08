@@ -25,11 +25,7 @@ metadata {
         capability "Switch"
         capability "Health Check"
   
-        // fingerprint profileId: "0104", inClusters: "0000, 0003, 0004, 0005, 0006"
-        // fingerprint profileId: "0104", inClusters: "0000, 0003, 0006", outClusters: "0003, 0006, 0019, 0406", manufacturer: "Leviton", model: "ZSS-10", deviceJoinName: "Leviton Switch"
-        // fingerprint profileId: "0104", inClusters: "0000, 0003, 0006", outClusters: "000A", manufacturer: "HAI", model: "65A21-1", deviceJoinName: "Leviton Wireless Load Control Module-30amp"
-        // fingerprint profileId: "0104", inClusters: "0000, 0003, 0004, 0005, 0006", outClusters: "0003, 0006, 0008, 0019, 0406", manufacturer: "Leviton", model: "DL15A", deviceJoinName: "Leviton Lumina RF Plug-In Appliance Module"
-        // fingerprint profileId: "0104", inClusters: "0000, 0003, 0004, 0005, 0006", outClusters: "0003, 0006, 0008, 0019, 0406", manufacturer: "Leviton", model: "DL15S", deviceJoinName: "Leviton Lumina RF Switch"
+        fingerprint profileId: "C05E", inClusters: "0000, 0003, 0004, 0005, 0006", outClusters: "0003, 0019", manufacturer: "ShenZhen_Homa", model: "HOMA1005", deviceJoinName: "ZigBee Fan Switch - 3 Channel"
 
 	// zbjoin: {"dni":"8D26","d":"00124B001A441DE2","capabilities":"8E","endpoints":[
 	//  {"simple":"01 C05E 0000 02 05 0000 0003 0004 0005 0006 00","application":"01","manufacturer":"ShenZhen_Homa","model":"HOMA1005"},
