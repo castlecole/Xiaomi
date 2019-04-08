@@ -262,8 +262,8 @@ def off1() {
 
     	log.debug "off1()"
 	sendEvent(name: "switch1", value: "off")
-	def currval2 = device.latestState("switch2")
-	def currval3 = device.latestState("switch3")
+	def currval2 = device.currentState("switch2")
+	def currval3 = device.currentState("switch3")
 	
 	if(currval2=="off") and (currval3=="off") then {
 	    sendEvent(name: "switch", value: "off", displayed: false)			 
@@ -285,8 +285,8 @@ def on1() {
    	log.debug "on1()"
 	sendEvent(name: "switch1", value: "on")
 
-	def currval2 = device.latestState("switch2")
-	def currval3 = device.latestState("switch3")
+	def currval2 = device.currentState("switch2")
+	def currval3 = device.currentState("switch3")
 	
 	if(currval2=="off") and (currval3=="off") then {
 	    sendEvent(name: "switch", value: "on1", displayed: false)			 
@@ -308,8 +308,8 @@ def off2() {
     	log.debug "off2()"
 	sendEvent(name: "switch2", value: "off")
 
-	def currval1 = device.latestState("switch1")
-	def currval3 = device.latestState("switch3")
+	def currval1 = device.currentState("switch1")
+	def currval3 = device.currentState("switch3")
 	
 	if(currval1=="off") and (currval3=="off") then {
 	    sendEvent(name: "switch", value: "off", displayed: false)			 
@@ -331,8 +331,8 @@ def on2() {
    	log.debug "on2()"
 	sendEvent(name: "switch2", value: "on")
 	
-	def currval1 = device.latestState("switch1")
-	def currval3 = device.latestState("switch3")
+	def currval1 = device.currentState("switch1")
+	def currval3 = device.currentState("switch3")
 	
 	if(currval1=="off") and (currval3=="off") then {
 	    sendEvent(name: "switch", value: "on2", displayed: false)			 
@@ -354,8 +354,8 @@ def off3() {
     	log.debug "off3()"
 	sendEvent(name: "switch3", value: "off")
 	
-	def currval1 = device.latestState("switch1")
-	def currval2 = device.latestState("switch2")
+	def currval1 = device.currentState("switch1")
+	def currval2 = device.currentState("switch2")
 	
 	if(currval1=="off") and (currval2=="off") then {
 	    sendEvent(name: "switch", value: "off", displayed: false)			 
@@ -377,8 +377,8 @@ def on3() {
    	log.debug "on3()"
 	sendEvent(name: "switch3", value: "on")
 	
-	def currval1 = device.latestState("switch1")
-	def currval2 = device.latestState("switch2")
+	def currval1 = device.currentState("switch1")
+	def currval2 = device.currentState("switch2")
 	
 	if(currval1=="off") and (currval2=="off") then {
 	    sendEvent(name: "switch", value: "on3", displayed: false)			 
