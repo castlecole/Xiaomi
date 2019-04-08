@@ -14,7 +14,7 @@
  */
 
 def version() {
-	return "v2.0 (20190407)\nZigBee 3-Gang Switch - HOMA1005"
+	return "v2.0 (20190408)\nZigBee 3-Gang Switch - HOMA1005"
 }
 
 metadata {
@@ -38,15 +38,15 @@ metadata {
         attribute "switch1", "string"
         attribute "switch2", "string"
         attribute "switch3", "string"
-    	
-	      command "on0"
-    	  command "off0"
-    	  command "on1"
-    	  command "off1"
+
+	command "on0"
+    	command "off0"
+    	command "on1"
+    	command "off1"
         command "on2"
-	      command "off2"
-	      command "on3"
-	      command "off3"
+	command "off2"
+	command "on3"
+	command "off3"
 
         attribute "switch1","ENUM",["on","off"]
         attribute "switch2","ENUM",["on","off"]
@@ -64,11 +64,11 @@ metadata {
         
         
         status "switch1 on": "on/off: 1"
-	      status "switch1 off": "on/off: 0"
+	status "switch1 off": "on/off: 0"
         status "switch2 on": "on/off: 1"
-	      status "switch2 off": "on/off: 0"
-	      status "switch3 on": "on/off: 1"
-	      status "switch3 off": "on/off: 0"
+	status "switch2 off": "on/off: 0"
+	status "switch3 on": "on/off: 1"
+	status "switch3 off": "on/off: 0"
 
         // reply messages
         reply "zcl on-off on": "on/off: 1"
