@@ -265,7 +265,7 @@ def off1() {
 	def currval2 = device.currentState("switch2")
 	def currval3 = device.currentState("switch3")
 	
-	log.debug "OFF: ${currval2} & ${currval3}"
+	log.debug "OFF_1: ${currval2} & ${currval3}"
 	
 	if(currval2=="off") and (currval3=="off") then {
 	    sendEvent(name: "switch", value: "off", displayed: false)			 
@@ -290,7 +290,7 @@ def on1() {
 	def currval2 = device.currentState("switch2")
 	def currval3 = device.currentState("switch3")
 	
-	log.debug "ON: ${currval2} & ${currval3}"
+	log.debug "ON_1: ${currval2} & ${currval3}"
 	
 	if(currval2=="off") and (currval3=="off") then {
 	    sendEvent(name: "switch", value: "on1", displayed: false)			 
@@ -315,7 +315,7 @@ def off2() {
 	def currval1 = device.currentState("switch1")
 	def currval3 = device.currentState("switch3")
 	
-	log.debug "OFF: ${currval1} & ${currval3}"
+	log.debug "OFF_2: ${currval1} & ${currval3}"
 
 	if(currval1=="off") and (currval3=="off") then {
 	    sendEvent(name: "switch", value: "off", displayed: false)			 
@@ -340,7 +340,7 @@ def on2() {
 	def currval1 = device.currentState("switch1")
 	def currval3 = device.currentState("switch3")
 	
-	log.debug "ON: ${currval1} & ${currval3}"
+	log.debug "ON_2: ${currval1} & ${currval3}"
 
 	if(currval1=="off") and (currval3=="off") then {
 	    sendEvent(name: "switch", value: "on2", displayed: false)			 
@@ -365,7 +365,7 @@ def off3() {
 	def currval1 = device.currentState("switch1")
 	def currval2 = device.currentState("switch2")
 	
-	log.debug "OFF: ${currval1} & ${currval2}"
+	log.debug "OFF_3: ${currval1} & ${currval2}"
 
 	if(currval1=="off") and (currval2=="off") then {
 	    sendEvent(name: "switch", value: "off", displayed: false)			 
@@ -390,7 +390,7 @@ def on3() {
 	def currval1 = device.currentState("switch1")
 	def currval2 = device.currentState("switch2")
 	
-	log.debug "ON: ${currval1} & ${currval2}"
+	log.debug "ON_3: ${currval1} & ${currval2}"
 
 	if(currval1=="off") and (currval2=="off") then {
 	    sendEvent(name: "switch", value: "on3", displayed: false)			 
