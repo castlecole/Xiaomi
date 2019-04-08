@@ -233,7 +233,7 @@ private Map parseReportAttributeMessage(String description) {
 	log.debug "Temperature Hex convert to ${resultMap.value}%"
     }
     else if (descMap.cluster == "0008" && descMap.attrId == "0000") {
-    	resultMap = createEvent(name: "switch", value: "off")
+resultMap = createEvent(name: "switch", value: "off")
     } 
     
     return resultMap
@@ -259,42 +259,141 @@ def on0() {
 }
 
 def off1() {
+
     	log.debug "off1()"
 	sendEvent(name: "switch1", value: "off")
-   	"st cmd 0x${device.deviceNetworkId} 0x01 0x0006 0x0 {}" 
+	def currval2 = device.latestState("switch2")
+	def currval3 = device.latestState("switch3")
+	
+	if(currval2=="off") and (currval3=="off") then {
+	    sendEvent(name: "switch", value: "off", displayed: false)			 
+	}
+	elseif (currval2=="on") and (currval3=="off") then {
+	    sendEvent(name: "switch", value: "on2", displayed: false)			 
+	}
+	elseif (currval2=="off") and (currval3=="on") then {
+	    sendEvent(name: "switch", value: "on3", displayed: false)			 
+	}
+	elseif (currval2=="on") and (currval3=="on") then {
+	    sendEvent(name: "switch", value: "on23", displayed: false)			 
+	}
+
+	"st cmd 0x${device.deviceNetworkId} 0x01 0x0006 0x0 {}" 
 }
 
 def on1() {
    	log.debug "on1()"
 	sendEvent(name: "switch1", value: "on")
-	sendEvent(name: "switch", value: "on1", displayed: false)
+
+	def currval2 = device.latestState("switch2")
+	def currval3 = device.latestState("switch3")
+	
+	if(currval2=="off") and (currval3=="off") then {
+	    sendEvent(name: "switch", value: "on1", displayed: false)			 
+	}
+	elseif (currval2=="on") and (currval3=="off") then {
+	    sendEvent(name: "switch", value: "on12", displayed: false)			 
+	}
+	elseif (currval2=="off") and (currval3=="on") then {
+	    sendEvent(name: "switch", value: "on13", displayed: false)			 
+	}
+	elseif (currval2=="on") and (currval3=="on") then {
+	    sendEvent(name: "switch", value: "on", displayed: false)			 
+	}
+
 	"st cmd 0x${device.deviceNetworkId} 0x01 0x0006 0x1 {}" 
 }
 
 def off2() {
     	log.debug "off2()"
 	sendEvent(name: "switch2", value: "off")
-    	"st cmd 0x${device.deviceNetworkId} 0x02 0x0006 0x0 {}" 
+
+	def currval1 = device.latestState("switch1")
+	def currval3 = device.latestState("switch3")
+	
+	if(currval1=="off") and (currval3=="off") then {
+	    sendEvent(name: "switch", value: "off", displayed: false)			 
+	}
+	elseif (currval1=="on") and (currval3=="off") then {
+	    sendEvent(name: "switch", value: "on1", displayed: false)			 
+	}
+	elseif (currval1=="off") and (currval3=="on") then {
+	    sendEvent(name: "switch", value: "on3", displayed: false)			 
+	}
+	elseif (currval1=="on") and (currval3=="on") then {
+	    sendEvent(name: "switch", value: "on13", displayed: false)			 
+	}
+
+	"st cmd 0x${device.deviceNetworkId} 0x02 0x0006 0x0 {}" 
    }
 
 def on2() {
    	log.debug "on2()"
 	sendEvent(name: "switch2", value: "on")
-	sendEvent(name: "switch", value: "on2", displayed: false)
-    	"st cmd 0x${device.deviceNetworkId} 0x02 0x0006 0x1 {}"
+	
+	def currval1 = device.latestState("switch1")
+	def currval3 = device.latestState("switch3")
+	
+	if(currval1=="off") and (currval3=="off") then {
+	    sendEvent(name: "switch", value: "on2", displayed: false)			 
+	}
+	elseif (currval1=="on") and (currval3=="off") then {
+	    sendEvent(name: "switch", value: "on12", displayed: false)			 
+	}
+	elseif (currval1=="off") and (currval3=="on") then {
+	    sendEvent(name: "switch", value: "on23", displayed: false)			 
+	}
+	elseif (currval1=="on") and (currval3=="on") then {
+	    sendEvent(name: "switch", value: "on", displayed: false)			 
+	}
+
+	"st cmd 0x${device.deviceNetworkId} 0x02 0x0006 0x1 {}"
 }
     
 def off3() {
     	log.debug "off3()"
 	sendEvent(name: "switch3", value: "off")
+	
+	def currval1 = device.latestState("switch1")
+	def currval2 = device.latestState("switch2")
+	
+	if(currval1=="off") and (currval2=="off") then {
+	    sendEvent(name: "switch", value: "off", displayed: false)			 
+	}
+	elseif (currval1=="on") and (currval2=="off") then {
+	    sendEvent(name: "switch", value: "on1", displayed: false)			 
+	}
+	elseif (currval1=="off") and (currval2=="on") then {
+	    sendEvent(name: "switch", value: "on2", displayed: false)			 
+	}
+	elseif (currval1=="on") and (currval2=="on") then {
+	    sendEvent(name: "switch", value: "on12", displayed: false)			 
+	}
+	
     	"st cmd 0x${device.deviceNetworkId} 0x03 0x0006 0x0 {}"
 }
 
 def on3() {
    	log.debug "on3()"
 	sendEvent(name: "switch3", value: "on")
-	sendEvent(name: "switch", value: "on3", displayed: false)
-    	"st cmd 0x${device.deviceNetworkId} 0x03 0x0006 0x1 {}" 
+	
+	def currval1 = device.latestState("switch1")
+	def currval2 = device.latestState("switch2")
+	
+	if(currval1=="off") and (currval2=="off") then {
+	    sendEvent(name: "switch", value: "on3", displayed: false)			 
+	}
+	elseif (currval1=="on") and (currval2=="off") then {
+	    sendEvent(name: "switch", value: "on13", displayed: false)			 
+	}
+	elseif (currval1=="off") and (currval2=="on") then {
+	    sendEvent(name: "switch", value: "on23", displayed: false)			 
+	}
+	elseif (currval1=="on") and (currval2=="on") then {
+	    sendEvent(name: "switch", value: "on", displayed: false)			 
+	}
+
+	"st cmd 0x${device.deviceNetworkId} 0x03 0x0006 0x1 {}" 
 }
     
 def ping() {
