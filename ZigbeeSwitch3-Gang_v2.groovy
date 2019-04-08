@@ -268,7 +268,7 @@ def refresh() {
 	zigbee.onOffRefresh()
 }
 
-def config() {
+def configure() {
 	log.debug "Config..."
 	[
 	"st rattr 0x${device.deviceNetworkId} 0x01 0x0006 0x0", "delay 1000",
