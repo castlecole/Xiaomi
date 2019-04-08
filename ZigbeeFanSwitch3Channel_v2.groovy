@@ -83,7 +83,7 @@ metadata {
     }
 
     tiles(scale: 2) {
-     	multiAttributeTile(name:"switch", type: "device.switch", width: 6, height: 4, canChangeIcon: true){
+     	multiAttributeTile(name:"switch", type: "device.switch", width: 6, height: 4, canChangeIcon: false){
             tileAttribute ("device.switch", key: "PRIMARY_CONTROL") { 
                 attributeState "on", label:'${name}', action:"off0", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch3123On.png", backgroundColor:"#359148", nextState:"turningOff"
                 attributeState "off", label:'${name}', action:"on0", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch30Off.png", backgroundColor:"#00a0dc", nextState:"turningOn"
@@ -95,21 +95,21 @@ metadata {
 	    }
         }
 	    
-	standardTile("switch1", "device.switch1", width: 2, height: 2, canChangeIcon: true){
+	standardTile("switch1", "device.switch1", width: 2, height: 2, canChangeIcon: false){
                 state("on", label:'SW1 On', action:"off1", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch1On.png", backgroundColor:"#359148", nextState:"turningOff")
                 state("off", label:'SW1 Off', action:"on1", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch1Off.png", backgroundColor:"#00a0dc", nextState:"turningOn")
                 state("turningOn", label:'Turning On', action:"off1", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch1On.png", backgroundColor:"#359148", nextState:"turningOff")
                 state("turningOff", label:'Turning Off', action:"on1", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch1Off.png", backgroundColor:"#00a0dc", nextState:"turningOn")
         }
 
-        standardTile("switch2", "device.switch2", width: 2, height: 2, canChangeIcon: true){
+        standardTile("switch2", "device.switch2", width: 2, height: 2, canChangeIcon: false){
                 state("on", label:'SW2 On', action:"off2", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch1On.png", backgroundColor:"#359148", nextState:"turningOff")
                 state("off", label:'SW2 Off', action:"on2", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch1Off.png", backgroundColor:"#00a0dc", nextState:"turningOn")
                 state("turningOn", label:'Turning On', action:"off2", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch1On.png", backgroundColor:"#359148", nextState:"turningOff")
                 state("turningOff", label:'Turning Off', action:"on2", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch1Off.png", backgroundColor:"#00a0dc", nextState:"turningOn")
         }
 
-        standardTile("switch3", "device.switch3", width: 2, height: 2, canChangeIcon: true){
+        standardTile("switch3", "device.switch3", width: 2, height: 2, canChangeIcon: false){
                 state("on", label:'SW3 On', action:"off3", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch1On.png", backgroundColor:"#359148", nextState:"turningOff")
                 state("off", label:'SW3 Off', action:"on3", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch1Off.png", backgroundColor:"#00a0dc", nextState:"turningOn")
                 state("turningOn", label:'Turning On', action:"off3", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch1On.png", backgroundColor:"#359148", nextState:"turningOff")
@@ -120,7 +120,7 @@ metadata {
             state "default", label:"", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
         }
         
-	      main(["switch"])
+	main(["switch"])
         details(["switch", "switch1", "switch2", "switch3", "refresh"])
     }
 }
