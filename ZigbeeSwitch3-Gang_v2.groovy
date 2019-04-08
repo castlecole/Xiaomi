@@ -95,33 +95,37 @@ metadata {
 	    }
         }
 	    
-	standardTile("switch1", "device.switch1", width: 2, height: 2, canChangeIcon: false){
+	standardTile("switch1", "device.switch1", inactiveLabel: false, decoration: "flat", width: 2, height: 2, canChangeIcon: false){
                 state("on", label:'SW1 On', action:"off1", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch1On.png", backgroundColor:"#359148", nextState:"turningOff")
                 state("off", label:'SW1 Off', action:"on1", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch1Off.png", backgroundColor:"#00a0dc", nextState:"turningOn")
                 state("turningOn", label:'Turning On', action:"off1", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch1On.png", backgroundColor:"#359148", nextState:"turningOff")
                 state("turningOff", label:'Turning Off', action:"on1", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch1Off.png", backgroundColor:"#00a0dc", nextState:"turningOn")
         }
 
-        standardTile("switch2", "device.switch2", width: 2, height: 2, canChangeIcon: false){
+        standardTile("switch2", "device.switch2", inactiveLabel: false, decoration: "flat", width: 2, height: 2, canChangeIcon: false){
                 state("on", label:'SW2 On', action:"off2", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch1On.png", backgroundColor:"#359148", nextState:"turningOff")
                 state("off", label:'SW2 Off', action:"on2", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch1Off.png", backgroundColor:"#00a0dc", nextState:"turningOn")
                 state("turningOn", label:'Turning On', action:"off2", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch1On.png", backgroundColor:"#359148", nextState:"turningOff")
                 state("turningOff", label:'Turning Off', action:"on2", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch1Off.png", backgroundColor:"#00a0dc", nextState:"turningOn")
         }
 
-        standardTile("switch3", "device.switch3", width: 2, height: 2, canChangeIcon: false){
+        standardTile("switch3", "device.switch3", inactiveLabel: false, decoration: "flat", width: 2, height: 2, canChangeIcon: false){
                 state("on", label:'SW3 On', action:"off3", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch1On.png", backgroundColor:"#359148", nextState:"turningOff")
                 state("off", label:'SW3 Off', action:"on3", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch1Off.png", backgroundColor:"#00a0dc", nextState:"turningOn")
                 state("turningOn", label:'Turning On', action:"off3", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch1On.png", backgroundColor:"#359148", nextState:"turningOff")
                 state("turningOff", label:'Turning Off', action:"on3", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch1Off.png", backgroundColor:"#00a0dc", nextState:"turningOn")
         }
 
-        standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
+        standardTile("blank", "device.refresh", inactiveLabel: true, decoration: "flat", width: 2, height: 2) {
+  	    state "default", label:"", action:""
+	}
+
+	standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
             state "default", label:"", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
         }
         
 	main(["switch"])
-        details(["switch", "switch1", "switch2", "switch3", "refresh"])
+        details(["switch", "switch1", "switch2", "switch3", "blank", "blank", "refresh"])
     }
 }
 
@@ -175,33 +179,58 @@ private Map parseCatchAllMessage(String description) {
     log.debug cluster
     
     if (cluster.clusterId == 0x0006 && cluster.command == 0x01){
-    	if (cluster.sourceEndpoint == 0x10) {
+    	if (cluster.sourceEndpoint == 0x01) {
         	log.debug "Its Switch one"
     		def onoff = cluster.data[-1]
         	if (onoff == 1)
-        		resultMap = createEvent(name: "switch1", value: "on")
+        	    resultMap = createEvent(name: "switch1", value: "on")
         	else if (onoff == 0)
         	    resultMap = createEvent(name: "switch1", value: "off")
         }
-        else if (cluster.sourceEndpoint == 0x11) {
+        else if (cluster.sourceEndpoint == 0x02) {
             	log.debug "Its Switch two"
     		def onoff = cluster.data[-1]
         	if (onoff == 1)
-        		resultMap = createEvent(name: "switch2", value: "on")
+        	    resultMap = createEvent(name: "switch2", value: "on")
         	else if (onoff == 0)
-            		resultMap = createEvent(name: "switch2", value: "off")
+            	    resultMap = createEvent(name: "switch2", value: "off")
 	}
-	else if (cluster.sourceEndpoint == 0x12) {
+	else if (cluster.sourceEndpoint == 0x03) {
             	log.debug "Its Switch three"
     		def onoff = cluster.data[-1]
         	if (onoff == 1)
-        		resultMap = createEvent(name: "switch3", value: "on")
+        	    resultMap = createEvent(name: "switch3", value: "on")
         	else if (onoff == 0)
-            	resultMap = createEvent(name: "switch3", value: "off")
+            	    resultMap = createEvent(name: "switch3", value: "off")
             	}					
     	}
     
 	return resultMap
+}
+
+private Map parseReportAttributeMessage(String description) {
+    
+    Map descMap = (description - "read attr - ").split(",").inject([:]) { map, param ->
+        def nameAndValue = param.split(":")
+        map += [(nameAndValue[0].trim()):nameAndValue[1].trim()]
+    }
+    
+    //log.debug "Desc Map: $descMap"
+    Map resultMap = [:]
+
+    //if (descMap.cluster == "0001" && descMap.attrId == "0020") {
+	//resultMap = getBatteryResult(convertHexToInt(descMap.value / 2))
+    //}
+    
+    if (descMap.cluster == "0002" && descMap.attrId == "0000") {
+	resultMap = createEvent(name: "temperature", value: zigbee.parseHATemperatureValue("temperature: " + (convertHexToInt(descMap.value) / 2), "temperature: ", getTemperatureScale()), unit: getTemperatureScale())
+	log.debug "Temperature Hex convert to ${resultMap.value}%"
+    }
+    else if (descMap.cluster == "0008" && descMap.attrId == "0000") {
+    	resultMap = createEvent(name: "switch", value: "off")
+    } 
+    
+    return resultMap
 }
 
 def off0() {
