@@ -246,6 +246,7 @@ def off0() {
 	sendEvent(name: "switch1", value: "off", displayed: false)
 	sendEvent(name: "switch2", value: "off", displayed: false)
 	sendEvent(name: "switch3", value: "off", displayed: false)
+	
     	"st cmd 0x${device.deviceNetworkId} 0xFF 0x0006 0x0 {}" 
 }
 
@@ -255,6 +256,7 @@ def on0() {
 	sendEvent(name: "switch1", value: "on", displayed: false)
 	sendEvent(name: "switch2", value: "on", displayed: false)
 	sendEvent(name: "switch3", value: "on", displayed: false)
+	
     	"st cmd 0x${device.deviceNetworkId} 0xFF 0x0006 0x1 {}" 
 }
 
