@@ -272,13 +272,13 @@ def off1() {
 	if(currval2=="off") and (currval3=="off") then {
 	    sendEvent(name: "switch", value: "off", displayed: false)			 
 	}
-	elseif (currval2=="on") and (currval3=="off") then {
+	else if (currval2=="on") and (currval3=="off") then {
 	    sendEvent(name: "switch", value: "on2", displayed: false)			 
 	}
-	elseif (currval2=="off") and (currval3=="on") then {
+	else if (currval2=="off") and (currval3=="on") then {
 	    sendEvent(name: "switch", value: "on3", displayed: false)			 
 	}
-	elseif (currval2=="on") and (currval3=="on") then {
+	else if (currval2=="on") and (currval3=="on") then {
 	    sendEvent(name: "switch", value: "on23", displayed: false)			 
 	}
 
@@ -297,13 +297,13 @@ def on1() {
 	if(currval2=="off") and (currval3=="off") then {
 	    sendEvent(name: "switch", value: "on1", displayed: false)			 
 	}
-	elseif (currval2=="on") and (currval3=="off") then {
+	else if (currval2=="on") and (currval3=="off") then {
 	    sendEvent(name: "switch", value: "on12", displayed: false)			 
 	}
-	elseif (currval2=="off") and (currval3=="on") then {
+	else if (currval2=="off") and (currval3=="on") then {
 	    sendEvent(name: "switch", value: "on13", displayed: false)			 
 	}
-	elseif (currval2=="on") and (currval3=="on") then {
+	else if (currval2=="on") and (currval3=="on") then {
 	    sendEvent(name: "switch", value: "on", displayed: false)			 
 	}
 
@@ -322,13 +322,13 @@ def off2() {
 	if(currval1=="off") and (currval3=="off") then {
 	    sendEvent(name: "switch", value: "off", displayed: false)			 
 	}
-	elseif (currval1=="on") and (currval3=="off") then {
+	else if (currval1=="on") and (currval3=="off") then {
 	    sendEvent(name: "switch", value: "on1", displayed: false)			 
 	}
-	elseif (currval1=="off") and (currval3=="on") then {
+	else if (currval1=="off") and (currval3=="on") then {
 	    sendEvent(name: "switch", value: "on3", displayed: false)			 
 	}
-	elseif (currval1=="on") and (currval3=="on") then {
+	else if (currval1=="on") and (currval3=="on") then {
 	    sendEvent(name: "switch", value: "on13", displayed: false)			 
 	}
 
@@ -347,13 +347,13 @@ def on2() {
 	if(currval1=="off") and (currval3=="off") then {
 	    sendEvent(name: "switch", value: "on2", displayed: false)			 
 	}
-	elseif (currval1=="on") and (currval3=="off") then {
+	else if (currval1=="on") and (currval3=="off") then {
 	    sendEvent(name: "switch", value: "on12", displayed: false)			 
 	}
-	elseif (currval1=="off") and (currval3=="on") then {
+	else if (currval1=="off") and (currval3=="on") then {
 	    sendEvent(name: "switch", value: "on23", displayed: false)			 
 	}
-	elseif (currval1=="on") and (currval3=="on") then {
+	else if (currval1=="on") and (currval3=="on") then {
 	    sendEvent(name: "switch", value: "on", displayed: false)			 
 	}
 
@@ -372,13 +372,13 @@ def off3() {
 	if(currval1=="off") and (currval2=="off") then {
 	    sendEvent(name: "switch", value: "off", displayed: false)			 
 	}
-	elseif (currval1=="on") and (currval2=="off") then {
+	else if (currval1=="on") and (currval2=="off") then {
 	    sendEvent(name: "switch", value: "on1", displayed: false)			 
 	}
-	elseif (currval1=="off") and (currval2=="on") then {
+	else if (currval1=="off") and (currval2=="on") then {
 	    sendEvent(name: "switch", value: "on2", displayed: false)			 
 	}
-	elseif (currval1=="on") and (currval2=="on") then {
+	else if (currval1=="on") and (currval2=="on") then {
 	    sendEvent(name: "switch", value: "on12", displayed: false)			 
 	}
 	
@@ -397,13 +397,13 @@ def on3() {
 	if(currval1=="off") and (currval2=="off") then {
 	    sendEvent(name: "switch", value: "on3", displayed: false)			 
 	}
-	elseif (currval1=="on") and (currval2=="off") then {
+	else if (currval1=="on") and (currval2=="off") then {
 	    sendEvent(name: "switch", value: "on13", displayed: false)			 
 	}
-	elseif (currval1=="off") and (currval2=="on") then {
+	else if (currval1=="off") and (currval2=="on") then {
 	    sendEvent(name: "switch", value: "on23", displayed: false)			 
 	}
-	elseif (currval1=="on") and (currval2=="on") then {
+	else if (currval1=="on") and (currval2=="on") then {
 	    sendEvent(name: "switch", value: "on", displayed: false)			 
 	}
 
