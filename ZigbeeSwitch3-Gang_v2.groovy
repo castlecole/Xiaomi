@@ -264,8 +264,8 @@ def off1() {
 
     	log.debug "off1()"
 	sendEvent(name: "switch1", value: "off")
-	def currval2 = device.currentState("switch2")
-	def currval3 = device.currentState("switch3")
+	def currval2 = device.currentValue("switch2")
+	def currval3 = device.currentValue("switch3")
 	
 	log.debug "OFF_1: ${currval2} & ${currval3}"
 	
@@ -289,8 +289,8 @@ def on1() {
    	log.debug "on1()"
 	sendEvent(name: "switch1", value: "on")
 
-	def currval2 = device.currentState("switch2")
-	def currval3 = device.currentState("switch3")
+	def currval2 = device.currentValue("switch2")
+	def currval3 = device.currentValue("switch3")
 	
 	log.debug "ON_1: ${currval2} & ${currval3}"
 	
@@ -314,8 +314,8 @@ def off2() {
     	log.debug "off2()"
 	sendEvent(name: "switch2", value: "off")
 
-	def currval1 = device.currentState("switch1")
-	def currval3 = device.currentState("switch3")
+	def currval1 = device.currentValue("switch1")
+	def currval3 = device.currentValue("switch3")
 	
 	log.debug "OFF_2: ${currval1} & ${currval3}"
 
@@ -339,8 +339,8 @@ def on2() {
    	log.debug "on2()"
 	sendEvent(name: "switch2", value: "on")
 	
-	def currval1 = device.currentState("switch1")
-	def currval3 = device.currentState("switch3")
+	def currval1 = device.currentValue("switch1")
+	def currval3 = device.currentValue("switch3")
 	
 	log.debug "ON_2: ${currval1} & ${currval3}"
 
@@ -364,8 +364,8 @@ def off3() {
     	log.debug "off3()"
 	sendEvent(name: "switch3", value: "off")
 	
-	def currval1 = device.currentState("switch1")
-	def currval2 = device.currentState("switch2")
+	def currval1 = device.currentValue("switch1")
+	def currval2 = device.currentValue("switch2")
 	
 	log.debug "OFF_3: ${currval1} & ${currval2}"
 
@@ -389,8 +389,8 @@ def on3() {
    	log.debug "on3()"
 	sendEvent(name: "switch3", value: "on")
 	
-	def currval1 = device.currentState("switch1")
-	def currval2 = device.currentState("switch2")
+	def currval1 = device.currentValue("switch1")
+	def currval2 = device.currentValue("switch2")
 	
 	log.debug "ON_3: ${currval1} & ${currval2}"
 
