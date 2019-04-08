@@ -9,23 +9,23 @@
  *  on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License
  *  for the specific language governing permissions and limitations under the License.
  *
- *  Based on on original by Lazcad / RaveTam
+ *  Huge thanks, to the original by Lazcad / RaveTam
  *  Mods for Hui 3 Gang Switch by Netsheriff
  */
 
 def version() {
-	return "v1.0 (20190407)\nZigbee Fan Switch - 3 Channel"
+	return "v1.0 (20190407)\nZigBee 3-Gang Switch - HOMA1005"
 }
 
 metadata {
-    definition (name: "ZigBee Fan Switch - 3 Channel", namespace: "castlecole", author: "smartthings") {
+    definition (name: "ZigBee 3-Gang Switch - HOMA1005", namespace: "castlecole", author: "smartthings") {
         capability "Actuator"
         capability "Configuration"
         capability "Refresh"
         capability "Switch"
         capability "Health Check"
   
-        fingerprint profileId: "C05E", inClusters: "0000, 0003, 0004, 0005, 0006", outClusters: "0003, 0019", manufacturer: "ShenZhen_Homa", model: "HOMA1005", deviceJoinName: "ZigBee Fan Switch - 3 Channel"
+        fingerprint profileId: "C05E", inClusters: "0000, 0003, 0004, 0005, 0006", outClusters: "0003, 0019", manufacturer: "ShenZhen_Homa", model: "HOMA1005", deviceJoinName: "ZigBee 3-Gang Switch - HOMA1005"
 
 	// zbjoin: {"dni":"8D26","d":"00124B001A441DE2","capabilities":"8E","endpoints":[
 	//  {"simple":"01 C05E 0000 02 05 0000 0003 0004 0005 0006 00","application":"01","manufacturer":"ShenZhen_Homa","model":"HOMA1005"},
@@ -72,8 +72,7 @@ metadata {
         // reply messages
         reply "zcl on-off on": "on/off: 1"
         reply "zcl on-off off": "on/off: 0"
-        
-      
+    
     }
 
     preferences {
@@ -129,30 +128,30 @@ metadata {
 
 def parse(String description) {
 
-    log.debug "Parsing '${description}'"
+    log.debug "Parsing message: '${description}'"
    
     def value = zigbee.parse(description)?.text
-    log.debug "Parse: $value"
+    log.debug "Parse message: $value"
     Map map = [:]
    
     if (description?.startsWith('catchall:')) {
-        log.debug "Catchall..."
+        log.debug "Parse Catchall..."
 	map = parseCatchAllMessage(description)
     }
     else if (description?.startsWith('read attr -')) {
-        log.debug "Read Attribute..."
+        log.debug "Parse Read Attribute..."
 	map = parseReportAttributeMessage(description)
     }
     else if (description?.startsWith('on/off: ')) {
-        log.debug "On Off..."
-        def refreshCmds = zigbee.readAttribute(0x0006, 0x0000, [destEndpoint: 0x10]) +
-    			  zigbee.readAttribute(0x0006, 0x0000, [destEndpoint: 0x11]) +
- 			  zigbee.readAttribute(0x0006, 0x0000, [destEndpoint: 0x12]) +             
-			  zigbee.readAttribute(0x0006, 0x0000, [destEndpoint: 0xFF])
+        log.debug "Parse On/Off message..."
+        // def refreshCmds = zigbee.readAttribute(0x0006, 0x0000, [destEndpoint: 0x10]) +
+    	//		  zigbee.readAttribute(0x0006, 0x0000, [destEndpoint: 0x11]) +
+ 	//		  zigbee.readAttribute(0x0006, 0x0000, [destEndpoint: 0x12]) +             
+	//		  zigbee.readAttribute(0x0006, 0x0000, [destEndpoint: 0xFF])
 		
-   	//return refreshCmds.collect { new physicalgraph.device.HubAction(it) }     
+   	// return refreshCmds.collect { new physicalgraph.device.HubAction(it) }     
     	def resultMap = zigbee.getKnownDescription(description)
-   	log.debug "${resultMap}"
+   	log.debug "Parse resultMap: ${resultMap}"
         
         map = parseCustomMessage(description) 
     }
@@ -264,14 +263,19 @@ def ping() {
 }
 
 def refresh() {
-	log.debug "refreshing"
+	log.debug "Refreshing..."
 	zigbee.onOffRefresh()
+}
+
+def config() {
+	log.debug "Config..."
 	[
 	"st rattr 0x${device.deviceNetworkId} 0x01 0x0006 0x0", "delay 1000",
 	"st rattr 0x${device.deviceNetworkId} 0x02 0x0006 0x0", "delay 1000",
 	"st rattr 0x${device.deviceNetworkId} 0x03 0x0006 0x0", "delay 1000",
 	"st rattr 0x${device.deviceNetworkId} 0xFF 0x0006 0x0", "delay 1000"
 	]
+	
 }
 
 private Map parseCustomMessage(String description) {
