@@ -61,16 +61,26 @@ metadata {
 				attributeState("default", label:'${currentValue}', icon: "st.Health & Wellness.health9")
 			}
 		}
+
+		multiAttributeTile(name:"switch2", type: "lighting", width: 6, height: 4, canChangeIcon: true){
+			tileAttribute ("device.switch", key: "PRIMARY_CONTROL") {
+				attributeState "on", label:'${name}', action:"switch.off", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Gears.png", backgroundColor:"#00A0DC", nextState:"turningOff"
+				attributeState "off", label:'${name}', action:"switch.on", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Gears.png", backgroundColor:"#ffffff", nextState:"turningOn"
+				attributeState "turningOn", label:'${name}', action:"switch.off", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Gears.png", backgroundColor:"#00A0DC", nextState:"turningOff"
+				attributeState "turningOff", label:'${name}', action:"switch.on", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Gears.png", backgroundColor:"#ffffff", nextState:"turningOn"
+			}
+		}
+
 		standardTile("power", "", inactiveLabel: True, decoration: "flat", width: 2, height: 2) {
 			state "default", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/Power-Icon.png"
 		}
-  	valueTile("blank", "", inactiveLabel: True, decoration: "flat", width: 2, height: 2) {
+  	        valueTile("blank", "", inactiveLabel: True, decoration: "flat", width: 2, height: 2) {
         		state "default", label:''
 		}
 		standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
 			state "default", label:"", action:"refresh.refresh", icon:"https://raw.githubusercontent.com/castlecole/customdevices/master/refresh.png"
 		}
-		main "switch"
+		main "switch2"
 		details(["switch", "power", "blank", "refresh"])
 	}
 }
