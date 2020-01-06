@@ -51,7 +51,7 @@
  import physicalgraph.zigbee.zcl.DataType
  
  metadata {
-    definition (name: "Universal Enhanced ZigBee Lock", namespace: "smartthings", author: "jhamstead")
+    definition (name: "ZigBee Lock", namespace: "castlecole", author: "jhamstead")
     {
         capability "Actuator"
         capability "Lock"
