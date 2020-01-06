@@ -1,5 +1,5 @@
 /*
- *  Universal Enhanced ZigBee Lock
+ *  ZigBee Lock
  *
  *  2018-08-06 : 1.7a - RBoy Apps Bug fix for Yale battery
  *  2017-07-23 : 1.7 - Bug fix for when lock and DTH are no longer in sync
