@@ -25,10 +25,10 @@ metadata {
         capability "Switch"
         capability "Health Check"
   
-        fingerprint profileId: "C05E", inClusters: "0000, 0003, 0004, 0005, 0006", outClusters: "0003, 0019", manufacturer: "ShenZhen_Homa", model: "HOMA1005", deviceJoinName: "ZigBee 3-Gang Switch - HOMA1005"
+        fingerprint profileId: "9C09", inClusters: "0000, 0003, 0006", outClusters: "0019", manufacturer: "TUYATEC-p9HCE8pZ", model: "TS0011", deviceJoinName: "ZigBee 2-Gang Switch"
 
   // 01 0104 0100 00 03 0000 0003 0006 01 0019   application: 46 endpointId: 01 manufacturer: TUYATEC-p9HCE8pZ model: TS0011 zigbeeNodeType: SLEEPY_END_DEVICE 
-// zbjoin: {"dni":"9C09","d":"EC1BBDFFFE5B768F","capabilities":"80","endpoints":[{"simple":"01 0104 0100 00 03 0000 0003 0006 01 0019","application":"46","manufacturer":"TUYATEC-O6SNCwd6","model":"TS0012"},{"simple":"02 0104 0100 00 03 0000 0003 0006 01 0019","application":"46","manufacturer":"TUYATEC-O6SNCwd6","model":"TS0012"}],"parent":"0000","joinType":1,"joinDurationMs":14543,"joinAttempts":1}
+  // zbjoin: {"dni":"9C09","d":"EC1BBDFFFE5B768F","capabilities":"80","endpoints":[{"simple":"01 0104 0100 00 03 0000 0003 0006 01 0019","application":"46","manufacturer":"TUYATEC-O6SNCwd6","model":"TS0012"},{"simple":"02 0104 0100 00 03 0000 0003 0006 01 0019","application":"46","manufacturer":"TUYATEC-O6SNCwd6","model":"TS0012"}],"parent":"0000","joinType":1,"joinDurationMs":14543,"joinAttempts":1}
 	    
   // zbjoin: {"dni":"8D26","d":"00124B001A441DE2","capabilities":"8E","endpoints":[
 	//  {"simple":"01 C05E 0000 02 05 0000 0003 0004 0005 0006 00","application":"01","manufacturer":"ShenZhen_Homa","model":"HOMA1005"},
@@ -40,7 +40,7 @@ metadata {
         attribute "switch", "string"
         attribute "switch1", "string"
         attribute "switch2", "string"
-        attribute "switch3", "string"
+        // attribute "switch3", "string"
 
 	command "on0"
     	command "off0"
@@ -48,12 +48,12 @@ metadata {
     	command "off1"
         command "on2"
 	command "off2"
-	command "on3"
-	command "off3"
+	// command "on3"
+	// command "off3"
 
         attribute "switch1","ENUM",["on","off"]
         attribute "switch2","ENUM",["on","off"]
-        attribute "switch3","ENUM",["on","off"]    
+        // attribute "switch3","ENUM",["on","off"]    
         // attribute "switchstate","ENUM",["on","off"] 
     
     }
@@ -70,8 +70,8 @@ metadata {
 	status "switch1 off": "on/off: 0"
         status "switch2 on": "on/off: 1"
 	status "switch2 off": "on/off: 0"
-	status "switch3 on": "on/off: 1"
-	status "switch3 off": "on/off: 0"
+	// status "switch3 on": "on/off: 1"
+	// status "switch3 off": "on/off: 0"
 
         // reply messages
         reply "zcl on-off on": "on/off: 1"
@@ -89,9 +89,8 @@ metadata {
      	multiAttributeTile(name:"switch", type: "device.switch", width: 6, height: 4, canChangeIcon: false){
             tileAttribute ("device.switch", key: "PRIMARY_CONTROL") { 
                 attributeState "on", label:'${name}', action:"off0", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch212On.png", backgroundColor:"#359148", nextState:"turningOff"
-                attributeState "on1", label:'${name}', action:"off0", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch21On.png", backgroundColor:"#359148", nextState:"turningOff"
-                attributeState "on2", label:'${name}', action:"off0", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch22On.png", backgroundColor:"#359148", nextState:"turningOff"
-                attributeState "on12", label:'${name}', action:"off0", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch212On.png", backgroundColor:"#359148", nextState:"turningOff"
+                attributeState "on1", label:'${name}', action:"off0", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch21Off.png", backgroundColor:"#359148", nextState:"turningOff"
+                attributeState "on2", label:'${name}', action:"off0", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch22Off.png", backgroundColor:"#359148", nextState:"turningOff"
                 attributeState "off", label:'${name}', action:"on0", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch20Off.png", backgroundColor:"#00a0dc", nextState:"turningOn"
                 attributeState "turningOn", label:'${name}', action:"off0", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch212On.png", backgroundColor:"#359148", nextState:"turningOff"
                 attributeState "turningOff", label:'${name}', action:"on0", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch20Off.png", backgroundColor:"#00a0dc", nextState:"turningOn"
@@ -194,15 +193,15 @@ private Map parseCatchAllMessage(String description) {
         	else if (onoff == 0)
             	    resultMap = createEvent(name: "switch2", value: "off")
 	}
-	else if (cluster.sourceEndpoint == 0x03) {
-            	log.debug "Its Switch three"
-    		def onoff = cluster.data[-1]
-        	if (onoff == 1)
-        	    resultMap = createEvent(name: "switch3", value: "on")
-        	else if (onoff == 0)
-            	    resultMap = createEvent(name: "switch3", value: "off")
-            	}					
-    	}
+//	else if (cluster.sourceEndpoint == 0x03) {
+//            	log.debug "Its Switch three"
+//    		def onoff = cluster.data[-1]
+//        	if (onoff == 1)
+//        	    resultMap = createEvent(name: "switch3", value: "on")
+//        	else if (onoff == 0)
+//            	    resultMap = createEvent(name: "switch3", value: "off")
+//            	}					
+//    	}
     
 	return resultMap
 }
@@ -238,7 +237,7 @@ def off0() {
 	sendEvent(name: "switch", value: "off")
 	sendEvent(name: "switch1", value: "off", displayed: false)
 	sendEvent(name: "switch2", value: "off", displayed: false)
-	sendEvent(name: "switch3", value: "off", displayed: false)
+//	sendEvent(name: "switch3", value: "off", displayed: false)
 	
     	"st cmd 0x${device.deviceNetworkId} 0xFF 0x0006 0x0 {}" 
 }
@@ -248,7 +247,7 @@ def on0() {
 	sendEvent(name: "switch", value: "on")
 	sendEvent(name: "switch1", value: "on", displayed: false)
 	sendEvent(name: "switch2", value: "on", displayed: false)
-	sendEvent(name: "switch3", value: "on", displayed: false)
+//	sendEvent(name: "switch3", value: "on", displayed: false)
 	
     	"st cmd 0x${device.deviceNetworkId} 0xFF 0x0006 0x1 {}" 
 }
@@ -258,21 +257,14 @@ def off1() {
     	log.debug "off1()"
 	sendEvent(name: "switch1", value: "off")
 	def currval2 = device.currentValue("switch2")
-	def currval3 = device.currentValue("switch3")
 	
 	log.debug "OFF_1: ${currval2} & ${currval3}"
 	
-	if(currval2=="off" && currval3=="off") {
+	if(currval2=="off") {
 	    sendEvent(name: "switch", value: "off", displayed: false)			 
 	}
-	else if (currval2=="on" && currval3=="off") {
+	else if (currval2=="on") {
 	    sendEvent(name: "switch", value: "on2", displayed: false)			 
-	}
-	else if (currval2=="off" && currval3=="on") {
-	    sendEvent(name: "switch", value: "on3", displayed: false)			 
-	}
-	else if (currval2=="on" && currval3=="on") {
-	    sendEvent(name: "switch", value: "on23", displayed: false)			 
 	}
 
 	"st cmd 0x${device.deviceNetworkId} 0x01 0x0006 0x0 {}" 
@@ -283,20 +275,13 @@ def on1() {
 	sendEvent(name: "switch1", value: "on")
 
 	def currval2 = device.currentValue("switch2")
-	def currval3 = device.currentValue("switch3")
 	
 	log.debug "ON_1: ${currval2} & ${currval3}"
 	
-	if(currval2=="off" && currval3=="off") {
+	if(currval2=="off") {
 	    sendEvent(name: "switch", value: "on1", displayed: false)			 
 	}
-	else if (currval2=="on" && currval3=="off") {
-	    sendEvent(name: "switch", value: "on12", displayed: false)			 
-	}
-	else if (currval2=="off" && currval3=="on") {
-	    sendEvent(name: "switch", value: "on13", displayed: false)			 
-	}
-	else if (currval2=="on" && currval3=="on") {
+	else if (currval2=="on") {
 	    sendEvent(name: "switch", value: "on", displayed: false)			 
 	}
 
@@ -308,21 +293,14 @@ def off2() {
 	sendEvent(name: "switch2", value: "off")
 
 	def currval1 = device.currentValue("switch1")
-	def currval3 = device.currentValue("switch3")
 	
 	log.debug "OFF_2: ${currval1} & ${currval3}"
 
-	if(currval1=="off" && currval3=="off") {
+	if(currval1=="off") {
 	    sendEvent(name: "switch", value: "off", displayed: false)			 
 	}
-	else if (currval1=="on" && currval3=="off") {
+	else if (currval1=="on") {
 	    sendEvent(name: "switch", value: "on1", displayed: false)			 
-	}
-	else if (currval1=="off" && currval3=="on") {
-	    sendEvent(name: "switch", value: "on3", displayed: false)			 
-	}
-	else if (currval1=="on" && currval3=="on") {
-	    sendEvent(name: "switch", value: "on13", displayed: false)			 
 	}
 
 	"st cmd 0x${device.deviceNetworkId} 0x02 0x0006 0x0 {}" 
@@ -333,76 +311,20 @@ def on2() {
 	sendEvent(name: "switch2", value: "on")
 	
 	def currval1 = device.currentValue("switch1")
-	def currval3 = device.currentValue("switch3")
 	
 	log.debug "ON_2: ${currval1} & ${currval3}"
 
-	if(currval1=="off" && currval3=="off") {
+	if(currval1=="off") {
 	    sendEvent(name: "switch", value: "on2", displayed: false)			 
 	}
-	else if (currval1=="on" && currval3=="off") {
-	    sendEvent(name: "switch", value: "on12", displayed: false)			 
-	}
-	else if (currval1=="off" && currval3=="on") {
-	    sendEvent(name: "switch", value: "on23", displayed: false)			 
-	}
-	else if (currval1=="on" && currval3=="on") {
+	else if (currval1=="on") {
 	    sendEvent(name: "switch", value: "on", displayed: false)			 
 	}
 
 	"st cmd 0x${device.deviceNetworkId} 0x02 0x0006 0x1 {}"
 }
-    
-def off3() {
-    	log.debug "off3()"
-	sendEvent(name: "switch3", value: "off")
-	
-	def currval1 = device.currentValue("switch1")
-	def currval2 = device.currentValue("switch2")
-	
-	log.debug "OFF_3: ${currval1} & ${currval2}"
 
-	if(currval1=="off" && currval2=="off") {
-	    sendEvent(name: "switch", value: "off", displayed: false)			 
-	}
-	else if (currval1=="on" && currval2=="off") {
-	    sendEvent(name: "switch", value: "on1", displayed: false)			 
-	}
-	else if (currval1=="off" && currval2=="on") {
-	    sendEvent(name: "switch", value: "on2", displayed: false)			 
-	}
-	else if (currval1=="on" && currval2=="on") {
-	    sendEvent(name: "switch", value: "on12", displayed: false)			 
-	}
-	
-    	"st cmd 0x${device.deviceNetworkId} 0x03 0x0006 0x0 {}"
-}
 
-def on3() {
-   	log.debug "on3()"
-	sendEvent(name: "switch3", value: "on")
-	
-	def currval1 = device.currentValue("switch1")
-	def currval2 = device.currentValue("switch2")
-	
-	log.debug "ON_3: ${currval1} & ${currval2}"
-
-	if(currval1=="off" && currval2=="off") {
-	    sendEvent(name: "switch", value: "on3", displayed: false)			 
-	}
-	else if (currval1=="on" && currval2=="off") {
-	    sendEvent(name: "switch", value: "on13", displayed: false)			 
-	}
-	else if (currval1=="off" && currval2=="on") {
-	    sendEvent(name: "switch", value: "on23", displayed: false)			 
-	}
-	else if (currval1=="on" && currval2=="on") {
-	    sendEvent(name: "switch", value: "on", displayed: false)			 
-	}
-
-	"st cmd 0x${device.deviceNetworkId} 0x03 0x0006 0x1 {}" 
-}
-    
 def ping() {
 	return refresh()
 }
@@ -417,7 +339,7 @@ def configure() {
 	[
 	"st rattr 0x${device.deviceNetworkId} 0x01 0x0006 0x0", "delay 1000",
 	"st rattr 0x${device.deviceNetworkId} 0x02 0x0006 0x0", "delay 1000",
-	"st rattr 0x${device.deviceNetworkId} 0x03 0x0006 0x0", "delay 1000",
+	// "st rattr 0x${device.deviceNetworkId} 0x03 0x0006 0x0", "delay 1000",
 	"st rattr 0x${device.deviceNetworkId} 0xFF 0x0006 0x0", "delay 1000"
 	]
 	
