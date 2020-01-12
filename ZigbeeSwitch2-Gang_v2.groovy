@@ -48,13 +48,9 @@ metadata {
     	command "off1"
         command "on2"
 	command "off2"
-	// command "on3"
-	// command "off3"
 
         attribute "switch1","ENUM",["on","off"]
         attribute "switch2","ENUM",["on","off"]
-        // attribute "switch3","ENUM",["on","off"]    
-        // attribute "switchstate","ENUM",["on","off"] 
     
     }
 
@@ -70,8 +66,6 @@ metadata {
 	status "switch1 off": "on/off: 0"
         status "switch2 on": "on/off: 1"
 	status "switch2 off": "on/off: 0"
-	// status "switch3 on": "on/off: 1"
-	// status "switch3 off": "on/off: 0"
 
         // reply messages
         reply "zcl on-off on": "on/off: 1"
@@ -192,16 +186,8 @@ private Map parseCatchAllMessage(String description) {
         	    resultMap = createEvent(name: "switch2", value: "on")
         	else if (onoff == 0)
             	    resultMap = createEvent(name: "switch2", value: "off")
-	}
-//	else if (cluster.sourceEndpoint == 0x03) {
-//            	log.debug "Its Switch three"
-//    		def onoff = cluster.data[-1]
-//        	if (onoff == 1)
-//        	    resultMap = createEvent(name: "switch3", value: "on")
-//        	else if (onoff == 0)
-//            	    resultMap = createEvent(name: "switch3", value: "off")
-//            	}					
-//    	}
+		}
+    	}
     
 	return resultMap
 }
@@ -237,7 +223,6 @@ def off0() {
 	sendEvent(name: "switch", value: "off")
 	sendEvent(name: "switch1", value: "off", displayed: false)
 	sendEvent(name: "switch2", value: "off", displayed: false)
-//	sendEvent(name: "switch3", value: "off", displayed: false)
 	
     	"st cmd 0x${device.deviceNetworkId} 0xFF 0x0006 0x0 {}" 
 }
@@ -247,7 +232,6 @@ def on0() {
 	sendEvent(name: "switch", value: "on")
 	sendEvent(name: "switch1", value: "on", displayed: false)
 	sendEvent(name: "switch2", value: "on", displayed: false)
-//	sendEvent(name: "switch3", value: "on", displayed: false)
 	
     	"st cmd 0x${device.deviceNetworkId} 0xFF 0x0006 0x1 {}" 
 }
@@ -339,7 +323,6 @@ def configure() {
 	[
 	"st rattr 0x${device.deviceNetworkId} 0x01 0x0006 0x0", "delay 1000",
 	"st rattr 0x${device.deviceNetworkId} 0x02 0x0006 0x0", "delay 1000",
-	// "st rattr 0x${device.deviceNetworkId} 0x03 0x0006 0x0", "delay 1000",
 	"st rattr 0x${device.deviceNetworkId} 0xFF 0x0006 0x0", "delay 1000"
 	]
 	
