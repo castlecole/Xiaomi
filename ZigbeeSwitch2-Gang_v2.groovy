@@ -28,7 +28,8 @@ metadata {
         fingerprint profileId: "C05E", inClusters: "0000, 0003, 0004, 0005, 0006", outClusters: "0003, 0019", manufacturer: "ShenZhen_Homa", model: "HOMA1005", deviceJoinName: "ZigBee 3-Gang Switch - HOMA1005"
 
   // 01 0104 0100 00 03 0000 0003 0006 01 0019   application: 46 endpointId: 01 manufacturer: TUYATEC-p9HCE8pZ model: TS0011 zigbeeNodeType: SLEEPY_END_DEVICE 
-	
+// zbjoin: {"dni":"9C09","d":"EC1BBDFFFE5B768F","capabilities":"80","endpoints":[{"simple":"01 0104 0100 00 03 0000 0003 0006 01 0019","application":"46","manufacturer":"TUYATEC-O6SNCwd6","model":"TS0012"},{"simple":"02 0104 0100 00 03 0000 0003 0006 01 0019","application":"46","manufacturer":"TUYATEC-O6SNCwd6","model":"TS0012"}],"parent":"0000","joinType":1,"joinDurationMs":14543,"joinAttempts":1}
+	    
   // zbjoin: {"dni":"8D26","d":"00124B001A441DE2","capabilities":"8E","endpoints":[
 	//  {"simple":"01 C05E 0000 02 05 0000 0003 0004 0005 0006 00","application":"01","manufacturer":"ShenZhen_Homa","model":"HOMA1005"},
 	//  {"simple":"02 C05E 0000 02 05 0000 0003 0004 0005 0006 00","application":"01","manufacturer":"ShenZhen_Homa","model":"HOMA1005"},
