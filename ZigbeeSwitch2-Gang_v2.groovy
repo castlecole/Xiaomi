@@ -51,6 +51,7 @@ metadata {
 
         attribute "switch1","ENUM",["on","off"]
         attribute "switch2","ENUM",["on","off"]
+        attribute "switchstate","ENUM",["on","off"] 
     
     }
 
@@ -83,8 +84,8 @@ metadata {
      	multiAttributeTile(name:"switch", type: "device.switch", width: 6, height: 4, canChangeIcon: false){
             tileAttribute ("device.switch", key: "PRIMARY_CONTROL") { 
                 attributeState "on", label:'${name}', action:"off0", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch212On.png", backgroundColor:"#359148", nextState:"turningOff"
-                attributeState "on1", label:'${name}', action:"on1", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch21Off.png", backgroundColor:"#359148", nextState:"turningOff"
-                attributeState "on2", label:'${name}', action:"on2", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch22Off.png", backgroundColor:"#359148", nextState:"turningOff"
+                attributeState "on1", label:'${name}', action:"off1", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch21Off.png", backgroundColor:"#359148", nextState:"turningOff"
+                attributeState "on2", label:'${name}', action:"off2", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch22Off.png", backgroundColor:"#359148", nextState:"turningOff"
                 attributeState "off", label:'${name}', action:"on0", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch20Off.png", backgroundColor:"#00a0dc", nextState:"turningOn"
                 attributeState "turningOn", label:'${name}', action:"off0", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch212On.png", backgroundColor:"#359148", nextState:"turningOff"
                 attributeState "turningOff", label:'${name}', action:"on0", icon:"https://raw.githubusercontent.com/castlecole/Xiaomi/master/Switch20Off.png", backgroundColor:"#00a0dc", nextState:"turningOn"
