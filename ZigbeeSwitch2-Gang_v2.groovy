@@ -40,7 +40,6 @@ metadata {
         attribute "switch", "string"
         attribute "switch1", "string"
         attribute "switch2", "string"
-        // attribute "switch3", "string"
 
 	command "on0"
     	command "off0"
@@ -69,8 +68,8 @@ metadata {
 	status "switch2 off": "on/off: 0"
 
         // reply messages
-        reply "zcl on-off on": "on/off: 1"
-        reply "zcl on-off off": "on/off: 0"
+        reply "zcl on-off": "on/off: 1"
+        reply "zcl off off": "on/off: 0"
     
     }
 
